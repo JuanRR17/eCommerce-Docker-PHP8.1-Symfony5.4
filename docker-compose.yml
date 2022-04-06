@@ -1,7 +1,18 @@
 version: '3.5'
  
 services:
- ecommerce: #Servicio que va a tener mi aplicación
+  phpmyadmin:
+     container_name: phpmyadmin
+     image: phpmyadmin/phpmyadmin
+     environment:
+         PMA_HOST: ecommerce-mysql
+     restart: always
+     ports:
+         - 9080:80
+     networks:
+       - ecommerce-network
+
+  ecommerce: #Servicio que va a tener mi aplicación
    container_name: ecommerce #Nombre del servicio
    build:
      context: ./docker #Carpeta donde buscar Dockerfile
@@ -21,24 +32,25 @@ services:
      - '1000:8000' #Redirección del puerto 1000 de mi máquina local al puerto 8000 del contenedor.
    networks:
      - ecommerce-network #Para que todos los servicios de la misma red se puedan ver entre ellos  
+   depends_on:
+      - ecommerce-postgres
 
-###> doctrine/doctrine-bundle ###
- database:
-   image: postgres:${POSTGRES_VERSION:-13}-alpine
-   environment:
-     POSTGRES_DB: ${POSTGRES_DB:-app}
-     # You should definitely change the password in production
-     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
-     POSTGRES_USER: ${POSTGRES_USER:-symfony}
-   volumes:
-     - db-data:/var/lib/postgresql/data:rw
-     # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-     # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
- 
+  ecommerce-postgres:
+    container_name: ecommerce-postgres
+    image: postgres:14-alpine
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: passwd
+      POSTGRES_DB: postgres_symfony
+    volumes:
+      - ecommerce-pgsql-data:/var/lib/postgresql/data
+    networks:
+      - ecommerce-network
+
 networks:
  ecommerce-network:
+
 volumes:
-###> doctrine/doctrine-bundle ###
- db-data:
-###< doctrine/doctrine-bundle ###
+  ecommerce-pgsql-data:
