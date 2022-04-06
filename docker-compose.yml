@@ -1,0 +1,26 @@
+version: '3.5'
+ 
+services:
+ ecommerce: #Servicio que va a tener mi aplicación
+   container_name: ecommerce #Nombre del servicio
+   build:
+     context: ./docker #Carpeta donde buscar Dockerfile
+     args:
+       UID: $U_ID
+   volumes:
+     - ./:/appdata/www #Todo lo que hay en la carpeta del proyecto lo va a mapear a www en el contenedor.
+   ###> XDEBUG 3 ###
+   # Use your client IP here
+   # Linux: run "ip a | grep docker0"
+   # Windows (with WSL2) and Mac: host.docker.internal
+   environment:
+     XDEBUG_CLIENT_HOST: 172.17.0.1
+     XDEBUG_CLIENT_PORT: 9003
+     PHP_IDE_CONFIG: serverName=ecommerce #Solo necesario en PHPStorm
+   ports:
+     - '1000:8000' #Redirección del puerto 1000 de mi máquina local al puerto 8000 del contenedor.
+   networks:
+     - ecommerce-network #Para que todos los servicios de la misma red se puedan ver entre ellos  
+ 
+networks:
+ ecommerce-network:
