@@ -62,7 +62,16 @@ services:
     networks:
       - ecommerce-network
     command: [ 'mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci' ]
-
+ 
+  ecommerce-rabbit:
+   container_name: ecommerce-rabbitmq
+   image: rabbitmq:3-management-alpine
+   ports:
+     - '5672:5672'
+     - '15672:15672'
+   networks:
+     - ecommerce-network
+     
 networks:
  ecommerce-network:
 
