@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ product.brand.name }} - {{ product.model }}
+{% endblock %}
+
+{% block main %}
+    {% if product is defined %}
+    {{dump(product)}}
+        <h1>{{ product.brand.name }} - {{ product.model }}</h1>
+        <a href="{{ path('editProduct', {'id': product.id })}}">Edit</a>
+        <div id="detail-product">
+            <div class="images_container">
+                <div class="image main">
+                    {# {% if product.images is not empty %} #}
+                    {% if main is not null %}
+                        <img src="{{ asset('/assets/imgs/products/'~ product.id ~'/'~ main.name) }}"/>
+                    {% else %}
+                        <img src="{{ asset('assets/imgs/global/logo.png')}}"/>
+                    {% endif %}
+                </div>
+                {% if product.images|length > 1 %}
+                <div class="list">
+                    {# {% if product.images|length > 3 %}
+                        <div class="arrows">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </div>
+                    {% endif %} #}
+                    {% for image in product.images %}
+                        {% if image.id != main.id %}
+                            <div class="image small">
+                                <a href="{{ path('productDetail', {'id': product.id, 'img_id':image.id}) }}">
+                                    <img src="{{ asset('/assets/imgs/products/'~ product.id ~'/'~ image.name) }}"/>
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    {# {% if product.images|length > 3 %}
+                        <div class="arrows">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </div>
+                    {% endif %} #}
+                </div>
+                {% endif %}
+            </div>
+            <div class="data">
+                <p>Category: {{ product.category.name }}</p>
+                <p>Brand: {{ product.brand.name }}</p>
+                <p>Model: {{ product.model }}</p>
+                <p>Colour: {{ product.colour }}</p>
+                <p class="price">Price: {{ product.price }} €</p>
+                <p><a href="{{ path('addToBasket', {'id':product.id}) }}">Add to Basket</a></p>
+                {% if product.offer is not null %}
+                    <p>Offer: {{ product.offer }}</p>
+                {% endif %}
+                <p>Stock: {{ product.stock }}</p>
+                <p>Specifications: {{ product.specifications }}</p>
+            </div>
+        </div>
+    {% else %}
+        <h1>El producto no existe</h1>
+    {% endif %}
+{% endblock %}

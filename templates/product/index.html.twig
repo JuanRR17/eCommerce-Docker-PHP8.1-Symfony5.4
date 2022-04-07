@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block main %}
+    <h1>Products</h1>
+    {% if products|length >= 1 %}
+        {% for product in products %}
+            {{ include('includes/productThumb.html.twig') }}
+        {% endfor %}
+    {% else %}
+    <strong> No products available </strong>
+    {% endif %}
+{% endblock %}

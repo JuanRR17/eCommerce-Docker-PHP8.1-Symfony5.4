@@ -1,0 +1,146 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if edit is not null and newProduct is not null %}
+        Edit Product
+        {% else %}
+        New Product
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    {% if message %}
+        {% if error %}
+            <span class="alert_red">{{message}}</span>
+        {% else %}
+            <span class="alert_green">{{message}}</span>
+        {% endif %}
+    {% endif %}
+
+    <h1>
+        {% if edit is not null and newProduct is not null %}
+        Edit</br>
+         {{ newProduct.brand.name }} - {{ newProduct.model }}
+        {% else %}
+        Create New Product
+        {% endif %}
+    </h1>
+    <a href="{{ path('productDetail', {'id': newProduct.id })}}">See details</a>
+    <form action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" method="POST"
+    enctype="multipart/form-data">
+        <label for="images">Images</label>
+        {% if newProduct.images is not empty %}
+            {% for image in newProduct.images  %}
+                <div class="image_thumb 
+                    {% if image.getisdefault == true %}
+                        default_image
+                    {% endif %}
+                    ">
+                    <div id="image_options">
+                        <a id="remove" href="{{ path('remove_image', {'id': image.id})}}">Remove</a>
+                        <a id="set_default" href="{{ path('set_default', {'id': image.id})}}">Set as Default</a>
+                        <a id="see" href="#">See</a>
+                    </div>
+                    <img src="{{ asset('/assets/imgs/products/'~ newProduct.id ~'/'~ image.name) }}"/>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if error.image is defined %}<span class="alert_red">{{ error.image }}</span>{% endif %} 
+        <p><input type="file" name="images[]" multiple accept=".jpg"></p>
+
+
+        <label for="category">Category*</label>
+        {% if error.category is defined %}<span class="alert_red">{{ error.category }}</span>{% endif %} 
+        <select name="category">
+            <option value="" 
+                {% if newProduct.category is empty %}
+                selected="selected"
+                {% endif %}
+                > Select Category 
+            </option>
+            {% for category in categories %}
+                <option value="{{category.id}}" 
+                    {% if newProduct.category is not null and newProduct.category.id == category.id %}
+                    selected="selected"
+                    {% endif %} 
+                    >{{category.name}}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="brand">Brand*</label>
+        {% if error.brand is defined %}<span class="alert_red">{{ error.brand }}</span>{% endif %} 
+         <select name="brand">
+            <option value="" 
+                {% if newProduct.brand is empty %}
+                selected="selected"
+                {% endif %}
+                > Select Brand 
+            </option>
+            {% for brand in brands %}
+                <option value="{{brand.id}}"
+                    {% if newProduct.brand is not null and newProduct.brand.id == brand.id %}
+                    selected="selected"
+                    {% endif %} 
+                    >{{brand.name}}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="model">Model*</label>
+        {% if error.model is defined %}<span class="alert_red">{{ error.model }}</span>{% endif %} 
+        <input type="text" name="model" placeholder="Model" 
+            {% if newProduct.model is not null %}
+                value= "{{ newProduct.model }}"
+            {% endif %}
+            />
+
+        <label for="specifications">Specifications</label>
+        <textarea name="specifications" placeholder="Specifications"
+        >{% if newProduct is defined and newProduct.specifications is defined %}{{ newProduct.specifications }}{% endif %}</textarea>
+
+        <label for="price">Price*</label>
+        {% if error.price is defined %}<span class="alert_red">{{ error.price }}</span>{% endif %} 
+        <input type="number" name="price" placeholder="Price" pattern="[0-9]+" step="1"
+            {% if newProduct.price is defined %}
+                value= {{ newProduct.price }}
+            {% endif %}
+        />
+
+        <label for="stock">Stock*</label>
+        {% if error.stock is defined %}<span class="alert_red">{{ error.stock }}</span>{% endif %} 
+        <input type="number" name="stock" placeholder="Stock" pattern="[0-9]+" min="0" step="1"
+            {% if newProduct.stock is defined %}
+                value= {{ newProduct.stock }}
+            {% endif %}
+        />
+
+        <label for="offer">Offer</label>
+        {% if error.offer is defined %} <span class="alert_red">{{ error.offer }}</span>{% endif %}
+        <input type="number" name="offer" placeholder="Offer" pattern="[0-9]+" step="1"
+            {% if newProduct.offer is defined %}
+                value= {{ newProduct.offer }}
+            {% endif %}
+        />
+
+        <label for="colour">Colour*</label>
+        {% if error.colour is defined %} <span class="alert_red">{{ error.colour }}</span>{% endif %}
+        <input type="text" name="colour" placeholder="Colour" pattern="^[A-za-z]+[A-za-z ]+"
+            {% if newProduct.colour is defined %}
+                value= "{{ newProduct.colour }}"
+            {% endif %}
+        />
+
+       <button type="submit">
+            {% if edit is not null and newProduct is not null %}
+                Edit Product
+                {% else %}
+                Create Product
+            {% endif %}
+        </button>
+        <button type="submit">
+            <a href="{{ path('manageProducts') }}">Manage Products</a>
+        </button>
+        
+    </form>
+{% endblock %}

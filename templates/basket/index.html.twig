@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Basket{% endblock %}
+
+{% block main %}
+    <h1>Basket</h1>
+    {% if basket is not empty %}
+        <div class="buttons actions">
+            <a href="{{ path('emptyBasket') }}" class="btn-delete">Empty Basket</a>
+        </div>
+    <table>
+        <tr>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+            <th>Total</th>
+        </tr>
+    
+        {% for prod in basket.basketRows %}
+        {% if prod.productId.images is not empty %}
+        {{ dump(prod.productId.images[0].name) }}
+        {% endif %}
+        {# {{ dump(prod ) }} #}
+        <tr>
+            <td>{{ prod.productId.images|length }}{% if prod.productId.images is not empty %}<img src="{{ asset('/assets/imgs/products/'~ prod.productId.images[0].name ) }}" />{% endif %}{{ prod.productId.id }}</td>
+            <td><a href="{{path('productDetail', {'id': prod.productId.id})}}">{{ prod.productId.brand.name }} {{ prod.productId.model }}</a></td>
+            <td class="align-right">{{ prod.productId.price }} €</td>
+            <td>{{ prod.quantity }}</td>
+            <td> 
+                <div class="updown-units">
+                    <a href="{{ path('basketUp', {'id':prod.id})}}" class="button">+</a>
+                    <a href="{{ path('basketDown', {'id':prod.id})}}" class="button">-</a>
+                    <a href="{{ path('removeFromBasket', {'id':prod.id})}}" class="button">x</a>
+                </div>
+            </td>
+            <td class="align-right">{{ prod.subtotal }} €</td>
+        </tr>      
+        {% endfor %}
+            <tr> 
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Total in Basket</td>
+                <td class="align-right">{{ basket.total }} €</td>
+            </tr>
+        </table>
+        <a href="{{ path('order_index', {'id': basket.id }) }}" class="button-orders">Make Order</a>
+    {% else %}
+        Basket is empty
+    {% endif %}
+    
+{% endblock %}

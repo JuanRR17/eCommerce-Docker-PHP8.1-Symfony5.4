@@ -6,3 +6,107 @@ messenger:
   path: /messenger
   controller: App\Controller\MessengerAction
   methods: [GET]
+
+register:
+   path: /register/{id?}
+   controller: App\Controller\UserController::register
+
+login_check:
+   path: /login-check
+logout:
+   path: /logout 
+
+newProduct:
+   path: /new-product
+   controller: App\Controller\ProductController::create
+
+index:
+   path: /
+   controller: App\Controller\ProductController::index
+
+manageCategories:
+   path: /manage-categories
+   controller: App\Controller\CategoryController::manage
+
+editCategory:
+   path: /category_edit/{id}
+   controller: App\Controller\CategoryController::edit
+
+removeCategory:
+   path: /category_remove/{id}
+   controller: App\Controller\CategoryController::remove
+
+manageBrands:
+   path: /manage-brands
+   controller: App\Controller\BrandController::manage
+
+editBrand:
+   path: /brand_edit/{id}
+   controller: App\Controller\BrandController::edit
+
+removeBrand:
+   path: /brand_remove/{id}
+   controller: App\Controller\BrandController::remove
+
+manageProducts:
+   path: /manage-products
+   controller: App\Controller\ProductController::manage
+   
+editProduct:
+   path: /product_edit/{id}
+   controller: App\Controller\ProductController::create
+
+removeProduct:
+   path: /product_remove/{id}
+   controller: App\Controller\ProductController::remove
+
+productDetail:
+   path: /product_detail/{id}/{img_id?}
+   controller: App\Controller\ProductController::detail
+   defaults:
+      img_id: null
+
+showCategory:
+   path: /show_cat/{id}
+   controller: App\Controller\CategoryController::showCategory
+
+basket:
+   path: /basket
+   controller: App\Controller\BasketController::index
+
+addToBasket:
+   path: /addtobasket/{id}
+   controller: App\Controller\BasketController::add
+
+emptyBasket:
+   path: /emptybasket
+   controller: App\Controller\BasketController::emptyBasket
+
+removeFromBasket:
+   path: /removeFromBasket/{id}
+   controller: App\Controller\BasketController::removefrombasket
+
+basketUp:
+   path: /basketup/{id}
+   controller: App\Controller\BasketController::up
+
+basketDown:
+   path: /basketdown/{id}
+   controller: App\Controller\BasketController::down
+
+order_index:
+   path: /make_order/{id}
+   controller: App\Controller\OrderController::index
+
+remove_image:
+   path: /remove_image/{id}
+   controller: App\Controller\ImageController::remove_image
+
+set_default:
+   path: /set_default/{id}
+   controller: App\Controller\ImageController::set_default
+
+select_main:
+   path: /select_main/{img_id}
+   controller: App\Controller\ProductController:select_main
+

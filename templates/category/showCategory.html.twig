@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block main %}
+    {% if category_products|length >= 1 %}
+        {% for product in category_products %}
+            {{ include('includes/productThumb.html.twig') }}
+        {% endfor %}
+    {% else %}
+        No {{ category.name }} available.
+    {% endif %}
+{% endblock %}
+

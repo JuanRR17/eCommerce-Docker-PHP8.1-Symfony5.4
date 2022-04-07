@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if edit is not null and app.user != null %}
+        Edit User details
+        {% else %}
+        Register User
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    {% if registered %}
+        <strong>User registered successfully!</strong>
+    {% endif %}
+    <div>
+        <h1>
+            {% if edit is not null and app.user != null %}
+                Edit User details
+                {% else %}
+                Register User
+            {% endif %}
+        </h1>
+        {{form_start(form)}}
+        {{form_widget(form)}}
+        {{form_end(form)}}
+    </div>
+{% endblock %}
