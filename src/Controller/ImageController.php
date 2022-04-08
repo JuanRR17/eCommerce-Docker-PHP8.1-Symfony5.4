@@ -22,6 +22,21 @@ class ImageController extends AbstractController
             $this->em->remove($image);
             $this->em->flush();
             unlink($image->getPath().$image->getName());
+
+            function dir_is_empty($dir) {
+                $handle = opendir($dir);
+                while (false !== ($entry = readdir($handle))) {
+                  if ($entry != "." && $entry != "..") {
+                    closedir($handle);
+                    return false;
+                  }
+                }
+                closedir($handle);
+                return true;
+              }
+              if(dir_is_empty($image->getPath())){
+                rmdir($image->getPath());
+              }            
         }
         return $this->redirect($this->generateUrl('editProduct', ['id'=> $image->getProduct()->getId()]));
     }   

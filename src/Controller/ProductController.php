@@ -149,15 +149,23 @@ class ProductController extends AbstractController
 
                 $count = 0;
 
-                foreach($this->request->files->get('images') as $image) {
-                    $uploadFolder = "{$this->projectDir}/public/assets/imgs/products/{$newProduct->getId()}/";
-                    if($count < 10){
-                        $count_name = '0'.$count;
+                function count_element($element){
+                    if($element < 10){
+                        $element_name = '0'.$element;
                     }else{
-                        $count_name = $count;
+                        $element_name = $element;
                     }
+                    return $element_name;
+                };
+
+                foreach($this->request->files->get('images') as $image) {
+
+                    $count_name=count_element($count);
+                    $count_product=count_element($newProduct->getId());
+                    $uploadFolder = "{$this->projectDir}/public/assets/imgs/products/{$newProduct->getId()}/";
+
                     //1. Give name to check
-                    $image_formatted_name = $newProduct->getId().'-'.$count_name.'.'.$image->getClientOriginalExtension();
+                    $image_formatted_name = $count_product.'-'.$count_name.'.'.$image->getClientOriginalExtension();
 
                     if(!is_dir($uploadFolder)){
                         mkdir($uploadFolder, 0777,true);
