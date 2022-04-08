@@ -41,15 +41,17 @@
                     ">
                     <div id="image_options">
                         <a id="remove" href="{{ path('remove_image', {'id': image.id})}}">Remove</a>
-                        <a id="set_default" href="{{ path('set_default', {'id': image.id})}}">Set as Default</a>
-                        <a id="see" href="#">See</a>
+                        {% if image.getisdefault == false %}
+                            <a id="set_default" href="{{ path('set_default', {'id': image.id})}}">Set as Default</a>
+                        {% endif %}
+                        <a id="see" href="{{ asset('/assets/imgs/products/'~ newProduct.id ~'/'~ image.name) }}" target="_blank">See</a>
                     </div>
                     <img src="{{ asset('/assets/imgs/products/'~ newProduct.id ~'/'~ image.name) }}"/>
                 </div>
             {% endfor %}
         {% endif %}
         {% if error.image is defined %}<span class="alert_red">{{ error.image }}</span>{% endif %} 
-        <p><input type="file" name="images[]" multiple accept=".jpg"></p>
+        <p><input type="file" name="images[]" multiple accept=".jpg, .jpeg, .png"></p>
 
 
         <label for="category">Category*</label>

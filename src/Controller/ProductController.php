@@ -161,7 +161,7 @@ class ProductController extends AbstractController
                     $image_formatted_name = $newProduct->getId().'-'.$count_name.'.'.$image->getClientOriginalExtension();
 
                     if(!is_dir($uploadFolder)){
-                        mkdir($uploadFolder, 0777);
+                        mkdir($uploadFolder, 0777,true);
                     }
 
 

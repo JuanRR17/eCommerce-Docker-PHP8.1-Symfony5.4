@@ -200,6 +200,9 @@ td.align-right{
 .form_container{
     width: 50%;
 }
+input[type="file"]{
+    margin-top: 10px;
+}
 
 label,
 input[type="text"],
@@ -496,6 +499,7 @@ button{
     position:relative;
     display:inline-block;
     height:60px !important;
+    border:1px solid black;
 }
 
 .image_thumb img{
@@ -515,6 +519,7 @@ button{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-size:12px;
 }
 
 #image_options a{
@@ -541,7 +546,7 @@ button{
 }
 
 .default_image{
-    border: 10px solid green;
+    border: 5px solid green;
 }
 
 /*FOOTER*/
