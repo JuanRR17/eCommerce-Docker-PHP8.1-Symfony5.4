@@ -21,6 +21,7 @@ class ImageController extends AbstractController
         if($image){
             $this->em->remove($image);
             $this->em->flush();
+            unlink($image->getPath().$image->getName());
         }
         return $this->redirect($this->generateUrl('editProduct', ['id'=> $image->getProduct()->getId()]));
     }   

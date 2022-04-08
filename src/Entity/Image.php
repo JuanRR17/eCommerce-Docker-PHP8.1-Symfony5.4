@@ -23,6 +23,9 @@ class Image
     #[ORM\JoinColumn(nullable: false)]
     private $product;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $path;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Image
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getPath(): ?string
+    {
+        return $this->path;
+    }
+
+    public function setPath(string $path): self
+    {
+        $this->path = $path;
 
         return $this;
     }

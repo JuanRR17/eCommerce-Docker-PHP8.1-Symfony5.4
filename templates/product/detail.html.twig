@@ -6,7 +6,7 @@
 
 {% block main %}
     {% if product is defined %}
-    {{dump(product)}}
+    {# {{dump(product)}} #}
         <h1>{{ product.brand.name }} - {{ product.model }}</h1>
         <a href="{{ path('editProduct', {'id': product.id })}}">Edit</a>
         <div id="detail-product">

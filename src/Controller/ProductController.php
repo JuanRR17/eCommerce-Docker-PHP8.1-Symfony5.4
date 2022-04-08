@@ -150,7 +150,6 @@ class ProductController extends AbstractController
                 $count = 0;
 
                 foreach($this->request->files->get('images') as $image) {
-
                     $uploadFolder = "{$this->projectDir}/public/assets/imgs/products/{$newProduct->getId()}/";
                     if($count < 10){
                         $count_name = '0'.$count;
@@ -163,7 +162,6 @@ class ProductController extends AbstractController
                     if(!is_dir($uploadFolder)){
                         mkdir($uploadFolder, 0777,true);
                     }
-
 
                     $db_images = $this->em->getRepository('App:Image')->findBy(['product' => $newProduct->getId()]);
                     if($db_images !== null){
@@ -181,7 +179,6 @@ class ProductController extends AbstractController
                             }
                             $image_formatted_name = $newProduct->getId().'-'.$count_name.'.'.$image->getClientOriginalExtension();
                         }
-
                     }
 
                     $image->move($uploadFolder,$image_formatted_name);
@@ -190,6 +187,7 @@ class ProductController extends AbstractController
                     $newImage
                         ->setName($image_formatted_name)
                         ->setProduct($newProduct)
+                        ->setPath($uploadFolder)
                         // ->setIsDefault($count === 0 ? true : false);
                         ->setIsDefault(
                             in_array(true,array_map(
