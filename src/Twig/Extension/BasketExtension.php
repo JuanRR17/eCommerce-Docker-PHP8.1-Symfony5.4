@@ -29,15 +29,18 @@ class BasketExtension extends AbstractExtension
 
     public function statsBasket(){
         // $basket = $this->em->getRepository('App:Basket')->findOneBy(['userid' => $this->user]);
-        $basket = $this->em->getRepository('App:Basket')->findAll()[0];
         // dump($basket);
         // die();
         $stats = array(
             'count' => 0,
             'total' => 0
         );
-
-        if(!empty($basket)){
+        
+        // $basket = $this->em->getRepository('App:Basket')->findAll()[0];
+        // dump($basket);
+        // die();
+        if(!empty($this->em->getRepository('App:Basket')->findAll()[0])){
+            $basket = $this->em->getRepository('App:Basket')->findAll()[0];
 			$stats['count'] = count($basket->getBasketRows());
 			
             $stats['total'] = $basket->getTotal();

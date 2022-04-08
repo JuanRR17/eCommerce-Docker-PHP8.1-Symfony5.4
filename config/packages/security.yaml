@@ -36,6 +36,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/new-product, roles: ROLE_USER }
+        - { path: ^/product-edit, roles: ROLE_USER }
         - { path: ^/manage-categories, roles: ROLE_USER }
         - { path: ^/category_edit, roles: ROLE_USER }
         - { path: ^/category_remove, roles: ROLE_USER }

@@ -9,23 +9,26 @@
 {% endblock %}
 
 {% block main %}
+    <h1>
+        {% if edit is not null and newProduct is not null %}
+        Edit</br>
+         {{ newProduct.brand.name }} - {{ newProduct.model }}
+    </h1>
+        <a href="{{ path('productDetail', {'id': newProduct.id })}}">See Product Details</a></br>
+        {% else %}
+        Create New Product
+        {% endif %}
+    </h1>
     {% if message %}
         {% if error %}
             <span class="alert_red">{{message}}</span>
         {% else %}
             <span class="alert_green">{{message}}</span>
+            {% if edit is null %}
+             </br><a href="{{ path('productDetail', {'id': newProduct.id })}}">See Product Details</a>
+            {% endif %}
         {% endif %}
     {% endif %}
-
-    <h1>
-        {% if edit is not null and newProduct is not null %}
-        Edit</br>
-         {{ newProduct.brand.name }} - {{ newProduct.model }}
-        {% else %}
-        Create New Product
-        {% endif %}
-    </h1>
-    <a href="{{ path('productDetail', {'id': newProduct.id })}}">See details</a>
     <form action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" method="POST"
     enctype="multipart/form-data">
         <label for="images">Images</label>

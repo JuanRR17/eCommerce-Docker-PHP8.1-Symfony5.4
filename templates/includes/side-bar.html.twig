@@ -1,10 +1,10 @@
 <div id="login" class="block_aside">
     <h3>My Basket</h3>
-    {# <ul>
+    <ul>
         {% set stats = statsBasket(app.user) %}
         <li><a href="{{ path('basket') }}">Basket ({{ stats.count }})</a></li>
         <li>Total: {{ stats.total }} €</li>
-    </ul> #}
+    </ul>
 </div>
 
 <div id="login" class="block_aside">
@@ -13,8 +13,8 @@
         {% if app.user.role == 'ROLE_USER' %}
         <h3>{{app.user.name ~ ' ' ~ app.user.surname}}</h3>
             <ul>
-                <li><a href="#">My orders</a></li>
-                <li><a href="#">Manage orders</a></li>
+                <li><a href="#">My Orders</a></li>
+                <li><a href="#">Manage Orders</a></li>
             {# </ul>
         {% elseif app.user.role == 'ROLE_ADMIN' %}
         <h3>{{app.user.name}}</h3>
