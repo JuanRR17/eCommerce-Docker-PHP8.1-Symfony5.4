@@ -1,10 +1,12 @@
 <div class="product">
     <div class="productDetails">
-        <img src="{{ asset('assets/imgs/global/logo.png') }}" alt="Image not available"/>
+        <div>
+            <img src="{{ asset('/assets/imgs/products/'~ product.id ~'/'~ product.images[0].name ) }}" alt="Image not available"/>
+        </div>
         <h2>{{product.brand.name}} | {{product.model}}</h2>
         <p><a href="{{ path('showCategory', {'id':product.category.id} )}}">{{ product.category.name }}</a></p>
-        <p>{{product.price}} € {% if product.offer %}| 
-        Offer {{product.offer}}%
+        <p>{{product.price}} € {% if product.offer %}
+        <span>| Offer {{product.offer}}%</span>
         {% endif %}</p>
         <a href="{{ path('productDetail', {'id':product.id}) }}" class="button">See Product</a>
     </div>

@@ -21,8 +21,10 @@ class ImageController extends AbstractController
         if($image){
             $this->em->remove($image);
             $this->em->flush();
-            unlink($image->getPath().$image->getName());
 
+            //Remove file from the system
+            unlink($image->getPath().$image->getName());
+            //Check directory is empty
             function dir_is_empty($dir) {
                 $handle = opendir($dir);
                 while (false !== ($entry = readdir($handle))) {
@@ -34,6 +36,7 @@ class ImageController extends AbstractController
                 closedir($handle);
                 return true;
               }
+              //Remove directory from system
               if(dir_is_empty($image->getPath())){
                 rmdir($image->getPath());
               }            

@@ -164,7 +164,6 @@ class ProductController extends AbstractController
                     $count_product=count_element($newProduct->getId());
                     $uploadFolder = "{$this->projectDir}/public/assets/imgs/products/{$newProduct->getId()}/";
 
-                    //1. Give name to check
                     $image_formatted_name = $count_product.'-'.$count_name.'.'.$image->getClientOriginalExtension();
 
                     if(!is_dir($uploadFolder)){
@@ -173,7 +172,7 @@ class ProductController extends AbstractController
 
                     $db_images = $this->em->getRepository('App:Image')->findBy(['product' => $newProduct->getId()]);
                     if($db_images !== null){
-                        //Create array with the names of the images.
+                        //Create array with the images name.
                         $db_images_names = array();
                         foreach($db_images as $image_name){
                             $db_images_names[]=$image_name->getName();
@@ -190,13 +189,12 @@ class ProductController extends AbstractController
                     }
 
                     $image->move($uploadFolder,$image_formatted_name);
-
+                    $test=$this->em->getRepository('App:Image')->findByProduct($newProduct->getId());
                     $newImage = new Image();
                     $newImage
                         ->setName($image_formatted_name)
                         ->setProduct($newProduct)
                         ->setPath($uploadFolder)
-                        // ->setIsDefault($count === 0 ? true : false);
                         ->setIsDefault(
                             in_array(true,array_map(
                             function($def){return $def->getIsDefault();},
@@ -205,8 +203,9 @@ class ProductController extends AbstractController
                     $this->em->persist($newImage);
                     
                     $count++;
+
+                    $this->em->flush();
                 }
-                $this->em->flush();
 
                 $message = $edit ? "Product modified successfully!!" : "Product created successfully!!";
             }else{

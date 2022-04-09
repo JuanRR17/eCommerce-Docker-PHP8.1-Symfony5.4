@@ -20,11 +20,9 @@
     
         {% for prod in basket.basketRows %}
         {% if prod.productId.images is not empty %}
-        {{ dump(prod.productId.images[0].name) }}
         {% endif %}
-        {# {{ dump(prod ) }} #}
         <tr>
-            <td>{{ prod.productId.images|length }}{% if prod.productId.images is not empty %}<img src="{{ asset('/assets/imgs/products/'~ prod.productId.images[0].name ) }}" />{% endif %}{{ prod.productId.id }}</td>
+            <td>{% if prod.productId.images is not empty %}<img class="img_basket" src="{{ asset('/assets/imgs/products/'~ prod.productId.id ~'/'~ prod.productId.images[0].name ) }}" />{% endif %}</td>
             <td><a href="{{path('productDetail', {'id': prod.productId.id})}}">{{ prod.productId.brand.name }} {{ prod.productId.model }}</a></td>
             <td class="align-right">{{ prod.productId.price }} €</td>
             <td>{{ prod.quantity }}</td>
