@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Basket;
 use App\Entity\BasketRow;
 use App\Entity\Product;
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,10 +32,16 @@ class BasketController extends AbstractController
                 $this->em->persist($basket);
                 $this->em->flush();
             }
-    }elseif($basketNoUser = $this->em->getRepository('App:Basket')->findOneBy(['userid'=>null])){
+    }else{
+        if($basketNoUser = $this->em->getRepository('App:Basket')->findOneBy(['userid'=>null])){
             $basket = $basketNoUser;
+        }else{
+                $basket = new Basket();
+                $basket->setTotal(0);
+                $this->em->persist($basket);
+                $this->em->flush();
+            }
         }
-
         $total = $basket->getTotal();
 
         return $this->render('basket/index.html.twig', [
@@ -55,9 +60,6 @@ class BasketController extends AbstractController
             $this->em->persist($basket);
             $this->em->flush();
         }
-        // dump($basket);
-        // die();
-
         if(isset($product)){
             $new_row=$this->em->getRepository('App:BasketRow')->findOneBy([
                 'product_id' => $product,
@@ -71,7 +73,7 @@ class BasketController extends AbstractController
                             ->setSubtotal();
                 $this->em->persist($basket_row);
                 $this->em->flush();
-                $basket->setTotal($basket->getTotal()+$product->getPrice());
+                $basket->setTotal();
                 $this->em->persist($basket);
                 $this->em->flush();
             }else{
@@ -79,7 +81,7 @@ class BasketController extends AbstractController
                 $basket_row->setQuantity($basket_row->getQuantity()+1)->setSubtotal();
                 $this->em->persist($basket_row);
                 $this->em->flush();
-                $basket->setTotal($basket->getTotal()+$product->getPrice());
+                $basket->setTotal();
                 $this->em->persist($basket);
                 $this->em->flush();
             }
@@ -99,16 +101,15 @@ class BasketController extends AbstractController
         return $this->redirect($this->generateUrl('basket'));
     }
     
-    public function removefrombasket(BasketRow $basket_row){
+    public function removeRow(BasketRow $basket_row){
         if(isset($basket_row)){
             $basket = $basket_row->getBasketId();
-            $basket->setTotal($basket->getTotal() - $basket_row->getSubtotal() );
             $this->em->remove($basket_row);
             $this->em->flush();
-            $basket_rows = $this->em->getRepository('App:BasketRow')->findAll();
-            if(empty($basket_rows)){
-                $this->em->remove($basket);
-                $this->em->flush(); 
+            $basket->setTotal();
+            $this->em->flush();
+            if(count($basket->getBasketRows())===0){
+                $this->emptyBasket();
             }
         }
         return $this->redirect($this->generateUrl('basket'));
@@ -128,12 +129,12 @@ class BasketController extends AbstractController
         if(isset($basket_row)){
             $basket_row->setQuantity($basket_row->getQuantity()-1)->setSubtotal();
             $basket = $basket_row->getBasketId();
-            $basket->setTotal($basket->getTotal()-$basket_row->getProductId()->getPrice());
+            $basket->setTotal();
             $this->em->persist($basket_row);
             $this->em->persist($basket);
             $this->em->flush();
             if($basket_row->getQuantity()==0){
-                $this->removefrombasket($basket_row);
+                $this->removeRow($basket_row);
             }
         }
 

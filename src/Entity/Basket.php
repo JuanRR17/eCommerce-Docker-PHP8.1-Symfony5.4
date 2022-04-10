@@ -39,23 +39,22 @@ class Basket
         return $this->total;
     }
 
-    public function setTotal(?int $total): self
-    {
-        $this->total = $total;
-
-        return $this;
-    }
-    // public function setTotal(?int $total_input):self
+    // public function setTotal(?int $total): self
     // {
-
-    //     $total = isset($total_input) ? $total_input : 0;
-    //     foreach($this->basketRows as $row ){
-    //         $total += $row->getSubtotal();
-    //     }
-
     //     $this->total = $total;
+
     //     return $this;
     // }
+    public function setTotal(?int $total=0):self
+    {
+        if(!empty($this->getBasketRows())){
+            foreach($this->getBasketRows() as $row ){
+                $total += $row->getSubtotal();
+            }
+        }
+        $this->total = $total;
+        return $this;
+    }
 
     /**
      * @return Collection<int, BasketRow>

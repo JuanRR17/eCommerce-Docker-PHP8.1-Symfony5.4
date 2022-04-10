@@ -82,9 +82,9 @@ emptyBasket:
    path: /emptybasket
    controller: App\Controller\BasketController::emptyBasket
 
-removeFromBasket:
-   path: /removeFromBasket/{id}
-   controller: App\Controller\BasketController::removefrombasket
+removeRow:
+   path: /removeRow/{id}
+   controller: App\Controller\BasketController::removeRow
 
 basketUp:
    path: /basketup/{id}
