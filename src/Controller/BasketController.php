@@ -25,16 +25,20 @@ class BasketController extends AbstractController
     public function index(?UserInterface $user): Response
     {
     if($user){     
-        $basket = $this->em->getRepository('App:Basket')->findOneBy([
-            'userid' => $user]); 
-            if($basket){
-            $total = $basket->getTotal();
-        }
-    }elseif($basketNoUser = $this->em->getRepository('App:Basket')->findOneBy([
-        'userid'=>null])){
+        $basket = $this->em->getRepository('App:Basket')->findOneBy(['userid' => $user]); 
+            if(!$basket){
+                $basket = new Basket();
+                $basket->setTotal(0);
+                $basket->setUserid($this->getUser());
+                $this->em->persist($basket);
+                $this->em->flush();
+            }
+    }elseif($basketNoUser = $this->em->getRepository('App:Basket')->findOneBy(['userid'=>null])){
             $basket = $basketNoUser;
-            $total = $basket->getTotal();
         }
+
+        $total = $basket->getTotal();
+
         return $this->render('basket/index.html.twig', [
             'basket' => $basket,
             'total' => $total
@@ -42,7 +46,6 @@ class BasketController extends AbstractController
     }
 
     public function add(Product $product){
-        // $basket = $this->em->getRepository('App:Basket')->findAll();
         $basket = $this->em->getRepository('App:Basket')->findOneBy(['userid' => $this->getUser()]);
 
         if($basket==null){
@@ -56,7 +59,10 @@ class BasketController extends AbstractController
         // die();
 
         if(isset($product)){
-            $new_row=$this->em->getRepository('App:BasketRow')->findOneBy(['product_id' => $product]);
+            $new_row=$this->em->getRepository('App:BasketRow')->findOneBy([
+                'product_id' => $product,
+                'basket_id' => $basket
+        ]);
             if(!isset($new_row)){
                 $basket_row = new BasketRow();
                 $basket_row->setQuantity(1)
@@ -86,7 +92,7 @@ class BasketController extends AbstractController
     }
 
     public function emptyBasket(){
-        $basket = $this->em->getRepository('App:Basket')->findAll()[0];
+        $basket = $this->em->getRepository('App:Basket')->findOneBy(['userid' => $this->getUser()]);
         $this->em->remove($basket);
         $this->em->flush();
 
