@@ -13,8 +13,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class UserController extends AbstractController
 {
-    public function register(Request $request, UserPasswordHasherInterface $passwordHasher, 
-    ManagerRegistry $doctrine, User $user=null): Response
+    public function register(
+        Request $request, 
+        UserPasswordHasherInterface $passwordHasher, 
+        ManagerRegistry $doctrine, 
+        User $user=null): Response
     {
         if(isset($user)){
             $edit=true;

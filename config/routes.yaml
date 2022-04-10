@@ -71,7 +71,7 @@ showCategory:
    controller: App\Controller\CategoryController::showCategory
 
 basket:
-   path: /basket
+   path: /basket/{id?}
    controller: App\Controller\BasketController::index
 
 addToBasket:

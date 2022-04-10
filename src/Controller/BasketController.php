@@ -5,26 +5,34 @@ namespace App\Controller;
 use App\Entity\Basket;
 use App\Entity\BasketRow;
 use App\Entity\Product;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class BasketController extends AbstractController
 {
     private $em;
 
     public function __construct(
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
     )
     {
         $this->em = $em;
     }
 
-    public function index(): Response
+    public function index(?UserInterface $user): Response
     {
-        $basket = $this->em->getRepository('App:Basket')->findAll() ? $this->em->getRepository('App:Basket')->findAll()[0] : "";
-        $total="";
-        if(!empty($basket)){
+    if($user){     
+        $basket = $this->em->getRepository('App:Basket')->findOneBy([
+            'userid' => $user]); 
+            if($basket){
+            $total = $basket->getTotal();
+        }
+    }elseif($basketNoUser = $this->em->getRepository('App:Basket')->findOneBy([
+        'userid'=>null])){
+            $basket = $basketNoUser;
             $total = $basket->getTotal();
         }
         return $this->render('basket/index.html.twig', [

@@ -2,7 +2,13 @@
     <h3>My Basket</h3>
     <ul>
         {% set stats = statsBasket(app.user) %}
-        <li><a href="{{ path('basket') }}">Basket ({{ stats.count }})</a></li>
+        <li><a href=
+        {% if app.user %}
+            "{{ path('basket', {'id':app.user.id}) }}"
+            {% else %}
+            "{{ path('basket')}}"
+        {% endif %}
+        >Basket ({{ stats.count }})</a></li>
         <li>Total: {{ stats.total }} €</li>
     </ul>
 </div>
