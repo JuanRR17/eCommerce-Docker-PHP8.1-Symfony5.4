@@ -55,7 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank]
     #[Assert\Regex(
-        pattern: "/[^a-zA-Z ]+/",
+        pattern: "/[^a-zA-ZñÑ ]+/",
         match: false,
         message: 'Your name can only contain letters')]
     private $name;

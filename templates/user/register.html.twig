@@ -9,9 +9,6 @@
 {% endblock %}
 
 {% block main %}
-    {% if registered %}
-        <strong>User registered successfully!</strong>
-    {% endif %}
     <div>
         <h1>
             {% if edit is not null and app.user != null %}
@@ -20,6 +17,13 @@
                 Register User
             {% endif %}
         </h1>
+        {% if registered %}
+            {% if edit is not null and app.user != null %}
+                <strong class="alert_green">Changes applied successfully!</strong>
+            {% else %}
+                <strong class="alert_green">User registered successfully!</strong>
+            {% endif %}
+        {% endif %}
         {{form_start(form)}}
         {{form_widget(form)}}
         {{form_end(form)}}

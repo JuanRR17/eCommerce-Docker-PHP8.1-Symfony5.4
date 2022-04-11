@@ -12,7 +12,7 @@ body{
 
 a{
     color: #01B1EA;
-    text-decoration: none;
+    text-decoration: none!important;
 }
 
 a:visited{
@@ -36,7 +36,6 @@ table{
     width: 100%;
     margin:auto;
     border-bottom: 1px solid #ccc;
-
 }
 
 tr{
@@ -56,6 +55,9 @@ td.align-right{
     text-align:right;
 }
 
+.float-right{
+    float:right;
+}
 
 .thumb{
     width: 100px;
@@ -127,14 +129,14 @@ td.align-right{
 }
 
 #menu ul li{
-    line-height: 55px;
+    line-height: 51px;
     float:left;
     border-right: 1px solid #363636;
 }
 
 #menu a{
     display: block;
-    color: white;
+    color: white!important;
     text-decoration: none;
     padding-left: 12px;
     padding-right: 12px;
@@ -247,14 +249,14 @@ button, .button{
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
-    color: white;
+    color: white!important;
     background: #2979CD;
     border: 1px solid #11608E;
     cursor:pointer;
 }
 
 .button{
-    color: white !important;
+    color: white!important;
     text-decoration: none;
 }
 
@@ -312,7 +314,6 @@ form button a{
 .buttons .btn-delete{
     background: red;
     border-color: #b90808;
-    float:right;
 }
 
 label, 

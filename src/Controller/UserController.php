@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use App\Form\RegisterType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -27,6 +28,15 @@ class UserController extends AbstractController
        }
         //Create form
         $form=$this->createForm(RegisterType::class, $user);
+        if($edit){
+            $form->add('submit', SubmitType::class, array(
+                'label'=>'Confirm changes'
+            ));
+        }else{
+            $form->add('submit', SubmitType::class, array(
+                'label'=>'Register'
+            ));
+        }
 
         //Fill the form
         $form->handleRequest($request);
