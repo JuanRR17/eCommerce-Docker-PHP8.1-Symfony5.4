@@ -312,6 +312,7 @@ form button a{
 .buttons .btn-delete{
     background: red;
     border-color: #b90808;
+    float:right;
 }
 
 label, 

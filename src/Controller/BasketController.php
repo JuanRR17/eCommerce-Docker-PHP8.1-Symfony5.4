@@ -95,7 +95,12 @@ class BasketController extends AbstractController
 
     public function emptyBasket(){
         $basket = $this->em->getRepository('App:Basket')->findOneBy(['userid' => $this->getUser()]);
-        $this->em->remove($basket);
+        foreach($basket->getBasketRows() as $row){
+            $this->em->remove($row);
+        }
+        // $this->em->remove($basket);
+        $this->em->flush();
+        $basket->setTotal();
         $this->em->flush();
 
         return $this->redirect($this->generateUrl('basket'));

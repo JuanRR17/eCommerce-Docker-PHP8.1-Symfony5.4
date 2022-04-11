@@ -5,9 +5,11 @@
 {% block main %}
     <h1>Basket</h1>
     {% if basket is not empty %}
+        {% if basket.basketRows.count > 0 %}
         <div class="buttons actions">
             <a href="{{ path('emptyBasket') }}" class="btn-delete">Empty Basket</a>
         </div>
+        {% endif %}
     <table>
         <tr>
             <th>Image</th>
