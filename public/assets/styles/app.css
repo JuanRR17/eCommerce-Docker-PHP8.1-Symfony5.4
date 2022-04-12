@@ -140,11 +140,22 @@ td.align-right{
     border-right: 1px solid #363636;
 }
 
+.row{
+    width:100%!important;
+}
+
 .dropdown-menu{
     background: #222!important;
     line-height: 30px!important;
     padding:1px!important;
+    color:white!important;
+    width:200px;
 }
+
+.dropdown-menu .show{
+    right:0px!important;
+}
+
 .dropdown-menu li{
     border-right:unset!important;
     width:100%;
@@ -344,9 +355,9 @@ button{
 
 /*CENTRAL*/
 #central{
-    width: 72%;
+    width: 100%;
     min-height: 500px;
-    float: right;
+    /* float: right; */
     border-left: 1px solid #ccc;
     box-shadow: -5px -1px 5px #ddd;
     padding:25px;

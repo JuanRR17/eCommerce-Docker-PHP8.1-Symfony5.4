@@ -8,15 +8,16 @@
     {% endif %}
 {% endblock %}
 
+{% block header %}
+    {% if edit is not null and app.user != null %}
+        Edit User details
+        {% else %}
+        Register User
+    {% endif %}
+{% endblock %}
+
 {% block main %}
     <div>
-        <h1>
-            {% if edit is not null and app.user != null %}
-                Edit User details
-                {% else %}
-                Register User
-            {% endif %}
-        </h1>
         {% if registered %}
             {% if edit is not null and app.user != null %}
                 <strong class="alert_green">Changes applied successfully!</strong>

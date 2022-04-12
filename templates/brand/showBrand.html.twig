@@ -2,8 +2,9 @@
 
 {% block title %}{{brand.name}}{% endblock %}
 
+{% block header %}{{brand.name}}{% endblock %}
+
 {% block main %}
-    <h1>{{brand.name}}</h1>
     {% if brand_products|length >= 1 %}
         {% for product in brand_products %}
             {{ include('includes/productThumb.html.twig') }}

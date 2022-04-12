@@ -103,7 +103,7 @@ class BrandController extends AbstractController
             ->execute();
 
         }
-        return $this->render('brand/index.html.twig',[
+        return $this->render('brand/showBrand.html.twig',[
             'brand' => $brand,
             'brand_products' => $brand_products
         ]);

@@ -2,9 +2,9 @@
 
 {% block title %}New Category{% endblock %}
 
-{% block main %}
+{% block header %}Create New Category{% endblock %}
 
-    <h1>Create New Category</h1>
+{% block main %}
     <form action="{{path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))}}" method='POST'>
         <label for="name">Name*</label>
         <input type="text" name="name" placeholder="Name" required="required"/>

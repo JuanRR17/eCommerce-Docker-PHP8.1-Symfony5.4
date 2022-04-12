@@ -2,10 +2,10 @@
 
 {% block title %}Manage Products{% endblock %}
 
-{% block main %}
+{% block header %}Manage Products{% endblock %}
 
-    <h1>Manage Products</h1>
-        <div style="text-align:center">
+{% block main %}
+        <div style="text-align:right">
             <a href="{{ path('newProduct') }}" class="btn-create" >Create New Product</a>
         </div>
     {% if message is defined %}
@@ -28,9 +28,9 @@
         {% for product in products %}
         <tr>
             <td>{% if product.images is not empty %}
-            <img src="{{ asset('/assets/imgs/products/'~ product.id ~'/'~ product.images[0].name) }}" width="100" />
+            <img class="img_basket" src="{{ asset('/assets/imgs/products/'~ product.id ~'/'~ product.images[0].name) }}"/>
             {% else %}
-                 <img src="{{ asset('assets/imgs/global/logo.png')}}" height="50"/>
+                 <img class="img_basket" src="{{ asset('assets/imgs/global/logo.png')}}"/>
             {% endif %}</td>
             <td><a href="{{ path('showCategory', {'id':product.category.id} )}}">{{ product.category.name }}</a></td>
             <td>{{ product.brand.name }}</td>

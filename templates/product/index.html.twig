@@ -2,8 +2,10 @@
 
 {% block title %}Home{% endblock %}
 
+{% block header %}Products{% endblock %}
+
 {% block main %}
-    <h1>Products</h1>
+
     {% if products|length >= 1 %}
         {% for product in products %}
             {{ include('includes/productThumb.html.twig') }}

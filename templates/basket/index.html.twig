@@ -2,8 +2,9 @@
 
 {% block title %}Basket{% endblock %}
 
+{% block header %}Basket{% endblock %}
+
 {% block main %}
-    <h1>Basket</h1>
     {% if basket is not empty %}
         {% if basket.basketRows.count > 0 %}
         <div class="buttons actions">

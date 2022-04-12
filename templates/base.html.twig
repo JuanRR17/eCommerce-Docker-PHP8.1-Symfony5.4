@@ -28,103 +28,119 @@
 
 			<nav id="menu" class="navbar navbar-expand-md">
 				<div class="container-fluid">
-					{# <a class="navbar-brand" href="#">eCommerce</a> #}
-					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-					</button>
-					<div class="collapse navbar-collapse" id="navbarNavDropdown">
-					<ul class="navbar-nav">
-						<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="{{ path('index') }}">
-							Home
-						</a>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								Products
-							</a>
-							<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								{% for category in getCategories() %}
-									<li>
-										<a class="dropdown-item" href="{{ path('showCategory', {'id':category.id} )}}">
-											{{ category.name }}
+					<div class="row justify-content-between style="width:100%;"">
+						<div class="col-auto">
+							{# <a class="navbar-brand" href="#">eCommerce</a> #}
+							<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+							</button>
+							<div class="collapse navbar-collapse" id="navbarNavDropdown">
+								<ul class="navbar-nav">
+									<li class="nav-item">
+										<a class="nav-link active" aria-current="page" href="{{ path('index') }}">
+											Home
 										</a>
 									</li>
-								{% endfor %}
-							</ul>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								Brands
-							</a>
-							<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								{% for brand in getBrands() %}
-									<li>
-										<a class="dropdown-item" href="{{ path('showBrand', {'id':brand.id} )}}">
-											{{ brand.name }}
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+											Products
 										</a>
+										<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+											{% for category in getCategories() %}
+												<li>
+													<a class="dropdown-item" href="{{ path('showCategory', {'id':category.id} )}}">
+														{{ category.name }}
+													</a>
+												</li>
+											{% endfor %}
+										</ul>
 									</li>
-								{% endfor %}
-							</ul>
-						</li>
-					</ul>
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+											Brands
+										</a>
+										<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+											{% for brand in getBrands() %}
+												<li>
+													<a class="dropdown-item" href="{{ path('showBrand', {'id':brand.id} )}}">
+														{{ brand.name }}
+													</a>
+												</li>
+											{% endfor %}
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-auto">
+							<ul class="navbar-nav">
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										Basket
+									</a>
+									<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+										{% set stats = statsBasket(app.user) %}
+										<li><a href=
+										{% if app.user %}
+											"{{ path('basket', {'id':app.user.id}) }}"
+											{% else %}
+											"{{ path('basket')}}"
+										{% endif %}
+										>Basket ({{ stats.count }})</a></li>
+										<li><a href="#">Total: {{ stats.total }} €</a></li>
+									</ul>
+									</li>
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+											{% if app.user %}
+												{# {% if app.user.role == 'ROLE_USER' %} #}
+												{{app.user.name ~ ' ' ~ app.user.surname}}
+											{% else %}
+												Login
+											{% endif %}
+										</a>
+										<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+											{% if app.user %}
+												<li><a href="#">My Orders</a></li>
+												<li><a href="#">Manage Orders</a></li>
+												<li><a href="{{ path('manageCategories')}}">Manage Categories</a></li>
+												<li><a href="{{ path('manageBrands')}}">Manage Brands</a></li>
+												<li><a href="{{ path('manageProducts') }}">Manage Products</a></li>
+
+												<li><a href="{{path('register', {'id':app.user.id})}}">My details</a></li>
+												<li><a href="{{path('logout')}}">Logout</a></li>
+												</ul>
+											{% else %}
+												<form action="{{ path('login_check') }}" method="post">
+													<label for="email">Email</label>
+													<input type="email" id="username" name="_username" />
+
+													<label for="password">Password</label>
+													<input type="password" id="password" name="_password" />
+
+													<input type="submit" value="Submit" />
+												</form>
+												<li><a href="{{ path('register') }}">Register</a></li>
+											{% endif %}
+										</ul>
+									</li>
+								</ul>
+						</div>
 					</div>
 				</div>
 			</nav>
-				
-				{# <ul class="nav-products">
-					<li>
-						<a href="{{ path('index') }}">Home</a>
-					</li>
-
-					<li class="dropdown">
-					<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Dropdown
-					</a>
-					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="#">Action</a></li>
-						<li><a class="dropdown-item" href="#">Another action</a></li>
-						<li><hr class="dropdown-divider"></li>
-						<li><a class="dropdown-item" href="#">Something else here</a></li>
-					</ul>
-					</li>
-				
-					{% for category in getCategories() %}
-						<li>
-							<a href="{{ path('showCategory', {'id':category.id} )}}">{{ category.name }}</a>
-						</li>
-					{% endfor %}
-				
-
-					</ul>
-				<ul class="float-right">
-					<li>				
-						{% set stats = statsBasket(app.user) %}
-						<a href=
-							{% if app.user %}
-								"{{ path('basket', {'id':app.user.id}) }}"
-								{% else %}
-								"{{ path('basket')}}"
-							{% endif %}>
-						Basket ({{ stats.count }}): {{ stats.total }} €
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							Login
-						</a>
-					</li>
-				</ul>
-			</nav> #}
 
 			<div id="content">
 
 				<!-- SIDE BAR -->
-				<aside id="lateral">
+				{# <aside id="lateral">
 						{{ include('includes/side-bar.html.twig') }}
-				</aside>
+				</aside> #}
 
 				<!-- CENTRAL CONTENT -->
                 
 				<div id="central">
+					<h1>{% block header %}{% endblock %}</h1>
                     {% block main %}{% endblock %}
 				</div>
                 

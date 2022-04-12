@@ -2,9 +2,10 @@
 
 {% block title %}New Brand{% endblock %}
 
+{% block header %}Create New Brand{% endblock %}
+
 {% block main %}
 
-    <h1>Create New Brand</h1>
     <form action="{{path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))}}" method='POST'>
         <label for="name">Name*</label>
         <input type="text" name="name" placeholder="Name" required="required"/>
