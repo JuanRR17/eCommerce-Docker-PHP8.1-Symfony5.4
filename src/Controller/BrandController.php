@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Brand;
+use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -87,6 +88,24 @@ class BrandController extends AbstractController
         return $this->render('brand/manageBrand.html.twig',[
             'message' => $message,
             'brands' => $brands
+        ]);
+    }
+
+    public function showBrand(Brand $brand): Response
+    {
+        if($brand){
+            $brand_products = $this->em->getRepository('App:Product')
+            ->createQueryBuilder('p')
+            ->andWhere("p.brand = :brand")
+            ->setParameter('brand', $brand->getId())
+            ->orderBy('p.id', 'DESC')
+            ->getQuery()
+            ->execute();
+
+        }
+        return $this->render('brand/index.html.twig',[
+            'brand' => $brand,
+            'brand_products' => $brand_products
         ]);
     }
 }

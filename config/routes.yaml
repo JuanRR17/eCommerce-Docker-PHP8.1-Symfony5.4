@@ -70,6 +70,10 @@ showCategory:
    path: /show_cat/{id}
    controller: App\Controller\CategoryController::showCategory
 
+showBrand:
+   path: /show_brand/{id}
+   controller: App\Controller\BrandController::showBrand
+
 basket:
    path: /basket/{id?}
    controller: App\Controller\BasketController::index
