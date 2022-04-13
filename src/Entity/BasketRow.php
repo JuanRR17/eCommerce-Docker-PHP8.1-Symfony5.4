@@ -16,7 +16,7 @@ class BasketRow
     #[ORM\Column(type: 'integer')]
     private $quantity;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'float')]
     private $subtotal;
 
     #[ORM\ManyToOne(targetEntity: Basket::class, inversedBy: 'basketRows')]
@@ -44,7 +44,7 @@ class BasketRow
         return $this;
     }
 
-    public function getSubtotal(): ?int
+    public function getSubtotal(): ?float
     {
         return $this->subtotal;
     }

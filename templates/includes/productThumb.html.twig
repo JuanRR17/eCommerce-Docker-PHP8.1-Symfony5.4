@@ -5,9 +5,15 @@
         </div>
         <h2>{{product.brand.name}} | {{product.model}}</h2>
         <p><a href="{{ path('showCategory', {'id':product.category.id} )}}">{{ product.category.name }}</a></p>
-        <p>{{product.price}} € {% if product.offer %}
-        <span>| Offer {{product.offer}}%</span>
-        {% endif %}</p>
-        <a href="{{ path('productDetail', {'id':product.id}) }}" class="button">See Product</a>
+        <p> 
+        {% if product.offer %}
+            <span class="offer-original-price">{{product.price}} € </span>
+            <span class="offer">| Offer {{product.offer}}%</span>
+            <p class="offer-final-price"> {{(product.price - (product.price*product.offer/100))}} €</p>
+        {% else %}
+            <span>{{product.price}} € </span>
+        {% endif %}
+        </p>
+        <a href="{{ path('productDetail', {'id':product.id}) }}" class="btn btn-primary">See Product</a>
     </div>
 </div>

@@ -26,7 +26,8 @@
             {% endif %}
         {% endif %}
         {{form_start(form)}}
-        {{form_widget(form)}}
+        {# {{form_widget(form)}} #}
+        {{form_widget(form.submit,{'attr':{'class':'btn btn-primary'}})}}
         {{form_end(form)}}
     </div>
 {% endblock %}

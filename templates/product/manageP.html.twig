@@ -5,9 +5,7 @@
 {% block header %}Manage Products{% endblock %}
 
 {% block main %}
-        <div style="text-align:right">
-            <a href="{{ path('newProduct') }}" class="btn-create" >Create New Product</a>
-        </div>
+            <a href="{{ path('newProduct') }}" class="btn btn-success float-right" >Create New Product</a>
     {% if message is defined %}
         <div class="message">{{message}}</div>
     {% endif %}
@@ -49,9 +47,9 @@
                 {% endif %}
             </td>
             <td class="stock">{{ product.stock }}</td>
-            <td class="buttons actions">
-                <a href="{{ path('editProduct', {'id':product.id}) }}" class="btn-edit">Edit</a>
-                <a href="{{ path('removeProduct', {'id':product.id}) }}" class="btn-delete">Delete</a>
+            <td class="actions">
+                <a href="{{ path('editProduct', {'id':product.id}) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ path('removeProduct', {'id':product.id}) }}" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         {% endfor %}

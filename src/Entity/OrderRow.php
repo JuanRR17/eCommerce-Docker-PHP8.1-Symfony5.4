@@ -24,6 +24,9 @@ class OrderRow
     #[ORM\JoinColumn(nullable: false)]
     private $product;
 
+    #[ORM\Column(type: 'float')]
+    private $subtotal;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +65,17 @@ class OrderRow
     {
         $this->product = $product;
 
+        return $this;
+    }
+
+    public function getSubtotal(): ?int
+    {
+        return $this->subtotal;
+    }
+
+    public function setSubtotal(): self
+    {
+        $this->subtotal = $this->product->getPrice() * $this->quantity;
         return $this;
     }
 }

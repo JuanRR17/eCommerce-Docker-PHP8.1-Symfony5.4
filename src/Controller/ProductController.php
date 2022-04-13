@@ -68,7 +68,7 @@ class ProductController extends AbstractController
                 $message = "Some required data is missing.";
             }
 
-            $error_message;
+            $error_message=[];
             //Take values from the form
             $category = $this->em->getRepository('App:Category')->findOneById($this->request->get('category'));
             $brand = $this->em->getRepository('App:Brand')->findOneById($this->request->get('brand'));
@@ -114,12 +114,11 @@ class ProductController extends AbstractController
                 $error_message['price'] = 'Please input a price.';
             }
 
-            if(!empty($stock)){
-                if($stock>0){
-                    $newProduct->setStock($stock);
-                }else{
-                $error_message['stock'] = 'Please input a stock higher than 0.';
-                }    
+            // if(!empty($stock)){
+            if($stock>=0){
+                $newProduct->setStock($stock);
+            }elseif($stock>0){
+                $error_message['stock'] = 'Stock can\'t be negative';
             }else{
                 $error_message['stock'] = 'Please input a stock.';
             }

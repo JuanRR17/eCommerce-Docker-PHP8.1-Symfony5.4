@@ -15,7 +15,7 @@ class Basket
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    #[ORM\Column(type: 'float', nullable: true)]
     private $total;
 
     #[ORM\OneToMany(mappedBy: 'basket_id', targetEntity: BasketRow::class, orphanRemoval: true)]
@@ -34,7 +34,7 @@ class Basket
         return $this->id;
     }
 
-    public function getTotal(): ?int
+    public function getTotal(): ?float
     {
         return $this->total;
     }
@@ -45,7 +45,7 @@ class Basket
 
     //     return $this;
     // }
-    public function setTotal(?int $total=0):self
+    public function setTotal(?float $total=0):self
     {
         if(!empty($this->getBasketRows())){
             foreach($this->getBasketRows() as $row ){

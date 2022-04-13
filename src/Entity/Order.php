@@ -41,6 +41,12 @@ class Order
     #[ORM\OneToMany(mappedBy: 'order_id', targetEntity: OrderRow::class, orphanRemoval: true)]
     private $orderRows;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $receiver_name;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $receiver_surname;
+
     public function __construct()
     {
         $this->orderRows = new ArrayCollection();
@@ -80,10 +86,21 @@ class Order
         return $this->cost;
     }
 
-    public function setCost(float $cost): self
-    {
-        $this->cost = $cost;
+    // public function setCost(float $cost): self
+    // {
+    //     $this->cost = $cost;
 
+    //     return $this;
+    // }
+
+    public function setCost(?float $total=0): self
+    {
+        if(!empty($this->getOrderRows())){
+            foreach($this->getOrderRows() as $row ){
+                $total += $row->getSubtotal();
+            }
+        }
+        $this->cost = $total;
         return $this;
     }
 
@@ -161,6 +178,30 @@ class Order
                 $orderRow->setOrderId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReceiverName(): ?string
+    {
+        return $this->receiver_name;
+    }
+
+    public function setReceiverName(string $receiver_name): self
+    {
+        $this->receiver_name = $receiver_name;
+
+        return $this;
+    }
+
+    public function getReceiverSurname(): ?string
+    {
+        return $this->receiver_surname;
+    }
+
+    public function setReceiverSurname(string $receiver_surname): self
+    {
+        $this->receiver_surname = $receiver_surname;
 
         return $this;
     }

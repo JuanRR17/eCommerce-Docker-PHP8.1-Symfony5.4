@@ -44,7 +44,7 @@ class BasketController extends AbstractController
         }
         $total = $basket->getTotal();
 
-        return $this->render('basket/index.html.twig', [
+        return $this->render('basket/basket.html.twig', [
             'basket' => $basket,
             'total' => $total
         ]);
@@ -88,7 +88,7 @@ class BasketController extends AbstractController
             return $this->redirect($this->generateUrl('basket'));
         }
 
-        return $this->render('basket/index.html.twig',[
+        return $this->render('basket/basket.html.twig',[
             'basket' => $basket
         ]);
     }

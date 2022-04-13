@@ -7,9 +7,7 @@
 {% block main %}
     {% if basket is not empty %}
         {% if basket.basketRows.count > 0 %}
-        <div class="buttons actions">
-            <a href="{{ path('emptyBasket') }}" class="btn-delete float-right">Empty Basket</a>
-        </div>
+            <a href="{{ path('emptyBasket') }}" class="btn btn-danger float-right m-2">Empty Basket</a>
         {% endif %}
     <table>
         <tr>
@@ -31,9 +29,9 @@
             <td>{{ prod.quantity }}</td>
             <td> 
                 <div class="updown-units">
-                    <a href="{{ path('basketUp', {'id':prod.id})}}" class="button">+</a>
-                    <a href="{{ path('basketDown', {'id':prod.id})}}" class="button">-</a>
-                    <a href="{{ path('removeRow', {'id':prod.id})}}" class="button">x</a>
+                    <a href="{{ path('basketUp', {'id':prod.id})}}">+</a>
+                    <a href="{{ path('basketDown', {'id':prod.id})}}">-</a>
+                    <a href="{{ path('removeRow', {'id':prod.id})}}">x</a>
                 </div>
             </td>
             <td class="align-right">{{ prod.subtotal }} €</td>
@@ -48,7 +46,7 @@
                 <td class="align-right">{{ basket.total }} €</td>
             </tr>
         </table>
-        <a href="{{ path('order_index', {'id': basket.id }) }}" class="button-orders">Make Order</a>
+        <a href="{{ path('order_index', {'id': basket.id }) }}" class="btn btn-success float-right m-2">Make Order</a>
     {% else %}
         Basket is empty
     {% endif %}

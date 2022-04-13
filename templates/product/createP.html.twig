@@ -136,16 +136,15 @@
             {% endif %}
         />
 
-       <button type="submit">
+       <button type="submit" class="btn btn-primary mt-2">
             {% if edit is not null and newProduct is not null %}
                 Confirm changes
                 {% else %}
                 Create Product
             {% endif %}
         </button>
-        <button type="submit">
-            <a href="{{ path('manageProducts') }}">Manage Products</a>
-        </button>
+        </br>
+        <a class="btn btn-primary mt-2" href="{{ path('manageProducts') }}">Manage Products</a>
         
     </form>
 {% endblock %}

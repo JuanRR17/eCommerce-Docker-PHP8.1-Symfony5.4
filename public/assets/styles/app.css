@@ -10,17 +10,17 @@ body{
     background: url(../imgs/global/bg.png);
 }
 
-a{
-    color: #01B1EA;
+td a{
+    color: #01B1EA!important;
     text-decoration: none!important;
 }
 
-a:visited{
-    color: #01B1EA;
+td a:visited{
+    color: #01B1EA!important;
 }
 
-a:hover{
-    color: #555555;
+td a:hover{
+    color: #555555!important;
 }
 
 .alert_green{
@@ -53,6 +53,13 @@ td{
 
 td.align-right{
     text-align:right;
+}
+
+td.actions a{
+    color:#555!important;
+}
+td.actions a:hover{
+    color:#111!important;
 }
 
 .float-right{
@@ -237,7 +244,10 @@ input[type="file"]{
     margin-top: 10px;
 }
 
-label,
+label{
+    display:inline;
+}
+
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -269,26 +279,6 @@ input[type="email"]:focus{
     color: black;
 }
 
-input[type="button"],
-input[type="submit"],
-button, .button{
-    display: block;
-    border-radius: 2px;
-    width: fit-content;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: white!important;
-    background: #2979CD;
-    border: 1px solid #11608E;
-    cursor:pointer;
-}
-
-.button{
-    color: white!important;
-    text-decoration: none;
-}
-
 .button-small{
     width: 120px;
     text-align: center;
@@ -303,14 +293,6 @@ button, .button{
 .button-red{
     background: red;
     border: 1px solid #cf1717;
-}
-
-.buttons a{
-    text-decoration: none !important;
-    border: 1px solid green;
-    padding: 5px;
-    color: white;
-    background: #00AA33;
 }
 
 .buttons{
@@ -382,18 +364,16 @@ button{
 
 /*PRODUCTS*/
 .product{
-    width: 230px;
-    height:300px;
+    width: 200px;
+    height:280px;
     float:left;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    margin:20px;
     text-align: center;
-    border:1px solid black;
-    padding: 10px;
+    /* border:1px solid black; */
+    padding: 20px;
     border-radius: 10px;
     box-sizing: border-box;
+    box-shadow: 0px 0px 15px #777;
 }
 
 .productDetails{
@@ -411,8 +391,23 @@ button{
     margin-bottom:10px;
 }
 
-.productDetails span{
+.productDetails .offer{
     color:rgb(212, 55, 55);
+}
+
+.productDetails a{
+    color:white!important;
+    width: fit-content;
+}
+
+.productDetails .offer-original-price{
+    text-decoration: line-through;
+    text-decoration-color: rgb(212, 55, 55);
+}
+
+.productDetails .offer-final-price{
+    color:#00AA33;
+    font-weight: bolder;
 }
 
 .product a{
@@ -420,7 +415,7 @@ button{
     text-decoration: none;
 }
 
-.product .button{
+.product a:last-child{
     position:absolute;
     bottom:0px;
     left: 50%;
@@ -438,6 +433,12 @@ button{
 }
 
 .img_basket{
+    height: 60px;
+    display: block;
+    margin:10px auto;
+}
+
+.img_prod_manag{
     height: 60px;
     display: block;
     margin:10px auto;
@@ -512,16 +513,6 @@ button{
     width:calc(5%) !important;
 }
 
-
-/* #detail-product .list>div{
-    width:calc(28%);
-    padding:0px;
-    border:1px solid black;
-    height:60px;
-    line-height:60px;
-} */
-
-
 #detail-product .data{
     float:left;
     margin-left:50px;
@@ -537,9 +528,8 @@ button{
     color: #444;
 }
 
-#detail-product .button{
-    width: 200px;
-    text-align: center;
+#detail-product .data .alert{
+    padding: 0.25rem;
 }
 
 /* CREATE-EDIT PRODUCT*/
@@ -598,16 +588,7 @@ button{
     border: 5px solid green;
 }
 
-/*FOOTER*/
-#footer{
-    clear: both;
-    text-align: center;
-    padding-top:10px;
-    padding-bottom: 10px;
-    color: white;
-    background: #222222;
-    border-top: 4px solid #01B1EA;
-}
+
 
 /*BASKET*/
 .delete-basket{
@@ -653,8 +634,43 @@ button{
     margin: 0px auto;
 }
 
-.updown-units .button{
+.updown-units a{
     display:inline;
     padding:3px 8px;
     margin: 2px;
+    color: white!important;
+    text-decoration: none;
+    /* display: block; */
+    border-radius: 5px;
+    width: fit-content;
+    /* padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px; */
+    /* color: white!important; */
+    background: #2979CD;
+    border: 1px solid #11608E;
+    cursor:pointer;
+}
+
+.updown-units a:visited{
+    color: white!important;
+}
+.updown-units a:hover{
+    color: black!important;
+}
+
+/* ORDER */ 
+.accordion button{
+    color:black!important;
+}
+
+/*FOOTER*/
+#footer{
+    clear: both;
+    text-align: center;
+    padding-top:10px;
+    padding-bottom: 10px;
+    color: white;
+    background: #222222;
+    border-top: 4px solid #01B1EA;
 }
