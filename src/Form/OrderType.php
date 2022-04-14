@@ -30,6 +30,10 @@ class OrderType extends AbstractType
         ->add('country', TextType::class, array(
             'label'=>'Country'
         ))
+        ->add('submit', SubmitType::class, array(
+            'label' => 'Confirm Order',
+            'attr' => ['class' => 'btn btn-success float-right mt-2']
+        ))
         ;
     }
 

@@ -16,7 +16,7 @@ class OrderRow
     #[ORM\Column(type: 'integer')]
     private $quantity;
 
-    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'orderRows')]
+    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'orderRows', cascade:["persist"])]
     #[ORM\JoinColumn(nullable: false)]
     private $order_id;
 

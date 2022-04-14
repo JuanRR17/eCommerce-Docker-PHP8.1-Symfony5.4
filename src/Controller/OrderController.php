@@ -64,18 +64,38 @@ class OrderController extends AbstractController
         $form=$this->createForm(OrderType::class,$order);
 
         //Fill the form
-        // $form->handleRequest($request);
+        $form->handleRequest($request);
 
-        // if($form->isSubmitted() && $form->isValid()){
+        //Validate form
+        if($form->isSubmitted() && $form->isValid()){
+            //Auto-completing the user fields before saving
+            $order->setCreatedAt(new \DateTimeImmutable("now"));
+            $order->setStatus("PENDING");
+            //Save order in database
+            $em=$doctrine->getManager();
+            //Remove Order Rows
+            // foreach($order->getOrderRows() as $orderRow){
+            //     $orderRows[]=$orderRow;
+            //     $order->removeOrderRow($orderRow);
+            // }
+            $em->persist($order);
+            $em->flush();
 
-
-        //     //Save order in database
-        //     $em=$doctrine->getManager();
-        //     $em->persist($order);
-        //     $em->flush();
-        // }
-        return $this->render('order/order.html.twig', [
+            // foreach($orderRows as $orderRow){
+            //     $orderRow->setOrderId($order);
+            //     $em->persist($orderRow);
+            //     $em->flush();
+            // }
+            return $this->redirect($this->generateUrl('orderConfirmation', ['id' => $order->getId()]));
+        }
+        return $this->render('order/orderForm.html.twig', [
             'form' => $form->createView(),
+            'order' => $order,     
+        ]);
+    }
+
+    public function orderConfirmation(Order $order){
+        return $this->render('order/orderConfirmation.html.twig', [
             'order' => $order,     
         ]);
     }

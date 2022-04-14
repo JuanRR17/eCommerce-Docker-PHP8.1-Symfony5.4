@@ -1,21 +1,20 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-
 messenger:
   path: /messenger
   controller: App\Controller\MessengerAction
   methods: [GET]
 
+# USER ROUTES
 register:
    path: /register/{id?}
    controller: App\Controller\UserController::register
 
 login_check:
    path: /login-check
+
 logout:
    path: /logout 
 
+# PRODUCT ROUTES
 newProduct:
    path: /new-product
    controller: App\Controller\ProductController::create
@@ -23,30 +22,6 @@ newProduct:
 index:
    path: /
    controller: App\Controller\ProductController::index
-
-manageCategories:
-   path: /manage-categories
-   controller: App\Controller\CategoryController::manage
-
-editCategory:
-   path: /category_edit/{id}
-   controller: App\Controller\CategoryController::edit
-
-removeCategory:
-   path: /category_remove/{id}
-   controller: App\Controller\CategoryController::remove
-
-manageBrands:
-   path: /manage-brands
-   controller: App\Controller\BrandController::manage
-
-editBrand:
-   path: /brand_edit/{id}
-   controller: App\Controller\BrandController::edit
-
-removeBrand:
-   path: /brand_remove/{id}
-   controller: App\Controller\BrandController::remove
 
 manageProducts:
    path: /manage-products
@@ -66,14 +41,53 @@ productDetail:
    defaults:
       img_id: null
 
+remove_image:
+   path: /remove_image/{id}
+   controller: App\Controller\ImageController::remove_image
+
+set_default:
+   path: /set_default/{id}
+   controller: App\Controller\ImageController::set_default
+
+select_main:
+   path: /select_main/{img_id}
+   controller: App\Controller\ProductController:select_main
+
+# CATEGORY ROUTES
+manageCategories:
+   path: /manage-categories
+   controller: App\Controller\CategoryController::manage
+
+editCategory:
+   path: /category_edit/{id}
+   controller: App\Controller\CategoryController::edit
+
+removeCategory:
+   path: /category_remove/{id}
+   controller: App\Controller\CategoryController::remove
+
 showCategory:
    path: /show_cat/{id}
    controller: App\Controller\CategoryController::showCategory
+
+# BRAND ROUTES
+manageBrands:
+   path: /manage-brands
+   controller: App\Controller\BrandController::manage
+
+editBrand:
+   path: /brand_edit/{id}
+   controller: App\Controller\BrandController::edit
+
+removeBrand:
+   path: /brand_remove/{id}
+   controller: App\Controller\BrandController::remove
 
 showBrand:
    path: /show_brand/{id}
    controller: App\Controller\BrandController::showBrand
 
+# BASKET ROUTES 
 basket:
    path: /basket/{id?}
    controller: App\Controller\BasketController::index
@@ -98,19 +112,12 @@ basketDown:
    path: /basketdown/{id}
    controller: App\Controller\BasketController::down
 
+# ORDER ROUTES
 order_index:
    path: /make_order/{id}
    controller: App\Controller\OrderController::index
 
-remove_image:
-   path: /remove_image/{id}
-   controller: App\Controller\ImageController::remove_image
-
-set_default:
-   path: /set_default/{id}
-   controller: App\Controller\ImageController::set_default
-
-select_main:
-   path: /select_main/{img_id}
-   controller: App\Controller\ProductController:select_main
+orderConfirmation:
+   path: /order_confirmation/{id}
+   controller: App\Controller\OrderController::orderConfirmation
 
