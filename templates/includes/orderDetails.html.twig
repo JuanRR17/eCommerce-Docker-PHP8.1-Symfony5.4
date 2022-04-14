@@ -1,5 +1,8 @@
     <div>
         <div>
         {{dump(order)}}
+        {% for orderrow in order.orderRows %}
+            {{orderrow.product.model}}
+        {% endfor %}
         </div>
     </div>

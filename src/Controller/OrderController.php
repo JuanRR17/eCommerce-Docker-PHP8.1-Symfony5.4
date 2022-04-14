@@ -73,19 +73,13 @@ class OrderController extends AbstractController
             $order->setStatus("PENDING");
             //Save order in database
             $em=$doctrine->getManager();
-            //Remove Order Rows
-            // foreach($order->getOrderRows() as $orderRow){
-            //     $orderRows[]=$orderRow;
-            //     $order->removeOrderRow($orderRow);
-            // }
+
             $em->persist($order);
+            foreach($order->getOrderRows() as $orderRow){
+                $em->persist($orderRow);
+            }
             $em->flush();
 
-            // foreach($orderRows as $orderRow){
-            //     $orderRow->setOrderId($order);
-            //     $em->persist($orderRow);
-            //     $em->flush();
-            // }
             return $this->redirect($this->generateUrl('orderConfirmation', ['id' => $order->getId()]));
         }
         return $this->render('order/orderForm.html.twig', [
