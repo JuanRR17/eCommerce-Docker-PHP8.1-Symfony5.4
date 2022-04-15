@@ -15,10 +15,10 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('receiver_name', TextType::class, array(
+        ->add('receiverName', TextType::class, array(
             'label'=>'Name*'
         ))
-        ->add('receiver_surname', TextType::class, array(
+        ->add('receiverSurname', TextType::class, array(
             'label'=>'Surname*'
         ))
         ->add('address',  TextType::class, array(

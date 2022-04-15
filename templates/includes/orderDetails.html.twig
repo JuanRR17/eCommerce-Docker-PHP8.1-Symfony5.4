@@ -1,8 +1,21 @@
     <div>
         <div>
         {{dump(order)}}
-        {% for orderrow in order.orderRows %}
-            {{orderrow.product.model}}
-        {% endfor %}
+        <p>Status: {{order.status}}</p>
+        {# <p>Date: {{order.created_at | date("m/d/Y")}}</p> #}
+        <div class="container">
+        <div class="row">
+            <div class="col">
+                <p>Delivery Address:</p>
+                <p>{{ order.receiverName }}{{ order.receiverSurname }}</p>
+                <p>{{ order.address }}</p>
+                <p>{{ order.city }}</p>
+                <p>{{ order.country }}</p>
+            </div>
+            <div class="col">
+                {% for orderrow in order.orderRows %}
+                    <p>{{orderrow.product.model}}</p>
+                {% endfor %}
+            </div>
         </div>
     </div>

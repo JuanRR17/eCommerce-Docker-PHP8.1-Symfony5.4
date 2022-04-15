@@ -42,10 +42,10 @@ class Order
     private $orderRows;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $receiver_name;
+    private $receiverName;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $receiver_surname;
+    private $receiverSurname;
 
     public function __construct()
     {
@@ -184,24 +184,24 @@ class Order
 
     public function getReceiverName(): ?string
     {
-        return $this->receiver_name;
+        return $this->receiverName;
     }
 
-    public function setReceiverName(string $receiver_name): self
+    public function setReceiverName(string $receiverName): self
     {
-        $this->receiver_name = $receiver_name;
+        $this->receiverName = $receiverName;
 
         return $this;
     }
 
     public function getReceiverSurname(): ?string
     {
-        return $this->receiver_surname;
+        return $this->receiverSurname;
     }
 
-    public function setReceiverSurname(string $receiver_surname): self
+    public function setReceiverSurname(string $receiverSurname): self
     {
-        $this->receiver_surname = $receiver_surname;
+        $this->receiverSurname = $receiverSurname;
 
         return $this;
     }
