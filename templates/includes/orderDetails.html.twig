@@ -2,20 +2,45 @@
         <div>
         {{dump(order)}}
         <p>Status: {{order.status}}</p>
-        {# <p>Date: {{order.created_at | date("m/d/Y")}}</p> #}
+        <p>Order Date: {{order.createdAt | date("m/d/Y")}}</p>
         <div class="container">
         <div class="row">
             <div class="col">
                 <p>Delivery Address:</p>
-                <p>{{ order.receiverName }}{{ order.receiverSurname }}</p>
+                <p>{{ order.receiverName }} {{ order.receiverSurname }}</p>
                 <p>{{ order.address }}</p>
                 <p>{{ order.city }}</p>
                 <p>{{ order.country }}</p>
             </div>
-            <div class="col">
-                {% for orderrow in order.orderRows %}
-                    <p>{{orderrow.product.model}}</p>
-                {% endfor %}
+            <div class="col-md-8">
+                <table>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                
+                    {% for row in order.orderRows %}
+                    {% if row.product.images is not empty %}
+                    {% endif %}
+                    <tr>
+                        <td>{% if row.product.images is not empty %}<img class="img_basket" src="{{ asset('/assets/imgs/products/'~ row.product.id ~'/'~ row.product.images[0].name ) }}" />{% endif %}</td>
+                        <td><a href="{{path('productDetail', {'id': row.product.id})}}">{{ row.product.brand.name }} {{ row.product.model }}</a></td>
+                        <td class="align-right">{{ row.product.price }} €</td>
+                        <td>{{ row.quantity }}</td>
+                        <td class="align-right">{{ row.subtotal }} €</td>
+                    </tr>      
+                    {% endfor %}
+                        <tr> 
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Cost</td>
+                            <td class="align-right">{{ order.cost }} €</td>
+                        </tr>
+                    </table>
             </div>
         </div>
     </div>

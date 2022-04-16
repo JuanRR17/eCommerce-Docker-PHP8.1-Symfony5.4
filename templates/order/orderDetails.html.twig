@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order Details{% endblock %}
+
+{% block header %}
+    {% if confirmation is defined %}
+        Order Confirmed
+    {% else %}
+        Order Details
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    {{ include('includes/orderDetails.html.twig')}}
+{% endblock %}

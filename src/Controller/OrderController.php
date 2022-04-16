@@ -25,7 +25,19 @@ class OrderController extends AbstractController
         $this->em = $em;
     }
 
-    public function index(
+    public function index(UserInterface $user): Response
+    {
+        if($user){
+            $orders = $this->em->getRepository('App:Order')->findBy(
+                ['user'=> $user]
+            );
+        }
+        return $this->render('order/user_orders_index.html.twig', [
+            'orders' => $orders
+        ]);
+    }
+
+    public function makeOrder(
         Request $request,
         ManagerRegistry $doctrine,
         Basket $basket): Response
@@ -71,14 +83,18 @@ class OrderController extends AbstractController
             //Auto-completing the user fields before saving
             $order->setCreatedAt(new \DateTimeImmutable("now"));
             $order->setStatus("PENDING");
+            
             //Save order in database
             $em=$doctrine->getManager();
-
+            //Persist Order
             $em->persist($order);
+            //Persist all OrderRows
             foreach($order->getOrderRows() as $orderRow){
                 $em->persist($orderRow);
             }
             $em->flush();
+            //Empty Basket after flushing the Order
+            $this->forward("App\Controller\BasketController::emptyBasket");
 
             return $this->redirect($this->generateUrl('orderConfirmation', ['id' => $order->getId()]));
         }
@@ -89,7 +105,15 @@ class OrderController extends AbstractController
     }
 
     public function orderConfirmation(Order $order){
-        return $this->render('order/orderConfirmation.html.twig', [
+        $confirmation=true;
+        return $this->render('order/orderDetails.html.twig', [
+            'order' => $order,    
+            'confirmation' => $confirmation 
+        ]);
+    }
+
+    public function showDetails(Order $order){
+        return $this->render('order/orderDetails.html.twig', [
             'order' => $order,     
         ]);
     }

@@ -20,7 +20,7 @@ class OrderRow
     #[ORM\JoinColumn(nullable: false)]
     private $order_id;
 
-    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'orderRows')]
+    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'orderRows', cascade:['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private $product;
 

@@ -49,6 +49,7 @@ th{
 td{
     border-top: 1px solid #ccc;
     padding: 2px 15px;
+    width:fit-content;
 }
 
 td.align-right{
@@ -664,7 +665,68 @@ button{
     color:black!important;
 }
 
+.ordered{
+    border: 2px solid #666;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px auto;
+    color: #666;
+    width:80%;
+}
 
+.ord-header{
+    background-color: #ddd;
+    border-bottom: 1px solid #999;
+    padding: 5px 10px;
+}
+
+.ord-body{
+    background-color: #eee;
+    padding: 10px 10px;
+}
+
+.ord-header span{
+    color: #333;
+    font-weight: bold;
+}
+
+.ord-row{
+    margin: 15px 0px;
+    display:flex;
+}
+
+.ord-img{
+    display:inline-block;
+    width:100px;
+    height:100px;
+    margin-right: 10px; 
+    flex: 0 0 100px;
+} 
+
+.ord-img img{
+    height:100%;
+    width:100%;
+    object-fit: contain;
+}
+
+.ord-product{
+    display:inline;
+    flex: 0 1 auto;
+    margin:10px;
+}
+
+.ord-product a{
+    display:inline-block;
+}
+
+.ordered a{
+    text-decoration: none!important;
+}
+
+.buy-again{
+    margin-top: 15px!important;
+    padding:5px!important;
+}
 
 /*FOOTER*/
 #footer{

@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Orders{% endblock %}
+
+{% block header %} My Orders {% endblock %}
+
+{% block main %}
+    {% if orders is not empty %}
+        {% for order in orders %}
+            <div class="ordered">
+            {# {{dump(order)}} #}
+                <div class="ord-header container-fluid">
+                    <div class="row">
+                        <div class="col-auto">
+                            ORDERED:<br/>
+                            <span>{{order.createdAt | date('d/m/Y')}}</span>
+                        </div>
+                        <div class="col-auto">
+                            TOTAL:<br/>
+                            <span>{{order.cost}} €</span>
+                        </div>
+                        <div class="col-auto">
+                            DELIVERED TO:<br/>
+                            <span>{{order.receiverName}} {{order.receiverSurname}}</span>
+                        </div>                        
+                        <div class="col-auto ms-md-auto text-end ">
+                            Order #: {{order.id}}<br/>
+                            <a href="{{ path('orderDetails', {'id':order.id}) }}">Order details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="ord-body container-fluid">
+                    <div class="row">
+                        {# <div class="col-sm-10"> #}
+                            {% for orderRow in order.orderRows %}
+                            {# {{dump(orderRow.product)}} #}
+
+                            <div class="ord-row">
+                                <div class="ord-img">
+                                    <img src="{{ asset('/assets/imgs/products/'~ orderRow.product.id ~'/'~ orderRow.product.images[0].name ) }}" alt="Image not available"/>
+                                </div>
+                                <div class="ord-product">
+                                    <a href="{{ path('productDetail', {'id':orderRow.product.id}) }}">{{orderRow.product.model}}</a>
+                                    </br>
+                                    <a class="btn btn-warning buy-again">Buy again</a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {# </div> #}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        You don't have orders yet.
+    {% endif %}
+{% endblock %}

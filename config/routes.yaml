@@ -113,11 +113,18 @@ basketDown:
    controller: App\Controller\BasketController::down
 
 # ORDER ROUTES
-order_index:
+make_order:
    path: /make_order/{id}
-   controller: App\Controller\OrderController::index
+   controller: App\Controller\OrderController::makeOrder
 
 orderConfirmation:
    path: /order_confirmation/{id}
    controller: App\Controller\OrderController::orderConfirmation
 
+user_orders_index:
+   path: /user_orders_index/{id}
+   controller: App\Controller\OrderController::index
+
+orderDetails:
+   path: /order/{id}
+   controller: App\Controller\OrderController::showDetails

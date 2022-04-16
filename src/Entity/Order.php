@@ -16,8 +16,8 @@ class Order
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'datetime_immutable')]
-    private $created_at;
+    // #[ORM\Column(type: 'datetime_immutable')]
+    // private $createdAt;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $status;
@@ -47,6 +47,9 @@ class Order
     #[ORM\Column(type: 'string', length: 255)]
     private $receiverSurname;
 
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $createdAt;
+
     public function __construct()
     {
         $this->orderRows = new ArrayCollection();
@@ -59,12 +62,12 @@ class Order
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
