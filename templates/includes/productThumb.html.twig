@@ -1,19 +1,35 @@
 <div class="product">
+    <div class="productFrame">
     <div class="productDetails">
-        <div>
-            <img src="{{ asset('/assets/imgs/products/'~ product.id ~'/'~ product.images[0].name ) }}" alt="Image not available"/>
+        <div class="imageFrame">
+            <a href="{{ path('productDetail', {'id':product.id}) }}">
+                <img src="{{ asset('/assets/imgs/products/'~ product.id ~'/'~ product.images[0].name ) }}" alt="Image not available"/>
+            </a>
         </div>
-        <h2>{{product.brand.name}} | {{product.model}}</h2>
-        <p><a href="{{ path('showCategory', {'id':product.category.id} )}}">{{ product.category.name }}</a></p>
-        <p> 
         {% if product.offer %}
-            <span class="offer-original-price">{{product.price}} € </span>
-            <span class="offer">| Offer {{product.offer}}%</span>
-            <p class="offer-final-price"> {{(product.price - (product.price*product.offer/100))}} €</p>
-        {% else %}
-            <span>{{product.price}} € </span>
-        {% endif %}
+        <p> 
+            <span class="offer-final-price">{{(product.price - (product.price*product.offer/100))}} € </span>
+            <span class="offer offerPerc"> Offer {{product.offer}}%</span>
+            <span class="offer original-price">{{product.price}} € </span>
         </p>
-        <a href="{{ path('productDetail', {'id':product.id}) }}" class="btn btn-primary">See Product</a>
+        {% else %}
+        <p>{{product.price}} € </p>
+        {% endif %}
+
+        <h2> 
+            <a class="showCategory" href="{{ path('showCategory', {'id':product.category.id} )}}">{{ product.category.name }}</a>
+            |
+            <a class="showBrand" href="{{ path('showBrand', {'id':product.brand.id} )}}">{{ product.brand.name }}</a>
+        </h2>
+        <p class="modelName">
+            <a class="model" href="{{ path('productDetail', {'id':product.id}) }}">
+                {{product.model|slice(0,40)}}
+                {% if product.model|length > 40 %}
+                ...
+                {% endif %}
+            </a>
+        </p>
+        <a href="{{ path('addToBasket', {'id':product.id})}}" class="btn btn-warning addToBasket">Add to Basket</a>
+    </div>
     </div>
 </div>

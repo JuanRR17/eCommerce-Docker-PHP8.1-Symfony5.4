@@ -187,48 +187,6 @@ td.actions a:hover{
     background: white;
 }
 
-/*SIDE BAR*/
-#lateral{
-    width: 20%;
-    min-height: 500px;
-    float: left;
-    margin-top:20px;
-    margin-left: 10px;
-}
-
-#lateral .block_aside{
-    display: block;
-    width: 90%;
-    margin: 5px auto;
-    padding: 10px;
-}
-
-#lateral h3{
-    display: block;
-    color: #222;
-    width: 100%;
-    text-align: center;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    margin-bottom: 15px;
-    font-size: 16px;
-    font-weight: bold;
-    background: #E1E1E1;
-    border-bottom: 2px solid #01B1EA;
-}
-
-#lateral ul{
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-#lateral ul li{
-    list-style: square;
-    margin-left: 20px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
 /*FORMS*/
 .form_container{
     width: 50%;
@@ -272,52 +230,12 @@ input[type="email"]:focus{
     color: black;
 }
 
-.button-small{
-    width: 120px;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.button-gestion{
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.button-red{
-    background: red;
-    border: 1px solid #cf1717;
-}
-
-.buttons{
-    width: auto;
-}
-
 form button{
     display: inline-block !important;
 }
 
 form button a{
     color:white !important;
-}
-
-.btn-create{
-    text-decoration: none !important;
-    border: 1px solid green;
-    padding: 5px;
-    color: white !important;
-    background: #00AA33;
-    display: inline-block;
-    margin:auto;
-}
-
-.buttons .btn-edit{
-    background: orange;
-    border-color: #f38b06;
-}
-
-.buttons .btn-delete{
-    background: red;
-    border-color: #b90808;
 }
 
 label, 
@@ -332,8 +250,6 @@ button{
 #central{
     width: 100%;
     min-height: 500px;
-    /* float: right; */
-    border-left: 1px solid #ccc;
     box-shadow: -5px -1px 5px #ddd;
     padding:25px;
 }
@@ -357,17 +273,28 @@ button{
 
 /*PRODUCTS*/
 .product{
-    width: 200px;
-    height:280px;
+    width: 250px;
+    height:300px;
     float:left;
     margin:20px;
     text-align: center;
-    /* border:1px solid black; */
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
     box-sizing: border-box;
     box-shadow: 0px 0px 15px #777;
+    position:relative;
 }
+
+.productFrame{
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:10px;
+    padding: 10px;
+    overflow: hidden;
+}
+
 
 .productDetails{
     position:relative;
@@ -375,48 +302,59 @@ button{
     width:100%;
 }
 
-.productDetails div{
-    height:100px;
+.imageFrame{
+    height:120px;
     width: 80%;
     padding:5px;
-    border:1px solid black;
+    /* border:1px solid black; */
     margin:auto;
     margin-bottom:10px;
 }
 
-.productDetails .offer{
-    color:rgb(212, 55, 55);
+.offer{
+    font-size: 12px;
 }
 
-.productDetails a{
+.offerPerc{
+    color:rgb(212, 55, 55);
+    margin-right:5px;
+}
+
+.showProduct{
     color:white!important;
     width: fit-content;
 }
 
-.productDetails .offer-original-price{
+.offer.original-price{
     text-decoration: line-through;
     text-decoration-color: rgb(212, 55, 55);
 }
 
-.productDetails .offer-final-price{
+.offer-final-price{
     color:#00AA33;
     font-weight: bolder;
+    margin-right: 10px;
 }
 
-.product a{
+.showCategory, .showBrand{
     color: black;
     text-decoration: none;
 }
 
-.product a:last-child{
+.modelName{
+    text-align: justify;
+}
+
+.model{
+    text-decoration: none!important;
+}
+
+.addToBasket{
+    width: fit-content;
     position:absolute;
     bottom:0px;
     left: 50%;
     transform: translateX(-50%);
-}
-
-.product a:hover{
-    color:#555;
 }
 
 .product img{
@@ -438,7 +376,7 @@ button{
 }
 
 .product h2{
-    font-size: 18px;
+    font-size: 15px;
     margin-bottom: 10px;
 }
 
