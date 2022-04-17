@@ -16,7 +16,7 @@ logout:
 
 # PRODUCT ROUTES
 newProduct:
-   path: /new-product
+   path: /product/create
    controller: App\Controller\ProductController::create
 
 index:
@@ -24,46 +24,46 @@ index:
    controller: App\Controller\ProductController::index
 
 manageProducts:
-   path: /manage-products
+   path: /product/manage
    controller: App\Controller\ProductController::manage
    
 editProduct:
-   path: /product_edit/{id}
+   path: /product/edit/{id}
    controller: App\Controller\ProductController::create
 
 removeProduct:
-   path: /product_remove/{id}
+   path: /product/remove/{id}
    controller: App\Controller\ProductController::remove
 
 productDetail:
-   path: /product_detail/{id}/{img_id?}
+   path: /prod-detail/{id}/{img_id?}
    controller: App\Controller\ProductController::detail
    defaults:
       img_id: null
 
 remove_image:
-   path: /remove_image/{id}
+   path: /product/image/remove/{id}
    controller: App\Controller\ImageController::remove_image
 
 set_default:
-   path: /set_default/{id}
+   path: /product/image/set_default/{id}
    controller: App\Controller\ImageController::set_default
 
 select_main:
-   path: /select_main/{img_id}
+   path: /product/image/select_main/{img_id}
    controller: App\Controller\ProductController:select_main
 
 # CATEGORY ROUTES
 manageCategories:
-   path: /manage-categories
+   path: /category/manage
    controller: App\Controller\CategoryController::manage
 
 editCategory:
-   path: /category_edit/{id}
+   path: /category/edit/{id}
    controller: App\Controller\CategoryController::edit
 
 removeCategory:
-   path: /category_remove/{id}
+   path: /category/remove/{id}
    controller: App\Controller\CategoryController::remove
 
 showCategory:
@@ -72,15 +72,15 @@ showCategory:
 
 # BRAND ROUTES
 manageBrands:
-   path: /manage-brands
+   path: /brand/manage
    controller: App\Controller\BrandController::manage
 
 editBrand:
-   path: /brand_edit/{id}
+   path: /brand/edit/{id}
    controller: App\Controller\BrandController::edit
 
 removeBrand:
-   path: /brand_remove/{id}
+   path: /brand/remove/{id}
    controller: App\Controller\BrandController::remove
 
 showBrand:
@@ -93,38 +93,42 @@ basket:
    controller: App\Controller\BasketController::index
 
 addToBasket:
-   path: /addtobasket/{id}
+   path: /basket/add/{id}
    controller: App\Controller\BasketController::add
 
 emptyBasket:
-   path: /emptybasket
+   path: /basket/empty
    controller: App\Controller\BasketController::emptyBasket
 
 removeRow:
-   path: /removeRow/{id}
+   path: /basket/row/remove/{id}
    controller: App\Controller\BasketController::removeRow
 
 basketUp:
-   path: /basketup/{id}
+   path: /basket/up/{id}
    controller: App\Controller\BasketController::up
 
 basketDown:
-   path: /basketdown/{id}
+   path: /basket/down/{id}
    controller: App\Controller\BasketController::down
 
 # ORDER ROUTES
 make_order:
-   path: /make_order/{id}
+   path: /order/make/{id}
    controller: App\Controller\OrderController::makeOrder
 
 orderConfirmation:
-   path: /order_confirmation/{id}
+   path: /order/confirmation/{id}
    controller: App\Controller\OrderController::orderConfirmation
 
 user_orders_index:
-   path: /user_orders_index/{id}
-   controller: App\Controller\OrderController::index
+   path: /order/user/{id}
+   controller: App\Controller\OrderController::userIndex
 
 orderDetails:
    path: /order/{id}
    controller: App\Controller\OrderController::showDetails
+
+manageOrders:
+   path: /order/manage
+   controller: App\Controller\OrderController::index

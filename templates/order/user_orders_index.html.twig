@@ -16,12 +16,21 @@
                             <span>{{order.createdAt | date('d/m/Y')}}</span>
                         </div>
                         <div class="col-auto">
+                            STATUS:<br/>
+                            <span>{{order.status}}</span>
+                        </div>
+                        <div class="col-auto">
                             TOTAL:<br/>
                             <span>{{order.cost}} €</span>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-auto dropdown">
                             DELIVERED TO:<br/>
                             <span>{{order.receiverName}} {{order.receiverSurname}}</span>
+                            <div class="dropdown-content">
+                                <div>{{order.address}}</div>
+                                <div>{{order.city}}</div>
+                                <div>{{order.country}}</div>
+                            </div>
                         </div>                        
                         <div class="col-auto ms-md-auto text-end ">
                             Order #: {{order.id}}<br/>
@@ -31,22 +40,23 @@
                 </div>
                 <div class="ord-body container-fluid">
                     <div class="row">
-                        {# <div class="col-sm-10"> #}
                             {% for orderRow in order.orderRows %}
-                            {# {{dump(orderRow.product)}} #}
-
+                            {# {{dump(orderRow)}} #}
                             <div class="ord-row">
+                                {# <div class="ord-qty">
+                                    {{orderRow.quantity}} x
+                                </div> #}
                                 <div class="ord-img">
                                     <img src="{{ asset('/assets/imgs/products/'~ orderRow.product.id ~'/'~ orderRow.product.images[0].name ) }}" alt="Image not available"/>
                                 </div>
                                 <div class="ord-product">
                                     <a href="{{ path('productDetail', {'id':orderRow.product.id}) }}">{{orderRow.product.model}}</a>
                                     </br>
+                                    <div>x {{orderRow.quantity}}</div>
                                     <a class="btn btn-warning buy-again">Buy again</a>
                                 </div>
                             </div>
                             {% endfor %}
-                        {# </div> #}
                     </div>
                 </div>
             </div>

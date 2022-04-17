@@ -74,7 +74,7 @@
 										<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 											{% if app.user %}
 												<li><a href="{{ path('user_orders_index', {'id':app.user.id}) }}">My Orders</a></li>
-												<li><a href="#">Manage Orders</a></li>
+												<li><a href="{{ path('manageOrders')}}">Manage Orders</a></li>
 												<li><a href="{{ path('manageCategories')}}">Manage Categories</a></li>
 												<li><a href="{{ path('manageBrands')}}">Manage Brands</a></li>
 												<li><a href="{{ path('manageProducts') }}">Manage Products</a></li>

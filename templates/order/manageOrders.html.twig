@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Manage Orders
+{% endblock %}
+
+{% block header %}
+    Manage Orders
+{% endblock %}
+
+{% block main%}
+    {% if orders is not null %}
+    {# {{dump(orders)}} #}
+        {% for order in orders %}
+            <div class="ordered">
+            {{dump(order)}}
+                <div class="ord-header container-fluid">
+                    <div class="row">
+                        <div class="col-auto">
+                            ORDERED:<br/>
+                            <span>{{order.createdAt | date('d/m/Y')}}</span>
+                        </div>
+                        <div class="col-auto">
+                            TOTAL:<br/>
+                            <span>{{order.cost}} €</span>
+                        </div>
+                        <div class="col-auto">
+                            DELIVERED TO:<br/>
+                            <span>{{order.receiverName}} {{order.receiverSurname}}</span>
+                        </div>                        
+                        <div class="col-auto ms-md-auto text-end ">
+                            Order #: {{order.id}}<br/>
+                            <a href="{{ path('orderDetails', {'id':order.id}) }}">Order details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        No existing orders yet.
+    {% endif %}
+{% endblock %}

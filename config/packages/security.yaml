@@ -35,15 +35,12 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/new-product, roles: ROLE_USER }
-        - { path: ^/product-edit, roles: ROLE_USER }
-        - { path: ^/manage-categories, roles: ROLE_USER }
-        - { path: ^/category_edit, roles: ROLE_USER }
-        - { path: ^/category_remove, roles: ROLE_USER }
-        - { path: ^/manage-brands, roles: ROLE_USER }
-        - { path: ^/brand_edit, roles: ROLE_USER }
-        - { path: ^/brand_remove, roles: ROLE_USER }
-        - { path: ^/order_index, roles: ROLE_USER }
+        - { path: ^/product/*, roles: ROLE_USER } # Actually ROLE_ADMIN
+        - { path: ^/category/*, roles: ROLE_USER } # Actually ROLE_ADMIN
+        - { path: ^/brand/*, roles: ROLE_USER } # Actually ROLE_ADMIN
+        - { path: ^/order/*, roles: ROLE_USER } 
+
+        - { path: ^/order/manage, roles: ROLE_USER } # Actually ROLE_ADMIN
 
 when@test:
     security:

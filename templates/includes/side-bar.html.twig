@@ -21,11 +21,6 @@
             <ul>
                 <li><a href="#">My Orders</a></li>
                 <li><a href="#">Manage Orders</a></li>
-            {# </ul>
-        {% elseif app.user.role == 'ROLE_ADMIN' %}
-        <h3>{{app.user.name}}</h3>
-            <ul> #}
-                {# <li><a href="{{ path('newProduct')}}">New Product</a></li> #}
                 <li><a href="{{ path('manageCategories')}}">Manage Categories</a></li>
                 <li><a href="{{ path('manageBrands')}}">Manage Brands</a></li>
                 <li><a href="{{ path('manageProducts') }}">Manage Products</a></li>

@@ -121,11 +121,6 @@ td.actions a:hover{
 }
 
 /*MENU*/
-
-#menu .user{
-    display:block;
-}
-
 #menu{
     clear:both;
     background: #222;
@@ -137,9 +132,6 @@ td.actions a:hover{
 #menu ul{
     list-style: none;
     text-decoration: none;
-    /* margin: 0px auto; */
-    /* margin-left: 25px; */
-    /* padding-left: 20px; */
 }
 
 #menu ul li{
@@ -680,19 +672,44 @@ button{
     padding: 5px 10px;
 }
 
-.ord-body{
-    background-color: #eee;
-    padding: 10px 10px;
-}
-
 .ord-header span{
     color: #333;
     font-weight: bold;
 }
 
+.dropdown{
+    position:relative;
+}
+
+.dropdown-content{
+    display:none;
+    position:absolute;
+    top:53px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #333;
+    padding:15px;
+    border-radius: 5px;
+    z-index:1;
+}
+
+.dropdown:hover .dropdown-content{
+    display: block;
+}
+
+.ord-body{
+    /* background-color: #eee; */
+    background-color: white;
+    padding: 10px 10px;
+}
+
 .ord-row{
     margin: 15px 0px;
     display:flex;
+}
+
+.ord-qty{
+    padding-right: 10px;
+    padding-top:40px;
 }
 
 .ord-img{
@@ -724,7 +741,7 @@ button{
 }
 
 .buy-again{
-    margin-top: 15px!important;
+    margin-top: 5px!important;
     padding:5px!important;
 }
 

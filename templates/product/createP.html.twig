@@ -8,17 +8,17 @@
     {% endif %}
 {% endblock %}
 
-{% block main %}
-    <h1>
-        {% if edit is not null and newProduct is not null %}
-        Edit</br>
-         {{ newProduct.brand.name }} - {{ newProduct.model }}
-    </h1>
-        <a href="{{ path('productDetail', {'id': newProduct.id })}}">See Product Details</a></br>
-        {% else %}
+{% block header %}
+    {% if edit is not null and newProduct is not null %}
+    Edit</br>
+        <a href="{{ path('productDetail', {'id': newProduct.id })}}">{{ newProduct.brand.name }} - {{ newProduct.model }}</a></br>
+    {% else %}
         Create New Product
-        {% endif %}
-    </h1>
+    {% endif %}
+{% endblock %}
+
+
+{% block main %}
     {% if message %}
         {% if error %}
             <span class="alert_red">{{message}}</span>
