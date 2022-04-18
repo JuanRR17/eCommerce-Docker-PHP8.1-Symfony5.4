@@ -12,14 +12,14 @@
                 <p>{{ order.city }}</p>
                 <p>{{ order.country }}</p>
             </div>
-            <div class="col-md-8">
+            <div class="col-lg-8">
                 <table>
                     <tr>
-                        <th>Image</th>
+                        <th></th>
                         <th>Product</th>
                         <th>Price</th>
                         <th>Quantity</th>
-                        <th>Total</th>
+                        <th>Subtotal</th>
                     </tr>
                 
                     {% for row in order.orderRows %}
@@ -27,18 +27,22 @@
                     {% endif %}
                     <tr>
                         <td>{% if row.product.images is not empty %}<img class="img_basket" src="{{ asset('/assets/imgs/products/'~ row.product.id ~'/'~ row.product.images[0].name ) }}" />{% endif %}</td>
-                        <td><a href="{{path('productDetail', {'id': row.product.id})}}">{{ row.product.brand.name }} {{ row.product.model }}</a></td>
-                        <td class="align-right">{{ row.product.price }} €</td>
+                        <td>
+                            <div class="productName">
+                                <a href="{{path('productDetail', {'id': row.product.id})}}">{{ row.product.brand.name }} {{ row.product.model }}</a>
+                            </div>
+                        </td>
+                        <td class="align-right">{{ row.product.price|number_format(2, ',', '.') }} €</td>
                         <td>{{ row.quantity }}</td>
-                        <td class="align-right">{{ row.subtotal }} €</td>
+                        <td class="align-right">{{ row.subtotal|number_format(2, ',', '.') }} €</td>
                     </tr>      
                     {% endfor %}
                         <tr> 
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>Cost</td>
-                            <td class="align-right">{{ order.cost }} €</td>
+                            <td>Total</td>
+                            <td class="align-right">{{ order.cost|number_format(2, ',', '.') }} €</td>
                         </tr>
                     </table>
             </div>

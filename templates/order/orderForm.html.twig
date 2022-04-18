@@ -30,10 +30,13 @@
         {% endif %}
         <tr>
             <td>{% if row.product.images is not empty %}<img class="img_basket" src="{{ asset('/assets/imgs/products/'~ row.product.id ~'/'~ row.product.images[0].name ) }}" />{% endif %}</td>
-            <td><a href="{{path('productDetail', {'id': row.product.id})}}">{{ row.product.brand.name }} {{ row.product.model }}</a></td>
-            <td class="align-right">{{ row.product.price }} €</td>
+            <td>
+              <div class="productName">
+                <a href="{{path('productDetail', {'id': row.product.id})}}">{{ row.product.brand.name }} {{ row.product.model }}</a></td>
+              </div>
+            <td class="align-right">{{ row.product.price|number_format(2, ',', '.') }} €</td>
             <td>{{ row.quantity }}</td>
-            <td class="align-right">{{ row.subtotal }} €</td>
+            <td class="align-right">{{ row.subtotal|number_format(2, ',', '.') }} €</td>
         </tr>      
         {% endfor %}
             <tr> 
@@ -41,7 +44,7 @@
                 <td></td>
                 <td></td>
                 <td>Order Cost</td>
-                <td class="align-right">{{ order.cost }} €</td>
+                <td class="align-right">{{ order.cost|number_format(2, ',', '.') }} €</td>
             </tr>
         </table>
 

@@ -8,12 +8,12 @@
         </div>
         {% if product.offer %}
         <p> 
-            <span class="offer-final-price">{{(product.price - (product.price*product.offer/100))}} € </span>
+            <span class="offer-final-price">{{ (product.price - (product.price*product.offer/100))|number_format(2, ',', '.') }} € </span></br>
             <span class="offer offerPerc"> Offer {{product.offer}}%</span>
-            <span class="offer original-price">{{product.price}} € </span>
+            <span class="offer original-price">{{product.price|number_format(2, ',', '.')}} € </span>
         </p>
         {% else %}
-        <p>{{product.price}} € </p>
+        <p>{{product.price|number_format(2, ',', '.')}} € </p>
         {% endif %}
 
         <h2> 
@@ -23,8 +23,8 @@
         </h2>
         <p class="modelName">
             <a class="model" href="{{ path('productDetail', {'id':product.id}) }}">
-                {{product.model|slice(0,40)}}
-                {% if product.model|length > 40 %}
+                {{product.model|slice(0,38)}}
+                {% if product.model|length > 38 %}
                 ...
                 {% endif %}
             </a>

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block header %}
-    {{ product.brand.name }} - {{ product.model }}
+    <a href="{{path('showBrand', {'id':product.brand.id})}}">{{ product.brand.name }}</a> - {{ product.model }}
 {% endblock %}
 
 {% block main %}
@@ -35,24 +35,29 @@
                 {% endif %}
             </div>
             <div class="data">
-                <p>Category: <a href="{{path('showCategory', {'id':product.category.id})}}">{{ product.category.name }}</a></p>
-                <p>Brand: <a href="{{path('showBrand', {'id':product.brand.id})}}">{{ product.brand.name }}</a></p>
-                <p>Model: {{ product.model }}</p>
-                <p>Colour: {{ product.colour }}</p>
-                <p class="price">Price: {{ product.price }} €</p>
-                <p><a href="{{ path('addToBasket', {'id':product.id})}}" class="btn btn-secondary">Add to Basket</a></p>
-                {% if product.offer is not null %}
-                    <p>Offer: {{ product.offer }} %</p>
-                {% endif %}
-                <p>Stock: 
-                {% if product.stock == 0 %}
-                    <span class="alert alert-danger">Product Not Available</span>
-                {% else %}
-                    {{ product.stock }}</p>
-                {% endif %}
+                <p><span class="field">Category:</span> <a href="{{path('showCategory', {'id':product.category.id})}}">{{ product.category.name }}</a></p>
+                <p><span class="field">Colour:</span> {{ product.colour }}</p>
                 {% if product.specifications is not null %}
-                <p>Specifications: {{ product.specifications }}</p>
+                    <p><span class="field">Specifications:</span> {{ product.specifications }}</p>
                 {% endif %}
+                <p class="price"><span class="field">Price:</span>
+                {% if product.offer %}
+                    <span class="offer-final-price">{{ (product.price - (product.price*product.offer/100))|number_format(2, ',', '.') }} € </span></br>
+                    <span class="offer offerPerc"> Offer {{product.offer}}%</span>
+                    <span class="offer original-price">{{product.price|number_format(2, ',', '.')}} € </span>
+                {% else %}
+                <span class="noOffer">  {{ product.price|number_format(2, ',', '.') }} €</span>
+                {% endif %}                
+                <p><a href="{{ path('addToBasket', {'id':product.id})}}" class="btn btn-warning">Add to Basket</a></p>
+                <p> 
+                {% if product.stock == 0 %}
+                    <span class="stock notAvailable">No Stock</span>
+                {% elseif product.stock >= 10 %}
+                    <span class="stock inStock">In Stock</span>
+                {% else %}
+                    <span class="stock onlyFew">Only {{ product.stock }} items available</span>
+                {% endif %}
+                </p>
             </div>
         </div>
     {% else %}

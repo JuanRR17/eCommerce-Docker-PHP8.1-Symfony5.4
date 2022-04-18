@@ -24,8 +24,11 @@
         {% endif %}
         <tr>
             <td>{% if prod.productId.images is not empty %}<img class="img_basket" src="{{ asset('/assets/imgs/products/'~ prod.productId.id ~'/'~ prod.productId.images[0].name ) }}" />{% endif %}</td>
-            <td><a href="{{path('productDetail', {'id': prod.productId.id})}}">{{ prod.productId.brand.name }} {{ prod.productId.model }}</a></td>
-            <td class="align-right">{{ prod.productId.price }} €</td>
+            <td>
+                <div class="productName">
+                    <a href="{{path('productDetail', {'id': prod.productId.id})}}">{{ prod.productId.brand.name }} {{ prod.productId.model }}</a></td>
+                </div>
+            <td class="align-right">{{ prod.productId.price|number_format(2, ',', '.') }} €</td>
             <td>{{ prod.quantity }}</td>
             <td> 
                 <div class="updown-units">
@@ -34,7 +37,7 @@
                     <a href="{{ path('removeRow', {'id':prod.id})}}">x</a>
                 </div>
             </td>
-            <td class="align-right">{{ prod.subtotal }} €</td>
+            <td class="align-right">{{ prod.subtotal|number_format(2, ',', '.') }} €</td>
         </tr>      
         {% endfor %}
             <tr> 
@@ -43,7 +46,7 @@
                 <td></td>
                 <td></td>
                 <td>Total in Basket</td>
-                <td class="align-right">{{ basket.total }} €</td>
+                <td class="align-right">{{ basket.total|number_format(2, ',', '.') }} €</td>
             </tr>
         </table>
         <a href="{{ path('make_order', {'id': basket.id }) }}" class="btn btn-success float-right m-2">Make Order</a>
