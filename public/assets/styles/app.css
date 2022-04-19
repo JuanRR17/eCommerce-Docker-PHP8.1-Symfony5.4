@@ -134,10 +134,10 @@ td.actions a:hover{
 /*MENU*/
 #menu{
     clear:both;
-    background: #222;
+    background: rgb(148, 91, 6);
     color: white;
     height: 55px;
-    border-bottom: 4px solid #01B1EA;
+    border-bottom: 4px solid black;
 }
 
 #menu ul{
@@ -148,20 +148,30 @@ td.actions a:hover{
 #menu ul li{
     line-height: 51px;
     float:left;
-    border-right: 1px solid #363636;
+    /* border-right: 1px solid #363636; */
 }
 
 .row{
     width:100%!important;
 }
 
-.dropdown-menu{
+/* .dropdown-item{
+    color:white!important;
+} */
+
+.dropdown-item:hover, .nav-item:hover{
+    background-color: #11608E!important;
+}
+
+
+/* .dropdown-menu{
     background: #222!important;
     line-height: 30px!important;
-    padding:1px!important;
+    padding:1px!important; 
     color:white!important;
     width:auto;
 }
+/*
 
 .dropdown-menu .show{
     right:0px!important;
@@ -170,7 +180,7 @@ td.actions a:hover{
 .dropdown-menu li{
     border-right:unset!important;
     width:100%;
-}
+}  */
 
 #menu a{
     display: block;
@@ -183,12 +193,12 @@ td.actions a:hover{
     transition: all 300ms;
 }
 
-#menu a:first-child{
+/* #menu a:first-child{
    border-left: 1px solid #363636; 
-}
+} */
 
 #menu a:hover{
-    background: #01B1EA;
+    background: #6d3602;
 }
 
 /*CONTENT*/
@@ -600,13 +610,8 @@ button{
     margin: 2px;
     color: white!important;
     text-decoration: none;
-    /* display: block; */
     border-radius: 5px;
     width: fit-content;
-    /* padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px; */
-    /* color: white!important; */
     background: #2979CD;
     border: 1px solid #11608E;
     cursor:pointer;
@@ -720,5 +725,5 @@ button{
     padding-bottom: 10px;
     color: white;
     background: #222222;
-    border-top: 4px solid #01B1EA;
+    border-top: 4px solid #0d6efd;
 }
