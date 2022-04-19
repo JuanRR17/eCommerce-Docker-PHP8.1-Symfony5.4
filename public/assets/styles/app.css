@@ -7,7 +7,7 @@
 }
 
 body{
-    background: url(../imgs/global/bg.png);
+    background-color:rgba(0, 162, 255, 0.568)!important;
 }
 
 td a{
@@ -84,10 +84,12 @@ td.actions a:hover{
 
 /*CONTAINER*/
 #container{
+    position:relative;
    width: 90%;
    margin: 0px auto;
    box-shadow: 0px 0px 10px gray;
    background: white;
+   min-height: 100vh;
 }
 
 /*HEADER*/
@@ -155,32 +157,13 @@ td.actions a:hover{
     width:100%!important;
 }
 
-/* .dropdown-item{
-    color:white!important;
-} */
-
 .dropdown-item:hover, .nav-item:hover{
     background-color: #11608E!important;
 }
 
-
-/* .dropdown-menu{
-    background: #222!important;
-    line-height: 30px!important;
-    padding:1px!important; 
-    color:white!important;
-    width:auto;
+.login-label{
+    padding-left:5px;
 }
-/*
-
-.dropdown-menu .show{
-    right:0px!important;
-}
-
-.dropdown-menu li{
-    border-right:unset!important;
-    width:100%;
-}  */
 
 #menu a{
     display: block;
@@ -193,19 +176,21 @@ td.actions a:hover{
     transition: all 300ms;
 }
 
-/* #menu a:first-child{
-   border-left: 1px solid #363636; 
-} */
-
 #menu a:hover{
     background: #6d3602;
+}
+
+nav{
+    border-bottom: 4px solid #222222;
 }
 
 /*CONTENT*/
 #content{
     margin: 0px auto;
+    padding-bottom: 50px;
     overflow: hidden;
     background: white;
+    min-height: calc(100vh - 90px);
 }
 
 /*FORMS*/
@@ -271,7 +256,6 @@ button{
 #central{
     width: 100%;
     min-height: 500px;
-    box-shadow: -5px -1px 5px #ddd;
     padding:25px;
 }
 
@@ -726,4 +710,9 @@ button{
     color: white;
     background: #222222;
     border-top: 4px solid #0d6efd;
+    position:absolute;
+    bottom: 0;
+    display:block;
+    width: 100%;
+    height:50px;
 }

@@ -1,104 +1,3 @@
-{# <nav id="menu" class="navbar navbar-expand-md">
-	<div class="container-fluid">
-		<div class="row justify-content-between" style="width:100%;">
-			<div class="col-auto">
-				<a class="navbar-brand" href="#">eCommerce</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNavDropdown">
-					<ul class="navbar-nav">
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="{{ path('index') }}">
-								Home
-							</a>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								Products
-							</a>
-							<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								{% for category in getCategories() %}
-									<li>
-										<a class="dropdown-item" href="{{ path('showCategory', {'id':category.id} )}}">
-											{{ category.name }}
-										</a>
-									</li>
-								{% endfor %}
-							</ul>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								Brands
-							</a>
-							<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								{% for brand in getBrands() %}
-									<li>
-										<a class="dropdown-item" href="{{ path('showBrand', {'id':brand.id} )}}">
-											{{ brand.name }}
-										</a>
-									</li>
-								{% endfor %}
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="col-auto">
-				<ul class="navbar-nav">
-					<li class="nav-item dropdown">
-					{% set stats = statsBasket(app.user) %}
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							Basket ({{ stats.count }})
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<li><a href=
-							{% if app.user %}
-								"{{ path('basket', {'id':app.user.id}) }}"
-								{% else %}
-								"{{ path('basket')}}"
-							{% endif %}>
-							Total: {{ stats.total|number_format(2, ',', '.') }} €</a></li>
-						</ul>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								{% if app.user %}
-									{{app.user.name ~ ' ' ~ app.user.surname}}
-								{% else %}
-									Login
-								{% endif %}
-							</a>
-							<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								{% if app.user %}
-									<li><a href="{{ path('user_orders_index', {'id':app.user.id}) }}">My Orders</a></li>
-									<li><a href="{{ path('manageOrders')}}">Manage Orders</a></li>
-									<li><a href="{{ path('manageCategories')}}">Manage Categories</a></li>
-									<li><a href="{{ path('manageBrands')}}">Manage Brands</a></li>
-									<li><a href="{{ path('manageProducts') }}">Manage Products</a></li>
-
-									<li><a href="{{path('register', {'id':app.user.id})}}">My details</a></li>
-									<li><a href="{{path('logout')}}">Logout</a></li>
-									</ul>
-								{% else %}
-									<form action="{{ path('login_check') }}" method="post">
-										<label for="email">Email</label>
-										<input type="email" id="username" name="_username" />
-
-										<label for="password">Password</label>
-										<input type="password" id="password" name="_password" />
-
-										<input type="submit" value="Submit" class="btn btn-primary"/>
-									</form>
-									<li><a href="{{ path('register') }}">Register</a></li>
-								{% endif %}
-							</ul>
-						</li>
-					</ul>
-			</div>
-		</div>
-	</div>
-</nav> #}
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary py-0">
   <div class="container-fluid">
       <a class="navbar-brand" href="#">
@@ -113,14 +12,11 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ path('index') }}">Home</a>
         </li>
-        {# <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li> #}
         <li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			<a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 				Products
 			</a>
-			<ul class="dropdown-menu  bg-primary" aria-labelledby="navbarDropdownMenuLink">
+			<ul class="dropdown-menu bg-primary p-0 overflow-hidden" aria-labelledby="navbarDropdownMenuLink">
 				{% for category in getCategories() %}
 					<li>
 						<a class="dropdown-item text-light" href="{{ path('showCategory', {'id':category.id} )}}">
@@ -131,10 +27,10 @@
 			</ul>
         </li>
 		<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			<a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 				Brands
 			</a>
-			<ul class="dropdown-menu bg-primary" aria-labelledby="navbarDropdownMenuLink">
+			<ul class="dropdown-menu bg-primary p-0 overflow-hidden" aria-labelledby="navbarDropdownMenuLink">
 				{% for brand in getBrands() %}
 					<li>
 						<a class="dropdown-item text-light" href="{{ path('showBrand', {'id':brand.id} )}}">
@@ -144,15 +40,12 @@
 				{% endfor %}
 			</ul>
 		</li>
-        {# <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li> #}
 		<li class="nav-item dropdown">
 		{% set stats = statsBasket(app.user) %}
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			<a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 				Basket ({{ stats.count }})
 			</a>
-			<ul class="dropdown-menu bg-primary" aria-labelledby="navbarDropdownMenuLink">
+			<ul class="dropdown-menu bg-primary p-0 overflow-hidden" aria-labelledby="navbarDropdownMenuLink">
 				<li><a class="dropdown-item text-light" href=
 				{% if app.user %}
 					"{{ path('basket', {'id':app.user.id}) }}"
@@ -163,14 +56,14 @@
 			</ul>
 		</li>
 		<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			<a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 				{% if app.user %}
 					{{app.user.name ~ ' ' ~ app.user.surname}}
 				{% else %}
 					Login
 				{% endif %}
 			</a>
-			<ul class="dropdown-menu bg-primary" aria-labelledby="navbarDropdownMenuLink">
+			<ul class="dropdown-menu bg-primary p-0 overflow-hidden" aria-labelledby="navbarDropdownMenuLink">
 				{% if app.user %}
 					<li><a class="dropdown-item text-light" href="{{ path('user_orders_index', {'id':app.user.id}) }}">My Orders</a></li>
 					<li><a class="dropdown-item text-light" href="{{ path('manageOrders')}}">Manage Orders</a></li>
@@ -183,10 +76,10 @@
 					</ul>
 				{% else %}
 					<form action="{{ path('login_check') }}" method="post">
-						<label class="dropdown-item text-light" for="email">Email</label>
+						<label class="login-label text-light" for="email">Email</label>
 						<input type="email" id="username" name="_username" />
 
-						<label class="dropdown-item text-light" for="password">Password</label>
+						<label class="login-label text-light" for="password">Password</label>
 						<input type="password" id="password" name="_password" />
 
 						<input class="dropdown-item text-light" type="submit" value="Login"/>
