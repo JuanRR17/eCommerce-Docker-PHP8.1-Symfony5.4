@@ -4,8 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Image;
 use App\Entity\Product;
+use App\Form\SearchType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -25,13 +29,54 @@ class ProductController extends AbstractController
         $this->projectDir = $projectDir;
     }
 
-    public function index(): Response
+    public function index(Request $request=null): Response
     {
         $products = $this->em->getRepository(Product::class)->findBy([],['id' => 'DESC']);
+
+        if($request->request->count() > 0){
+            $search=$request->request->get('search')['searchBar'];
+
+            //Search within Products
+            $matches=[];
+            foreach($products as $product){
+                if(
+                    str_contains($product->getModel(), $search)
+                    ||
+                    str_contains($product->getSpecifications(), $search)
+                    ||
+                    str_contains($product->getColour(), $search)
+                    ){
+                    $matches[]=$product;
+                }
+            }
+            if(!empty($matches)){
+                $products=$matches;
+            }
+        }
+               
 
         return $this->render('product/index.html.twig', [
             'products' => $products,
         ]);
+    }
+
+    public function searchBar(Request $request=null):Response
+    {
+        //Create search Bar Form
+        $search = [];
+
+        $form=$this->createForm(SearchType::class,$search);
+        //Handle search
+        $form->handleRequest($request);
+
+        //Fill the $search variable
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->redirect($this->generateUrl('index'));
+        }
+                   
+        return $this->render('includes/searchBar.html.twig', [
+            'form' => $form->createView()
+            ]);
     }
 
     public function manage(): Response

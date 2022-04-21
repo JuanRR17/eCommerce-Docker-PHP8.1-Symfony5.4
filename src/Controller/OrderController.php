@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Admin\OrderStatus;
 use App\Entity\Basket;
+use App\Entity\BasketRow;
 use App\Entity\Order;
 use App\Entity\OrderRow;
 use App\Entity\User;
@@ -28,9 +30,11 @@ class OrderController extends AbstractController
     public function index(): Response
     {
         $orders = $this->em->getRepository('App:Order')->findAll();
+        $statusMap = OrderStatus::status;
 
         return $this->render('order/manageOrders.html.twig', [
-            'orders' => $orders
+            'orders' => $orders,
+            'statusMap' => $statusMap
         ]);
     }
 
@@ -64,6 +68,7 @@ class OrderController extends AbstractController
         ->setReceiverSurname($user->getSurname())
         ;
 
+        //Add Rows from Basket to Order
         $basketRows = $this->em->getRepository('App:BasketRow')->findBy([
             'basket_id' => $basket
         ]);
@@ -92,7 +97,7 @@ class OrderController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             //Auto-completing the user fields before saving
             $order->setCreatedAt(new \DateTimeImmutable("now"));
-            $order->setStatus("PENDING");
+            $order->setStatus(OrderStatus::status['PENDING']);
             
             //Save order in database
             $em=$doctrine->getManager();
@@ -126,5 +131,41 @@ class OrderController extends AbstractController
         return $this->render('order/orderDetails.html.twig', [
             'order' => $order,     
         ]);
+    }
+
+    public function makeOrderFromLogin(
+        Request $request,
+        ManagerRegistry $doctrine,
+        User $user
+    ){
+        $userBasket=$this->em->getRepository('App:Basket')->findOneBy(
+            ['userid' => $user]
+        );
+
+        $noUserBasketRows=$this->em->getRepository('App:BasketRow')->findBy(
+            ['userid' => null]
+        );
+
+        //Add Rows from No User Basket to User Basket
+        foreach($noUserBasketRows as $noUserBasketRow){
+            $rowProduct = $this->em->getRepository('App:Product')->findOneById([
+                'id' => $noUserBasketRow->getProductId()
+            ]); 
+            
+            $newBasketRow = new BasketRow;
+            $newBasketRow
+                ->setQuantity($noUserBasketRow->getQuantity())
+                ->setBasketId($userBasket->getId())
+                ->setProductId($rowProduct)
+                ->setSubtotal()
+                ;
+            $this->em->persist($newBasketRow);
+            $this->em->flush();
+            $userBasket->addBasketRow($rowProduct);
+
+        }
+
+        $this->makeOrder($request, $doctrine, $userBasket);
+
     }
 }

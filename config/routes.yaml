@@ -23,6 +23,10 @@ index:
    path: /
    controller: App\Controller\ProductController::index
 
+handleSearch:
+   path: /search
+   controller: App\Controller\ProductController::handleSearch
+
 manageProducts:
    path: /product/manage
    controller: App\Controller\ProductController::manage
@@ -117,6 +121,10 @@ make_order:
    path: /order/make/{id}
    controller: App\Controller\OrderController::makeOrder
 
+makeOrderFromLogin:
+   path: /order/makeFromLogin/{id}
+   controller: App\Controller\OrderController::makeOrderFromLogin
+
 orderConfirmation:
    path: /order/confirmation/{id}
    controller: App\Controller\OrderController::orderConfirmation
@@ -125,10 +133,11 @@ user_orders_index:
    path: /order/user/{id}
    controller: App\Controller\OrderController::userIndex
 
+manageOrders:
+   path: /order/manage
+   controller: App\Controller\OrderController::index
+   
 orderDetails:
    path: /order/{id}
    controller: App\Controller\OrderController::showDetails
 
-manageOrders:
-   path: /order/manage
-   controller: App\Controller\OrderController::index

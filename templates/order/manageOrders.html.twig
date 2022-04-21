@@ -10,10 +10,8 @@
 
 {% block main%}
     {% if orders is not null %}
-    {# {{dump(orders)}} #}
         {% for order in orders %}
             <div class="ordered">
-            {{dump(order)}}
                 <div class="ord-header container-fluid">
                     <div class="row">
                         <div class="col-auto">
@@ -21,8 +19,22 @@
                             <span>{{order.createdAt | date('d/m/Y')}}</span>
                         </div>
                         <div class="col-auto">
+                            STATUS:<br/>
+                            <select>
+                                {% for status in statusMap %}
+                                    <option value="{{status}}"
+                                    {% if status == order.status %}
+                                    selected="selected"
+                                    {% endif %}
+                                    >
+                                     {{status}} 
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>  
+                        <div class="col-auto">
                             TOTAL:<br/>
-                            <span>{{order.cost}} €</span>
+                            <span>{{order.cost|number_format(2, ',', '.')}} €</span>
                         </div>
                         <div class="col-auto">
                             DELIVERED TO:<br/>

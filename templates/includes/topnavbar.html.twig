@@ -89,10 +89,9 @@
 			</ul>
 		</li>		
       </ul>
-      <form class="d-flex p-1">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-info" type="submit">Search</button>
-      </form>
+		{{render(controller(
+			'App\\Controller\\ProductController::searchBar'
+		))}}
     </div>
   </div>
 </nav>

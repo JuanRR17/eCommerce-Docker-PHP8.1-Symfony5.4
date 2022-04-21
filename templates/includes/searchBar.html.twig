@@ -1,0 +1,15 @@
+{{form_start(form,{
+    'attr': {'class':'d-flex p-1', 'action':path('index')}
+})}}
+
+{{ form_widget(form.searchBar,{
+    'attr': {'class':'form-control me-2', 'placeholder': 'Search...'}
+})
+}}
+
+{{ form_widget(form.Search,{
+    'attr': {'class':'btn btn-info py-0'}
+})
+}}
+
+{{form_end(form)}}

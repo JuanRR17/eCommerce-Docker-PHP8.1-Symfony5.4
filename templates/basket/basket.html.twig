@@ -11,7 +11,7 @@
         {% endif %}
     <table>
         <tr>
-            <th>Image</th>
+            <th></th>
             <th>Product</th>
             <th>Price</th>
             <th>Quantity</th>
@@ -49,7 +49,38 @@
                 <td class="align-right">{{ basket.total|number_format(2, ',', '.') }} €</td>
             </tr>
         </table>
-        <a href="{{ path('make_order', {'id': basket.id }) }}" class="btn btn-success float-right m-2">Make Order</a>
+        {% if app.user is not null %}
+            <a href="{{ path('make_order', {'id': basket.id }) }}" class="btn btn-success float-right m-2">Make Order</a>
+        {% else %}
+            <a href="#" class="btn btn-success float-right m-2" data-bs-toggle="modal" data-bs-target="#loginModal">Make Order</a>
+            <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Login to add the products in the Basket to your Personal Basket.</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ path('login_check') }}" method="post">
+						<labelfor="email">Email</label>
+						<input type="email" id="username" name="_username" />
+
+						<label for="password">Password</label>
+						<input type="password" id="password" name="_password" />
+{# 
+						<input type="submit" value="Login"/>
+					</form> #}
+					<a href="{{ path('register') }}">Register</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+            </div>
+        {% endif %}
     {% else %}
         Basket is empty
     {% endif %}
