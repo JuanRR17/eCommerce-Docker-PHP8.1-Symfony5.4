@@ -23,10 +23,6 @@ index:
    path: /
    controller: App\Controller\ProductController::index
 
-handleSearch:
-   path: /search
-   controller: App\Controller\ProductController::handleSearch
-
 manageProducts:
    path: /product/manage
    controller: App\Controller\ProductController::manage

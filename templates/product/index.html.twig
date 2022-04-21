@@ -5,12 +5,15 @@
 {% block header %}Products{% endblock %}
 
 {% block main %}
-
     {% if products|length >= 1 %}
         {% for product in products %}
             {{ include('includes/productThumb.html.twig') }}
         {% endfor %}
     {% else %}
-    <strong> No products available </strong>
+        {% if search is defined %}
+        <strong> No results for search "{{search}}"  </strong>
+        {% else  %}
+        <strong> No products available </strong>
+        {% endif %}
     {% endif %}
 {% endblock %}

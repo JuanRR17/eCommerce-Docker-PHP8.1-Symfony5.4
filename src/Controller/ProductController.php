@@ -33,6 +33,7 @@ class ProductController extends AbstractController
     {
         $products = $this->em->getRepository(Product::class)->findBy([],['id' => 'DESC']);
 
+        // searchBar request handling
         if($request->request->count() > 0){
             $search=$request->request->get('search')['searchBar'];
 
@@ -49,12 +50,12 @@ class ProductController extends AbstractController
                     $matches[]=$product;
                 }
             }
-            if(!empty($matches)){
-                $products=$matches;
-            }
+            return $this->render('product/index.html.twig', [
+                'products' => $matches,
+                'search' => $search
+            ]);
         }
-               
-
+        
         return $this->render('product/index.html.twig', [
             'products' => $products,
         ]);
@@ -69,7 +70,7 @@ class ProductController extends AbstractController
         //Handle search
         $form->handleRequest($request);
 
-        //Fill the $search variable
+        //If there is a search, redirect to index
         if ($form->isSubmitted() && $form->isValid()) {
             $this->redirect($this->generateUrl('index'));
         }
