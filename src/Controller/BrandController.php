@@ -22,13 +22,6 @@ class BrandController extends AbstractController
         $this->request = $request->getCurrentRequest();
     }
 
-    public function index(): Response
-    {
-        return $this->render('brand/index.html.twig', [
-            'controller_name' => 'BrandController',
-        ]);
-    }
-
     public function manage(): Response
     {
         $message="";
@@ -40,13 +33,10 @@ class BrandController extends AbstractController
             $this->em->flush();
 
             $message = "Brand created successfully";
-            //return $this->redirect($this->generateUrl('index'));
         }
-        $brands=$this->em->getRepository('App:Brand')->findBy([], ['name' => 'ASC']);
         
         return $this->render('brand/manageBrand.html.twig',[
             'message' => $message,
-            'brands' => $brands
         ]);
     }
 
@@ -60,10 +50,9 @@ class BrandController extends AbstractController
             $this->em->flush();
 
             $message = "Brand modified successfully";
-            return $this->redirect($this->generateUrl('manageBrands'));
         }
         
-        return $this->render('brand/editBrand.html.twig',[
+        return $this->render('brand/manageBrand.html.twig',[
             'message' => $message,
             'edit_brand' => $edit_brand
         ]);
@@ -78,16 +67,13 @@ class BrandController extends AbstractController
             $this->em->flush();
 
             $message = "Brand deleted successfully";
-            return $this->redirect($this->generateUrl('manageBrands'));
 
         }else{
             $message = "Brand couldn't be deleted";
         }
-        $brands=$this->em->getRepository('App:Brand')->findBy([], ['name' => 'ASC']);
 
         return $this->render('brand/manageBrand.html.twig',[
             'message' => $message,
-            'brands' => $brands
         ]);
     }
 

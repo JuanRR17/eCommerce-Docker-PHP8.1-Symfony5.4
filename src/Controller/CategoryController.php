@@ -21,17 +21,9 @@ class CategoryController extends AbstractController
         $this->request = $request->getCurrentRequest();
     }
 
-    public function index(): Response
+    public function manage(): Response
     {
-        $categories = $this->em->getRepository('App:Category')->findAll;
-        return $this->render('category/index.html.twig', [
-            'categories' => $categories
-        ]);
-    }
-
-    public function manage(?string $message1): Response
-    {
-        $message=$message1;
+        $message="";
         if($this->request->getMethod() == 'POST'){
             $new_category = new Category();
             $new_category->setName($this->request->get('name'));
@@ -40,7 +32,6 @@ class CategoryController extends AbstractController
             $this->em->flush();
 
             $message = "Category created successfully";
-            //return $this->redirect($this->generateUrl('index'));
         }
         
         return $this->render('category/manageCat.html.twig',[
@@ -58,7 +49,6 @@ class CategoryController extends AbstractController
             $this->em->flush();
 
             $message = "Category modified successfully";
-            // return $this->redirect($this->generateUrl('manageCategories', ['message' => $message]));
         }
         
         return $this->render('category/manageCat.html.twig',[
@@ -74,12 +64,14 @@ class CategoryController extends AbstractController
             $this->em->remove($category);
             $this->em->flush();
 
-            $message = "Category modified successfully";
+            $message = "Category removed successfully";
         }else{
             $message = "Category couldn't be deleted";
         }
         
-        return $this->redirect($this->generateUrl('manageCategories'));
+        return $this->render('category/manageCat.html.twig',[
+            'message' => $message,
+        ]);
     }
 
     public function showCategory(Category $category): Response

@@ -5,12 +5,12 @@
 {% block header %}Manage Products{% endblock %}
 
 {% block main %}
-            <a href="{{ path('newProduct') }}" class="btn btn-success float-right" >Create New Product</a>
+    <a href="{{ path('newProduct') }}" class="btn btn-success float-right mb-2" >Create New Product</a>
     {% if message is defined %}
         <div class="message">{{message}}</div>
     {% endif %}
 
-    <table>
+    <table class="table table-striped table-hover table-bordered border-secondary">
         <tr>
             <th>Image</th>
             <th>Category</th>
@@ -43,10 +43,16 @@
                 {% if product.offer is not null %}
                   {{ product.offer }} %
                 {% else %}
-                  0
+                  None
                 {% endif %}
             </td>
-            <td class="stock">{{ product.stock }}</td>
+            <td class="stock">
+                {% if product.stock == 0 %}
+                <strong style="color:red">{{ product.stock }}</strong>
+                {% else %}
+                {{ product.stock }}
+                {% endif %}
+            </td>
             <td class="actions">
                 <a href="{{ path('editProduct', {'id':product.id}) }}" class="btn btn-outline-warning">Edit</a>
                 <a href="{{ path('removeProduct', {'id':product.id}) }}" class="btn btn-outline-danger">Delete</a>

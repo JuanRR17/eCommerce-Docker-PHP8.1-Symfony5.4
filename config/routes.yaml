@@ -55,7 +55,7 @@ select_main:
 
 # CATEGORY ROUTES
 manageCategories:
-   path: /category/manage/{msg?}
+   path: /category/manage
    controller: App\Controller\CategoryController::manage
 
 editCategory:
@@ -88,7 +88,6 @@ showBrand:
    controller: App\Controller\BrandController::showBrand
 
 # BASKET ROUTES 
-
 
 addToBasket:
    path: /basket/add/{id}
