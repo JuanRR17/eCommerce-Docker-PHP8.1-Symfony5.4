@@ -38,7 +38,7 @@
                 </a>
             </td>
             <td>{{ product.colour }}</td>
-            <td class="align-right">{{ product.price }} €</td>
+            <td class="align-right">{{ product.price|number_format(2, ',', '.') }} €</td>
             <td>
                 {% if product.offer is not null %}
                   {{ product.offer }} %
@@ -48,8 +48,8 @@
             </td>
             <td class="stock">{{ product.stock }}</td>
             <td class="actions">
-                <a href="{{ path('editProduct', {'id':product.id}) }}" class="btn btn-warning">Edit</a>
-                <a href="{{ path('removeProduct', {'id':product.id}) }}" class="btn btn-danger">Delete</a>
+                <a href="{{ path('editProduct', {'id':product.id}) }}" class="btn btn-outline-warning">Edit</a>
+                <a href="{{ path('removeProduct', {'id':product.id}) }}" class="btn btn-outline-danger">Delete</a>
             </td>
         </tr>
         {% endfor %}

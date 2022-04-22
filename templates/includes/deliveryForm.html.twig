@@ -1,0 +1,60 @@
+ {{form_start(form, {
+            'attr':{'class':'container'}
+        })}}
+            <div class="row">
+            {{ form_row(form.receiverName, {
+                attr: {
+                    placeholder: 'Name',
+                    class:'form-control'
+                },
+                label: 'Name*',
+                row_attr: {
+                    class: 'col-md-6'
+                }
+            }) }}
+            {{ form_row(form.receiverSurname, {
+                attr: {
+                    placeholder: 'Surname',
+                    class:'form-control'
+                },
+                label: 'Surname*',
+                row_attr: {
+                    class: 'col-md-6'
+                }
+            }) }}
+            </div>
+            <div class="row">
+            {{form_row(form.address,{
+                attr: {
+                    placeholder: 'Address',
+                    class:'form-control'
+                },
+                row_attr: {
+                    class: 'col'
+                }
+            })}}
+            </div>
+            <div class="row">
+            {{ form_row(form.city, {
+                attr: {
+                    placeholder: 'City',
+                    class:'form-control'
+                },
+                label: 'City',
+                row_attr: {
+                    class: 'col-md-6'
+                }
+            }) }}
+            {{ form_row(form.country, {
+                
+                attr: {
+                    placeholder: 'Country',
+                    class:'form-control'
+                },
+                label: 'Country',
+                row_attr: {
+                    class: 'col-md-6'
+                }
+            }) }}
+            </div>
+

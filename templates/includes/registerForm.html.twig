@@ -1,0 +1,95 @@
+ {{form_start(form, {
+            'attr':{'class':'container'}
+        })}}
+            <div class="row">
+            {{ form_row(form.name, {
+                attr: {
+                    placeholder: 'Name',
+                    class:'form-control'
+                },
+                label: 'Name*',
+                row_attr: {
+                    class: 'col-md-6'
+                }
+            }) }}
+            {{ form_row(form.surname, {
+                attr: {
+                    placeholder: 'Surname',
+                    class:'form-control'
+                },
+                label: 'Surname*',
+                row_attr: {
+                    class: 'col-md-6'
+                }
+            }) }}
+            </div>
+            <div class="row">
+            {{form_row(form.address,{
+                attr: {
+                    placeholder: 'Address',
+                    class:'form-control'
+                },
+                row_attr: {
+                    class: 'col'
+                }
+            })}}
+            </div>
+            <div class="row">
+            {{ form_row(form.city, {
+                attr: {
+                    placeholder: 'City',
+                    class:'form-control'
+                },
+                label: 'City',
+                row_attr: {
+                    class: 'col-md-6'
+                }
+            }) }}
+            {{ form_row(form.country, {
+                
+                attr: {
+                    placeholder: 'Country',
+                    class:'form-control'
+                },
+                label: 'Country',
+                row_attr: {
+                    class: 'col-md-6'
+                }
+            }) }}
+            </div>
+            <div class="row">
+            {{ form_row(form.email, {
+                attr: {
+                    placeholder: 'example@mail.com',
+                    class:'form-control'
+                },
+                label: 'Email',
+                row_attr: {
+                    class: 'col-md-6'
+                }
+            }) }}
+            {{ form_row(form.phone, {
+                
+                attr: {
+                    placeholder: 'Phone number',
+                    class:'form-control'
+                },
+                label: 'Phone number',
+                row_attr: {
+                    class: 'col-md-6'
+                }
+            }) }}
+            </div> 
+            <div class="row">
+            {{form_row(form.password,{
+                attr: {
+                    placeholder: 'Password',
+                    class:'form-control'
+                },
+                row_attr: {
+                    class: 'col-md-6 mb-2'
+                }
+            })}}
+            </div>           
+        {{form_widget(form.submit,{'attr':{'class':'btn btn-primary'}})}}
+        {{form_end(form)}}

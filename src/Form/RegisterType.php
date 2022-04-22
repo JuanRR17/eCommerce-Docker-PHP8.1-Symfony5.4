@@ -44,9 +44,6 @@ class RegisterType extends AbstractType
             ->add('password', PasswordType::class, array(
                 'label'=>'Password*'
             ))
-            // ->add('submit', SubmitType::class, array(
-            //     'label'=>'Register'
-            // ));
     ;}
 
     public function configureOptions(OptionsResolver $resolver): void

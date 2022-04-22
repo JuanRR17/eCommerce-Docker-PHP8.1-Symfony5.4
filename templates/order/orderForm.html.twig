@@ -6,7 +6,6 @@
 
 {% block main %}
     {% if order is defined %}
-    {{dump(order)}}
 <div class="accordion" id="accordionPanelsStayOpenExample">
   <div class="accordion-item">
     <h2 class="accordion-header" id="panelsStayOpen-headingOne">
@@ -39,7 +38,7 @@
             <td class="align-right">{{ row.subtotal|number_format(2, ',', '.') }} €</td>
         </tr>      
         {% endfor %}
-            <tr> 
+            <tr class="rowTotal"> 
                 <td></td>
                 <td></td>
                 <td></td>
@@ -61,14 +60,13 @@
     </h2>
     <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
       <div class="accordion-body">
-        {{form_start(form)}}
-        {# {% set submit = form_widget(form.submit) %} #}
+      {{ include('includes/deliveryForm.html.twig')}}
+        {# {{form_start(form)}}
         {{form_row(form.receiverName)}}
         {{form_row(form.receiverSurname)}}
         {{form_row(form.address)}}
         {{form_row(form.city)}}
-        {{form_row(form.country)}}
-        {# {{form_end(form)}} #}
+        {{form_row(form.country)}} #}
       </div>
     </div>
   </div>

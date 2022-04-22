@@ -55,7 +55,7 @@ select_main:
 
 # CATEGORY ROUTES
 manageCategories:
-   path: /category/manage
+   path: /category/manage/{msg?}
    controller: App\Controller\CategoryController::manage
 
 editCategory:
@@ -88,9 +88,7 @@ showBrand:
    controller: App\Controller\BrandController::showBrand
 
 # BASKET ROUTES 
-basket:
-   path: /basket/{id?}
-   controller: App\Controller\BasketController::index
+
 
 addToBasket:
    path: /basket/add/{id}
@@ -111,6 +109,10 @@ basketUp:
 basketDown:
    path: /basket/down/{id}
    controller: App\Controller\BasketController::down
+
+basket:
+   path: /basket/{id?}
+   controller: App\Controller\BasketController::index
 
 # ORDER ROUTES
 make_order:

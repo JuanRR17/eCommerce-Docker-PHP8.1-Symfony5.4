@@ -10,7 +10,7 @@
             {{ include('includes/productThumb.html.twig') }}
         {% endfor %}
     {% else %}
-        No {{ category.name }} available.
+        No products in category "{{ category.name }}" available.
     {% endif %}
 {% endblock %}
 

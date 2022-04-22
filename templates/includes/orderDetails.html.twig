@@ -1,12 +1,11 @@
     <div>
         <div>
-        {{dump(order)}}
-        <p>Status: {{order.status}}</p>
-        <p>Order Date: {{order.createdAt | date("m/d/Y")}}</p>
+        <p><strong>Status:</strong> {{order.status}}</p>
+        <p><strong>Order Date:</strong> {{order.createdAt | date("m/d/Y")}}</p>
         <div class="container">
         <div class="row">
             <div class="col">
-                <p>Delivery Address:</p>
+                <p><strong>Delivery Address:</strong></p>
                 <p>{{ order.receiverName }} {{ order.receiverSurname }}</p>
                 <p>{{ order.address }}</p>
                 <p>{{ order.city }}</p>
@@ -37,7 +36,7 @@
                         <td class="align-right">{{ row.subtotal|number_format(2, ',', '.') }} €</td>
                     </tr>      
                     {% endfor %}
-                        <tr> 
+                        <tr class="rowTotal"> 
                             <td></td>
                             <td></td>
                             <td></td>

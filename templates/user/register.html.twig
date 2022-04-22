@@ -25,9 +25,7 @@
                 <strong class="alert_green">User registered successfully!</strong>
             {% endif %}
         {% endif %}
-        {{form_start(form)}}
-        {# {{form_widget(form)}} #}
-        {{form_widget(form.submit,{'attr':{'class':'btn btn-primary'}})}}
-        {{form_end(form)}}
+       {{ include('includes/registerForm.html.twig')}}
+            
     </div>
 {% endblock %}

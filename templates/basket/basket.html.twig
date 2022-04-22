@@ -5,10 +5,10 @@
 {% block header %}Basket{% endblock %}
 
 {% block main %}
-    {% if basket is not empty %}
-        {% if basket.basketRows.count > 0 %}
+    {% if basket.basketRows.count > 0 %}
+        {# {% if basket.basketRows.count > 0 %} #}
             <a href="{{ path('emptyBasket') }}" class="btn btn-danger float-right m-2">Empty Basket</a>
-        {% endif %}
+        {# {% endif %} #}
     <table>
         <tr>
             <th></th>
@@ -40,7 +40,7 @@
             <td class="align-right">{{ prod.subtotal|number_format(2, ',', '.') }} €</td>
         </tr>      
         {% endfor %}
-            <tr> 
+            <tr class="rowTotal"> 
                 <td></td>
                 <td></td>
                 <td></td>
@@ -49,7 +49,9 @@
                 <td class="align-right">{{ basket.total|number_format(2, ',', '.') }} €</td>
             </tr>
         </table>
-        {% if app.user is not null %}
+            <a href="{{ path('make_order', {'id': basket.id }) }}" class="btn btn-success float-right m-2">Make Order</a>
+
+        {# {% if app.user is not null %}
             <a href="{{ path('make_order', {'id': basket.id }) }}" class="btn btn-success float-right m-2">Make Order</a>
         {% else %}
             <a href="#" class="btn btn-success float-right m-2" data-bs-toggle="modal" data-bs-target="#loginModal">Make Order</a>
@@ -67,9 +69,6 @@
 
 						<label for="password">Password</label>
 						<input type="password" id="password" name="_password" />
-{# 
-						<input type="submit" value="Login"/>
-					</form> #}
 					<a href="{{ path('register') }}">Register</a>
                 </div>
                 <div class="modal-footer">
@@ -80,9 +79,9 @@
                 </div>
             </div>
             </div>
-        {% endif %}
+        {% endif %} #}
     {% else %}
-        Basket is empty
+        Your basket is empty.
     {% endif %}
     
 {% endblock %}

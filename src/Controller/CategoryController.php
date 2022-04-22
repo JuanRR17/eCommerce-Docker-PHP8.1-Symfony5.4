@@ -29,9 +29,9 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    public function manage(): Response
+    public function manage(?string $message1): Response
     {
-        $message="";
+        $message=$message1;
         if($this->request->getMethod() == 'POST'){
             $new_category = new Category();
             $new_category->setName($this->request->get('name'));
@@ -58,10 +58,10 @@ class CategoryController extends AbstractController
             $this->em->flush();
 
             $message = "Category modified successfully";
-            return $this->redirect($this->generateUrl('manageCategories'));
+            // return $this->redirect($this->generateUrl('manageCategories', ['message' => $message]));
         }
         
-        return $this->render('category/editCat.html.twig',[
+        return $this->render('category/manageCat.html.twig',[
             'message' => $message,
             'edit_cat' => $edit_cat
         ]);
