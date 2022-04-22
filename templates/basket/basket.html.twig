@@ -9,10 +9,9 @@
         {# {% if basket.basketRows.count > 0 %} #}
             <a href="{{ path('emptyBasket') }}" class="btn btn-danger float-right m-2">Empty Basket</a>
         {# {% endif %} #}
-    <table>
+    <table class="table align-middle table-striped table-hover table-bordered border-secondary">
         <tr>
-            <th></th>
-            <th>Product</th>
+            <th colspan = "2" >Product</th>
             <th>Price</th>
             <th>Quantity</th>
             <th>Actions</th>
@@ -41,10 +40,7 @@
         </tr>      
         {% endfor %}
             <tr class="rowTotal"> 
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td colspan = "4" ></td>
                 <td>Total in Basket</td>
                 <td class="align-right">{{ basket.total|number_format(2, ',', '.') }} €</td>
             </tr>

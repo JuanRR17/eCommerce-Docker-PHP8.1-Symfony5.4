@@ -15,7 +15,7 @@
     </h2>
     <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
       <div class="accordion-body">
-      <table>
+      <table class="table align-middle table-striped table-hover table-bordered border-secondary">
         <tr>
             <th>Image</th>
             <th>Product</th>
@@ -39,9 +39,7 @@
         </tr>      
         {% endfor %}
             <tr class="rowTotal"> 
-                <td></td>
-                <td></td>
-                <td></td>
+                <td colspan = "3" ></td>
                 <td>Order Cost</td>
                 <td class="align-right">{{ order.cost|number_format(2, ',', '.') }} €</td>
             </tr>
@@ -61,12 +59,6 @@
     <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
       <div class="accordion-body">
       {{ include('includes/deliveryForm.html.twig')}}
-        {# {{form_start(form)}}
-        {{form_row(form.receiverName)}}
-        {{form_row(form.receiverSurname)}}
-        {{form_row(form.address)}}
-        {{form_row(form.city)}}
-        {{form_row(form.country)}} #}
       </div>
     </div>
   </div>

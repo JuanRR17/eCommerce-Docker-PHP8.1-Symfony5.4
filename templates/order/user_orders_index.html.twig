@@ -8,11 +8,10 @@
     {% if orders is not empty %}
         {% for order in orders %}
             <div class="ordered">
-            {# {{dump(order)}} #}
                 <div class="ord-header container-fluid">
                     <div class="row">
                         <div class="col-auto">
-                            ORDERED:<br/>
+                            DATE:<br/>
                             <span>{{order.createdAt | date('d/m/Y')}}</span>
                         </div>
                         <div class="col-auto">
@@ -21,7 +20,7 @@
                         </div>
                         <div class="col-auto">
                             TOTAL:<br/>
-                            <span>{{order.cost}} €</span>
+                            <span>{{order.cost|number_format(2, ',', '.')}} €</span>
                         </div>
                         <div class="col-auto dropdown">
                             DELIVERED TO:<br/>
@@ -34,23 +33,19 @@
                         </div>                        
                         <div class="col-auto ms-md-auto text-end ">
                             Order #: {{order.id}}<br/>
-                            <a href="{{ path('orderDetails', {'id':order.id}) }}">Order details</a>
+                            <a href="{{ path('orderDetails', {'id':order.id}) }}" target="_blank">Order details</a>
                         </div>
                     </div>
                 </div>
                 <div class="ord-body container-fluid">
                     <div class="row">
                             {% for orderRow in order.orderRows %}
-                            {# {{dump(orderRow)}} #}
                             <div class="ord-row">
-                                {# <div class="ord-qty">
-                                    {{orderRow.quantity}} x
-                                </div> #}
                                 <div class="ord-img">
                                     <img src="{{ asset('/assets/imgs/products/'~ orderRow.product.id ~'/'~ orderRow.product.images[0].name ) }}" alt="Image not available"/>
                                 </div>
                                 <div class="ord-product">
-                                    <a href="{{ path('productDetail', {'id':orderRow.product.id}) }}">{{orderRow.product.model}}</a>
+                                    <a href="{{ path('productDetail', {'id':orderRow.product.id}) }}">{{orderRow.product.brand.name}} {{orderRow.product.model}}</a>
                                     </br>
                                     <div>x {{orderRow.quantity}}</div>
                                     <a class="btn btn-warning buy-again">Buy again</a>

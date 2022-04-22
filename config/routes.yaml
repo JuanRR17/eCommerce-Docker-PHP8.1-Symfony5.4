@@ -131,9 +131,17 @@ user_orders_index:
    controller: App\Controller\OrderController::userIndex
 
 manageOrders:
-   path: /order/manage
+   path: /order/manage/{id?}
    controller: App\Controller\OrderController::index
-   
+
+updateOrderStatus:
+   path: /order/update/{id}/status
+   controller: App\Controller\OrderController::updateOrderStatus
+
+updateOrder:
+   path: /order/update/{id}
+   controller: App\Controller\OrderController::updateOrder
+
 orderDetails:
    path: /order/{id}
    controller: App\Controller\OrderController::showDetails

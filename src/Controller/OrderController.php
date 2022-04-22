@@ -9,6 +9,7 @@ use App\Entity\Order;
 use App\Entity\OrderRow;
 use App\Entity\User;
 use App\Form\OrderType;
+use App\Form\StatusType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,15 +28,21 @@ class OrderController extends AbstractController
         $this->em = $em;
     }
 
-    public function index(): Response
+    public function index(?Order $order): Response
     {
         $orders = $this->em->getRepository('App:Order')->findAll();
-        $statusMap = OrderStatus::status;
+         if($order!=null){
+            $update=true;
+            return $this->render('order/manageOrders.html.twig', [
+                'orders' => $orders,
+                'update' => $update
+            ]);
+        }else{
+            return $this->render('order/manageOrders.html.twig', [
+                'orders' => $orders,
+            ]);
+        }
 
-        return $this->render('order/manageOrders.html.twig', [
-            'orders' => $orders,
-            'statusMap' => $statusMap
-        ]);
     }
 
 
@@ -131,6 +138,33 @@ class OrderController extends AbstractController
         return $this->render('order/orderDetails.html.twig', [
             'order' => $order,     
         ]);
+    }
+
+    public function updateOrder(Order $order):Response
+    {
+        return $this->redirect($this->generateUrl('manageOrders', ['id'=>$order->getId()]));
+    }
+
+    public function updateOrderStatus(Request $request, Order $order):Response
+    {
+        $statusForm=$this->createForm(StatusType::class);
+    
+        //Handle search
+        $statusForm->handleRequest($request);
+
+        //Update Status of Order in the Database
+        if ($statusForm->isSubmitted() && $statusForm->isValid()) {
+            $status=$request->request->get('status')['status'];
+            $order->setStatus($status);
+            $this->em->persist($order);
+            $this->em->flush();
+            return $this->redirect($this->generateUrl('manageOrders'));
+        }
+        return $this->render('includes/updateStatus.html.twig', [
+            'order2' => $order,
+            'statusForm' => $statusForm->createView()
+        ]);
+
     }
 
     public function makeOrderFromLogin(

@@ -20,17 +20,18 @@
                         </div>
                         <div class="col-auto">
                             STATUS:<br/>
-                            <select>
-                                {% for status in statusMap %}
-                                    <option value="{{status}}"
-                                    {% if status == order.status %}
-                                    selected="selected"
-                                    {% endif %}
-                                    >
-                                     {{status}} 
-                                    </option>
-                                {% endfor %}
-                            </select>
+                            <a href="{{path('updateOrder', {'id':order.id})}}" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{order.id}}">
+                                {# <a href="{{path('updateOrder', {'id':order.id})}}"> #}
+                                    {{order.status}}
+                                {# </a> #}
+                             </a>
+                            <!-- Modal -->
+                            {% if update is defined %}
+                                {{render(controller(
+                                'App\\Controller\\OrderController::updateOrderStatus',{'order':order.id}
+                                ))}}
+                            {% endif %}
+
                         </div>  
                         <div class="col-auto">
                             TOTAL:<br/>

@@ -1,49 +1,47 @@
-    <div>
-        <div>
-        <p><strong>Status:</strong> {{order.status}}</p>
-        <p><strong>Order Date:</strong> {{order.createdAt | date("m/d/Y")}}</p>
-        <div class="container">
-        <div class="row">
-            <div class="col">
-                <p><strong>Delivery Address:</strong></p>
-                <p>{{ order.receiverName }} {{ order.receiverSurname }}</p>
-                <p>{{ order.address }}</p>
-                <p>{{ order.city }}</p>
-                <p>{{ order.country }}</p>
-            </div>
-            <div class="col-lg-8">
-                <table>
-                    <tr>
-                        <th></th>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Subtotal</th>
-                    </tr>
-                
-                    {% for row in order.orderRows %}
-                    {% if row.product.images is not empty %}
-                    {% endif %}
-                    <tr>
-                        <td>{% if row.product.images is not empty %}<img class="img_basket" src="{{ asset('/assets/imgs/products/'~ row.product.id ~'/'~ row.product.images[0].name ) }}" />{% endif %}</td>
-                        <td>
-                            <div class="productName">
-                                <a href="{{path('productDetail', {'id': row.product.id})}}">{{ row.product.brand.name }} {{ row.product.model }}</a>
-                            </div>
-                        </td>
-                        <td class="align-right">{{ row.product.price|number_format(2, ',', '.') }} €</td>
-                        <td>{{ row.quantity }}</td>
-                        <td class="align-right">{{ row.subtotal|number_format(2, ',', '.') }} €</td>
-                    </tr>      
-                    {% endfor %}
-                        <tr class="rowTotal"> 
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Total</td>
-                            <td class="align-right">{{ order.cost|number_format(2, ',', '.') }} €</td>
-                        </tr>
-                    </table>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <p><strong>Status:</strong> {{order.status}}</p>
+            <p><strong>Order Date:</strong> {{order.createdAt | date("m/d/Y")}}</p>
+            <p><strong>Delivery Address:</strong></p>
+            <p>{{ order.receiverName }} {{ order.receiverSurname }}</p>
+            <p>{{ order.address }}</p>
+            <p>{{ order.city }}</p>
+            <p>{{ order.country }}</p>
+        </div>
+        <div class="col-lg-8">
+            <table class="table align-middle table-striped table-hover table-bordered border-secondary">
+                <tr>
+                    <th></th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                </tr>
+            
+                {% for row in order.orderRows %}
+                {% if row.product.images is not empty %}
+                {% endif %}
+                <tr>
+                    <td>{% if row.product.images is not empty %}<img class="img_basket" src="{{ asset('/assets/imgs/products/'~ row.product.id ~'/'~ row.product.images[0].name ) }}" />{% endif %}</td>
+                    <td>
+                        <div class="productName">
+                            <a href="{{path('productDetail', {'id': row.product.id})}}">{{ row.product.brand.name }} {{ row.product.model }}</a>
+                        </div>
+                    </td>
+                    <td class="align-right">{{ row.product.price|number_format(2, ',', '.') }} €</td>
+                    <td>{{ row.quantity }}</td>
+                    <td class="align-right">{{ row.subtotal|number_format(2, ',', '.') }} €</td>
+                </tr>      
+                {% endfor %}
+                <tr class="rowTotal"> 
+                    <td colspan="3"></td>
+                    <td>Total</td>
+                    <td class="align-right">{{ order.cost|number_format(2, ',', '.') }} €</td>
+                </tr>
+            </table>
         </div>
     </div>
+    <a class="btn btn-primary" href="{{ path('user_orders_index', {'id':app.user.id}) }}">My Orders</a>
+
+</div>
