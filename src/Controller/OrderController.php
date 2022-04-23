@@ -28,23 +28,15 @@ class OrderController extends AbstractController
         $this->em = $em;
     }
 
-    public function index(?Order $order): Response
+    public function index(): Response
     {
         $orders = $this->em->getRepository('App:Order')->findAll();
-         if($order!=null){
-            $update=true;
-            return $this->render('order/manageOrders.html.twig', [
-                'orders' => $orders,
-                'update' => $update
-            ]);
-        }else{
+       
             return $this->render('order/manageOrders.html.twig', [
                 'orders' => $orders,
             ]);
-        }
 
     }
-
 
     public function userIndex(UserInterface $user): Response
     {
@@ -140,10 +132,6 @@ class OrderController extends AbstractController
         ]);
     }
 
-    public function updateOrder(Order $order):Response
-    {
-        return $this->redirect($this->generateUrl('manageOrders', ['id'=>$order->getId()]));
-    }
 
     public function updateOrderStatus(Request $request, Order $order):Response
     {
@@ -161,10 +149,9 @@ class OrderController extends AbstractController
             return $this->redirect($this->generateUrl('manageOrders'));
         }
         return $this->render('includes/updateStatus.html.twig', [
-            'order2' => $order,
+            'order' => $order,
             'statusForm' => $statusForm->createView()
         ]);
-
     }
 
     public function makeOrderFromLogin(

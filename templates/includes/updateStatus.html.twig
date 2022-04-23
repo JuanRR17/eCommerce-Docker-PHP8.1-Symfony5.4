@@ -1,14 +1,13 @@
-<div class="modal fade" id="staticBackdrop{{order2.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop{{order.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Update Status</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Update Order #{{order.id}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            {{dump(order2)}}
                 {{form_start(statusForm,{
-                        'attr': {'action':path('updateOrderStatus', {'id':order2.id})}
+                        'attr': {'action':path('updateOrderStatus', {'id':order.id})}
                     })}}
                 {{form_end(statusForm)}}
             </div>

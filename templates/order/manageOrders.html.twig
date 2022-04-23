@@ -20,18 +20,13 @@
                         </div>
                         <div class="col-auto">
                             STATUS:<br/>
-                            <a href="{{path('updateOrder', {'id':order.id})}}" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{order.id}}">
-                                {# <a href="{{path('updateOrder', {'id':order.id})}}"> #}
+                            <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{order.id}}">
                                     {{order.status}}
-                                {# </a> #}
                              </a>
                             <!-- Modal -->
-                            {% if update is defined %}
                                 {{render(controller(
                                 'App\\Controller\\OrderController::updateOrderStatus',{'order':order.id}
                                 ))}}
-                            {% endif %}
-
                         </div>  
                         <div class="col-auto">
                             TOTAL:<br/>
@@ -43,7 +38,7 @@
                         </div>                        
                         <div class="col-auto ms-md-auto text-end ">
                             Order #: {{order.id}}<br/>
-                            <a href="{{ path('orderDetails', {'id':order.id}) }}">Order details</a>
+                            <a href="{{ path('orderDetails', {'id':order.id}) }}" target="_target">Order details</a>
                         </div>
                     </div>
                 </div>
