@@ -83,12 +83,13 @@ class ProductController extends AbstractController
             ]);
     }
 
-    public function manage(): Response
+    public function manage(string $message=null): Response
     {
         $products = $this->em->getRepository(Product::class)->findBy([],['id' => 'DESC']);
 
         return $this->render('product/manageP.html.twig', [
             'products' => $products,
+            'message' => $message
         ]);
     }
 
@@ -275,14 +276,13 @@ class ProductController extends AbstractController
     {
         $message="";
         if($product){
+            $message=$product->getBrand()->getName().' '.$product->getModel().' removed successfully!';
             $this->em->remove($product);
             $this->em->flush();
-            $message="Product removed successfully!";
         }else{
             $message="Product couldn't be removed";    
         }
-
-        return $this->redirect($this->generateUrl('manageProducts'));
+        return $this->manage($message);
     }
 
     public function detail(Product $product, $img_id): Response

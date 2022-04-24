@@ -5,10 +5,10 @@
 {% block header %}Manage Products{% endblock %}
 
 {% block main %}
-    <a href="{{ path('newProduct') }}" class="btn btn-success mb-2" >Create New Product</a>
     {% if message is defined %}
         <div class="message">{{message}}</div>
     {% endif %}
+<a href="{{ path('newProduct') }}" class="btn btn-success mb-2" >Create New Product</a>
 <div class="overflow-auto">
     <table class="table align-middle table-striped table-hover table-bordered border-secondary">
         <tr>
@@ -55,9 +55,28 @@
                 <strong style="color:green">{{ product.stock }}</strong>
                 {% endif %}
             </td>
-            <td class="actions">
-                <a href="{{ path('editProduct', {'id':product.id}) }}" class="btn btn-outline-warning">Edit</a>
-                <a href="{{ path('removeProduct', {'id':product.id}) }}" class="btn btn-outline-danger">Delete</a>
+            <td>
+                <a href="{{ path('editProduct', {'id':product.id}) }}" class="btn btn-outline-warning actions" >Edit</a>
+                <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{product.id}}">
+                    <span class="btn btn-outline-danger actions">Delete</span>
+                </a>
+                 <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop{{product.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Remove <strong>{{product.brand.name}} {{product.model}}</strong></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <span>Are you sure you want to remove the Product</br> 
+                                    <strong>{{product.brand.name}} {{product.model}}?</strong>
+                                </span></br>
+                                <a href="{{ path('removeProduct', {'id':product.id}) }}" class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </td>
         </tr>
         {% endfor %}

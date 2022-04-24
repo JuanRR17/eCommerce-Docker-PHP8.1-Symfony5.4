@@ -63,11 +63,9 @@ class BrandController extends AbstractController
 
         $message="";
         if($brand){
+            $message = $brand->getName()." deleted successfully";
             $this->em->remove($brand);
             $this->em->flush();
-
-            $message = "Brand deleted successfully";
-
         }else{
             $message = "Brand couldn't be deleted";
         }

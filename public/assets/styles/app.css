@@ -14,13 +14,6 @@ a{
     text-decoration: none!important;
 }
 
-td a{
-    color: #01B1EA!important;
-}
-
-td a:visited{
-    color: #01B1EA!important;
-}
 
 td a:hover{
     color: #555555!important;
@@ -78,10 +71,10 @@ td, th{
     white-space: nowrap;
 }
 
-td.actions a{
+.actions{
     color:#555!important;
-    padding:2px;
-    margin:2px;
+    padding:2px!important;
+    margin:2px!important;
 }
 
 

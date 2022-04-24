@@ -16,13 +16,31 @@
                     <th>Actions</th>
                     <th>Products</th>
                 </tr>
-            
                 {% for brand in getBrands() %}
                 <tr>
                     <td>{{ brand.name }}</td>
-                    <td class="actions">
-                        <a href="{{ path('editBrand', {'id':brand.id}) }}" class="btn btn-outline-warning">Edit</a>
-                        <a href="{{ path('removeBrand', {'id':brand.id}) }}" class="btn btn-outline-danger">Delete</a>
+                    <td>
+                        <a href="{{ path('editBrand', {'id':brand.id}) }}" class="btn btn-outline-warning actions">Edit</a>
+                        <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{brand.id}}">
+                            <span class="btn btn-outline-danger actions">Delete</span>
+                        </a>
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop{{brand.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Remove Brand <strong>{{brand.name}}</strong></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <span>Are you sure you want to remove the Brand</br> 
+                                            <strong>{{brand.name}}</strong>?
+                                        </span></br>
+                                        <a href="{{ path('removeBrand', {'id':brand.id}) }}" class="btn btn-danger">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                     <td>
                         <a href="{{ path('showBrand', {'id':brand.id} )}}">

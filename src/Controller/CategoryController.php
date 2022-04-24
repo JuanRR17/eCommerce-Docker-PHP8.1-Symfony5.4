@@ -61,10 +61,10 @@ class CategoryController extends AbstractController
     {
         $message="";
         if($category){
+            $message = $category->getName()." deleted successfully";
             $this->em->remove($category);
             $this->em->flush();
 
-            $message = "Category removed successfully";
         }else{
             $message = "Category couldn't be deleted";
         }
