@@ -6,76 +6,52 @@
 
 {% block main %}
     {% if basket.basketRows.count > 0 %}
-        {# {% if basket.basketRows.count > 0 %} #}
-            <a href="{{ path('emptyBasket') }}" class="btn btn-danger float-right m-2">Empty Basket</a>
-        {# {% endif %} #}
-    <table class="table align-middle table-striped table-hover table-bordered border-secondary">
-        <tr>
-            <th colspan = "2" >Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Actions</th>
-            <th>Total</th>
-        </tr>
-    
-        {% for prod in basket.basketRows %}
-        {% if prod.productId.images is not empty %}
-        {% endif %}
-        <tr>
-            <td>{% if prod.productId.images is not empty %}<img class="img_basket" src="{{ asset('/assets/imgs/products/'~ prod.productId.id ~'/'~ prod.productId.images[0].name ) }}" />{% endif %}</td>
-            <td>
-                <div class="productName">
-                    <a href="{{path('productDetail', {'id': prod.productId.id})}}">{{ prod.productId.brand.name }} {{ prod.productId.model }}</a></td>
-                </div>
-            <td class="align-right">{{ prod.productId.price|number_format(2, ',', '.') }} €</td>
-            <td>{{ prod.quantity }}</td>
-            <td> 
-                <div class="updown-units">
-                    <a href="{{ path('basketUp', {'id':prod.id})}}">+</a>
-                    <a href="{{ path('basketDown', {'id':prod.id})}}">-</a>
-                    <a href="{{ path('removeRow', {'id':prod.id})}}">x</a>
-                </div>
-            </td>
-            <td class="align-right">{{ prod.subtotal|number_format(2, ',', '.') }} €</td>
-        </tr>      
-        {% endfor %}
-            <tr class="rowTotal"> 
-                <td colspan = "4" ></td>
-                <td>Total in Basket</td>
-                <td class="align-right">{{ basket.total|number_format(2, ',', '.') }} €</td>
+    <a href="{{ path('emptyBasket') }}" class="btn btn-danger">Empty Basket</a>
+    <div class="overflow-auto my-3">
+        <table class="table align-middle table-striped table-hover table-bordered border-secondary mb-0">
+            <tr>
+                <th colspan = "2" >Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+                <th>Total</th>
             </tr>
-        </table>
-            <a href="{{ path('make_order', {'id': basket.id }) }}" class="btn btn-success float-right m-2">Make Order</a>
+        
+            {% for prod in basket.basketRows %}
+            {% if prod.productId.images is not empty %}
+            {% endif %}
+            <tr>
+                <td>{% if prod.productId.images is not empty %}<img class="img_basket" src="{{ asset('/assets/imgs/products/'~ prod.productId.id ~'/'~ prod.productId.images[0].name ) }}" />{% endif %}</td>
+                <td>
+                    <div class="productName">
+                        <a href="{{path('productDetail', {'id': prod.productId.id})}}">{{ prod.productId.brand.name }} {{ prod.productId.model }}</a></td>
+                    </div>
+                <td class="align-right">{{ prod.productId.price|number_format(2, ',', '.') }} €</td>
+                <td>{{ prod.quantity }}</br>
+                {% if prod.quantity == prod.productId.stock %}
+                    <span class="notAvailable">Max. Stock</span>
+                {% endif %}</td>
+                <td> 
+                    <div
+                     class="updown-units"
+                     >
+                        <a href="{{ path('basketUp', {'id':prod.id})}}">+</a>
+                        <a href="{{ path('basketDown', {'id':prod.id})}}">-</a>
+                        <a href="{{ path('removeRow', {'id':prod.id})}}">x</a>
 
-        {# {% if app.user is not null %}
-            <a href="{{ path('make_order', {'id': basket.id }) }}" class="btn btn-success float-right m-2">Make Order</a>
-        {% else %}
-            <a href="#" class="btn btn-success float-right m-2" data-bs-toggle="modal" data-bs-target="#loginModal">Make Order</a>
-            <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Login to add the products in the Basket to your Personal Basket.</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ path('login_check') }}" method="post">
-						<labelfor="email">Email</label>
-						<input type="email" id="username" name="_username" />
-
-						<label for="password">Password</label>
-						<input type="password" id="password" name="_password" />
-					<a href="{{ path('register') }}">Register</a>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                    </form>
-                </div>
-                </div>
-            </div>
-            </div>
-        {% endif %} #}
+                    </div>
+                </td>
+                <td class="align-right">{{ prod.subtotal|number_format(2, ',', '.') }} €</td>
+            </tr>      
+            {% endfor %}
+                <tr class="rowTotal"> 
+                    <td colspan = "4" ></td>
+                    <td>Total in Basket</td>
+                    <td class="align-right">{{ basket.total|number_format(2, ',', '.') }} €</td>
+                </tr>
+            </table>
+        </div>
+            <a href="{{ path('make_order', {'id': basket.id }) }}" class="btn btn-success float-right">Make Order</a>
     {% else %}
         Your basket is empty.
     {% endif %}

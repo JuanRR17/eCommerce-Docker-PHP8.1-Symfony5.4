@@ -14,7 +14,7 @@
       </button>
     </h2>
     <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-      <div class="accordion-body">
+      <div class="accordion-body overflow-auto my-3">
       <table class="table align-middle table-striped table-hover table-bordered border-secondary">
         <tr>
             <th>Image</th>
@@ -70,16 +70,13 @@
     </h2>
     <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
       <div class="accordion-body">
-      No need to pay anything for now. It's free!!
+      No need to pay anything. It's free!!
       </div>
     </div>
   </div>
 </div>
 {{form_widget(form.submit)}}
-        {{form_end(form)}}
-{# <a href="# #}
-{# {{path('order_index', {'id':order.id})}} #}
-{# " class="btn btn-success float-right mt-2">Confirm Order</a> #}
+{{form_end(form)}}
         <div style="clear:both"></div>
     {% endif %}
 {% endblock %}

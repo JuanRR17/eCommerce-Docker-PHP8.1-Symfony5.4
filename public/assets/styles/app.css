@@ -10,14 +10,12 @@ body{
     background-color:rgba(0, 162, 255, 0.568)!important;
 }
 
-.btn{
-    box-shadow: inset 0 0 7px 0px!important;
-    border-radius: 0.6rem!important;
+a{
+    text-decoration: none!important;
 }
 
 td a{
     color: #01B1EA!important;
-    text-decoration: none!important;
 }
 
 td a:visited{
@@ -85,9 +83,7 @@ td.actions a{
     padding:2px;
     margin:2px;
 }
-td.actions a:hover{
-    color:#111!important;
-}
+
 
 .float-right{
     float:right;
@@ -164,12 +160,9 @@ nav{
     border-bottom: 4px solid #222222;
 }
 
-#search_searchBar{
-    border-radius: 15px;
-}
-
-#search_Search{
-    border-radius: 15px!important;
+#search_searchBar, #search_Search{
+    box-shadow: inset 0 0 7px 0px!important;
+    border-radius: 0.6rem!important;
 }
 
 /*CONTENT*/
@@ -177,7 +170,7 @@ nav{
     margin: 0px auto;
     padding-bottom: 50px;
     overflow: hidden;
-    background: white;
+    background:ghostwhite;
     min-height: calc(100vh - 90px);
 }
 
@@ -213,18 +206,18 @@ button{
 #central{
     width: 100%;
     min-height: 500px;
-    padding:25px;
+    padding:20px;
+    padding-top: 0px;
 }
 
 #central h1{
     font-size: 24px;
-    font-weight: normal;
+    font-weight: bolder;
     letter-spacing: 1px;
     text-align: center;
     border-bottom: 1px solid #ccc;
     margin-bottom: 20px;
-    padding: 20px;
-    padding-top: 0px;
+    padding: 10px;
 }
 
 .message{
@@ -245,6 +238,7 @@ button{
     box-sizing: border-box;
     box-shadow: 0px 0px 15px #777;
     position:relative;
+    background-color: white;
 }
 
 .productFrame{
@@ -268,7 +262,6 @@ button{
     height:120px;
     width: 100%;
     padding:5px;
-    /* border:1px solid black; */
     margin:auto;
     margin-bottom:10px;
 }
@@ -315,10 +308,16 @@ button{
 }
 
 .addToBasket{
+    box-shadow: inset 0 0 7px 0px!important;
+    border-radius: 0.6rem!important;
     width: fit-content;
-    position:absolute;
     padding:5px 10px!important;
     font-size: 15px!important;
+}
+
+
+.inThumb{
+    position:absolute;
     bottom:0px;
     left: 50%;
     transform: translateX(-50%);
@@ -373,23 +372,25 @@ button{
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
 }
 
 .image.main{
     padding:10px;
     height:250px;
     width:100%;
+    box-shadow: 0 0 10px;
+    overflow: hidden;
+    border-radius: 10px;
 }
 
 .image.small{
-    width:calc(28%);
+    width:60px;
     padding:0px;
-    border:1px solid black;
     height:60px;
-    margin: 1px 3px;
+    margin: 1px 5px;
     overflow: hidden;
-    /* line-height:60px; */
+    box-shadow: 0 0 10px;
+    border-radius: 3px;
 }
 
 #detail-product img, .image.small a{
@@ -403,7 +404,7 @@ button{
     flex-direction: row;
     justify-content: center;
     width:100%;
-    margin-top: 5px;
+    margin-top: 15px;
 }
 
 #detail-product .data{
@@ -443,7 +444,11 @@ button{
     color:green;
 }
 
-/* CREATE-EDIT PRODUCT*/
+/* MANAGE PRODUCT*/
+
+.btn-outline-danger:hover{
+    color: white!important;
+}
 
 .image_thumb{
     position:relative;
@@ -589,6 +594,10 @@ button{
 .ord-header span{
     color: #333;
     font-weight: bold;
+}
+
+a .status{
+    color:blue!important;
 }
 
 .dropdown{

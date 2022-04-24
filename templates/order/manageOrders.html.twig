@@ -21,12 +21,12 @@
                         <div class="col-auto">
                             STATUS:<br/>
                             <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{order.id}}">
-                                    {{order.status}}
-                             </a>
+                                <span class="status">{{order.status}}</span>
+                            </a>
                             <!-- Modal -->
-                                {{render(controller(
-                                'App\\Controller\\OrderController::updateOrderStatus',{'order':order.id}
-                                ))}}
+                            {{render(controller(
+                            'App\\Controller\\OrderController::updateOrderStatus',{'order':order.id}
+                            ))}}
                         </div>  
                         <div class="col-auto">
                             TOTAL:<br/>

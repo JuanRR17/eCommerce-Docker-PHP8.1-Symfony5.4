@@ -119,9 +119,9 @@
         <div class="row">
             <div class="col-md-3">
                 <label for="price">Price*</label>
-                <input class="form-control" type="number" name="price" placeholder="Price" pattern="[0-9]+" min=0 step="0.01"
+                <input class="form-control" type="number" name="price" placeholder="€" pattern="[0-9]+" min=0 step="0.01"
                     {% if newProduct.price is defined %}
-                        value= {{ newProduct.price }}
+                        value= {{ newProduct.price }} €
                     {% endif %}
                 />
                 {% if error.price is defined %}<span class="alert_red">{{ error.price }}</span>{% endif %} 
@@ -137,9 +137,9 @@
             </div>
             <div class="col-md-3">
                 <label for="offer">Offer</label>
-                <input class="form-control" type="number" name="offer" placeholder="Offer" pattern="[0-9]+" step="1"
+                <input class="form-control" type="number" name="offer" placeholder="%" pattern="[0-9]+" step="1" min="0"
                     {% if newProduct.offer is defined %}
-                        value= {{ newProduct.offer }}
+                        value = {{ newProduct.offer }}
                     {% endif %}
                 />
                 {% if error.offer is defined %} <span class="alert_red">{{ error.offer }}</span>{% endif %}
@@ -147,6 +147,7 @@
             <div class="col-md-3">
                 <label for="colour">Colour*</label>
                 <input class="form-control" type="text" name="colour" placeholder="Colour" pattern="^[A-za-z]+[A-za-z ]+"
+                    oninvalid="this.setCustomValidity('Colour can\'t have numbers')"  oninput="this.setCustomValidity('')"
                     {% if newProduct.colour is defined %}
                         value= "{{ newProduct.colour }}"
                     {% endif %}

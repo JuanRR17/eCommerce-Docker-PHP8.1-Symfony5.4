@@ -29,7 +29,11 @@
                 {% endif %}
             </a>
         </p>
-        <a href="{{ path('addToBasket', {'id':product.id})}}" class="btn btn-warning addToBasket">Add to Basket</a>
+        {% if product.stock == 0 %}
+            <span class="stock notAvailable inThumb">No Stock</span>
+        {% else %}
+            <a href="{{ path('addToBasket', {'id':product.id})}}" class="btn btn-warning addToBasket inThumb">Add to Basket</a>
+        {% endif %}
     </div>
     </div>
 </div>

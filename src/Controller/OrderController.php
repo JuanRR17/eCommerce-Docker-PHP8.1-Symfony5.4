@@ -35,7 +35,6 @@ class OrderController extends AbstractController
             return $this->render('order/manageOrders.html.twig', [
                 'orders' => $orders,
             ]);
-
     }
 
     public function userIndex(UserInterface $user): Response
@@ -107,9 +106,15 @@ class OrderController extends AbstractController
                 $em->persist($orderRow);
             }
             $em->flush();
+
+            //Update Stock
+            $this->forward("App\Controller\ProductController::updateStock",[
+                'order' => $order
+            ]);
+            
             //Empty Basket after flushing the Order
             $this->forward("App\Controller\BasketController::emptyBasket");
-
+            
             return $this->redirect($this->generateUrl('orderConfirmation', ['id' => $order->getId()]));
         }
         return $this->render('order/orderForm.html.twig', [
@@ -132,18 +137,16 @@ class OrderController extends AbstractController
         ]);
     }
 
-
     public function updateOrderStatus(Request $request, Order $order):Response
     {
-        $statusForm=$this->createForm(StatusType::class);
+        $statusForm=$this->createForm(StatusType::class,$order);
     
         //Handle search
         $statusForm->handleRequest($request);
 
         //Update Status of Order in the Database
         if ($statusForm->isSubmitted() && $statusForm->isValid()) {
-            $status=$request->request->get('status')['status'];
-            $order->setStatus($status);
+            // $status=$request->request->get('status')['status'];
             $this->em->persist($order);
             $this->em->flush();
             return $this->redirect($this->generateUrl('manageOrders'));

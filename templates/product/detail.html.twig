@@ -47,8 +47,10 @@
                     <span class="offer original-price">{{product.price|number_format(2, ',', '.')}} € </span>
                 {% else %}
                 <span class="noOffer">  {{ product.price|number_format(2, ',', '.') }} €</span>
-                {% endif %}                
-                <p><a href="{{ path('addToBasket', {'id':product.id})}}" class="btn btn-warning">Add to Basket</a></p>
+                {% endif %} 
+                {% if product.stock > 0 %}               
+                <p><a href="{{ path('addToBasket', {'id':product.id})}}" class="btn btn-warning addToBasket">Add to Basket</a></p>
+                {% endif %}
                 <p> 
                 {% if product.stock == 0 %}
                     <span class="stock notAvailable">No Stock</span>

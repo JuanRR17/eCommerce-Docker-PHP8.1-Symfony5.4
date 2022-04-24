@@ -110,7 +110,7 @@ basketDown:
    controller: App\Controller\BasketController::down
 
 basket:
-   path: /basket/{id?}
+   path: /basket/{id?}/{msg?}
    controller: App\Controller\BasketController::index
 
 # ORDER ROUTES

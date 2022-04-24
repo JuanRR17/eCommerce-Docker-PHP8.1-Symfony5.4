@@ -119,13 +119,15 @@ class BasketController extends AbstractController
         return $this->redirect($this->generateUrl('basket'));
     }
 
-    public function up(BasketRow $basket_row){
-        
-        if(isset($basket_row)){
+    public function up(BasketRow $basket_row)
+    {
+        $stock=$basket_row->getProductId()->getStock();
+        if($stock > $basket_row->getQuantity()
+        &&
+        isset($basket_row)){
             $this->add($basket_row->getProductId());
         }
-
-        return $this->redirect($this->generateUrl('basket'));
+        return $this->redirect($this->generateUrl('basket'));        
     }
 
     public function down(BasketRow $basket_row){

@@ -55,7 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank]
     #[Assert\Regex(
-        pattern: "/[^a-zA-ZñÑ ]+/",
+        pattern: "/[^a-zA-ZñÑáéíóúÁÉÍÓÚçÇ ]+/",
         match: false,
         message: 'Your name can only contain letters')]
     private $name;
@@ -63,7 +63,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank]
     #[Assert\Regex(
-        pattern: "/[^a-zA-Z ]+/",
+        pattern: "/[^a-zA-ZñÑáéíóúÁÉÍÓÚçÇ ]+/",
         match: false,
         message: 'Your surname can only contain letters')]
     private $surname;
@@ -73,14 +73,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Assert\Regex(
-        pattern: "/[^a-zA-Z ]+/",
+        pattern: "/[^a-zA-ZñÑáéíóúÁÉÍÓÚçÇ ]+/",
         match: false,
         message: 'Your city can only contain letters')]
     private $city;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Assert\Regex(
-        pattern: "/[^a-zA-Z ]+/",
+        pattern: "/[^a-zA-ZñÑáéíóúÁÉÍÓÚçÇ ]+/",
         match: false,
         message: 'Your country can only contain letters')]
     private $country;
@@ -92,7 +92,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Assert\Regex(
-        pattern: "/[^0-9 ]+/",
+        pattern: "/[^0-9\+ ]+/",
         match: false,
         message: 'Your phone number can only contain numbers')]
     private $phone;

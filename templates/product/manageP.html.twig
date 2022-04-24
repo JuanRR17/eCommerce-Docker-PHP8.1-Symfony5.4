@@ -5,11 +5,11 @@
 {% block header %}Manage Products{% endblock %}
 
 {% block main %}
-    <a href="{{ path('newProduct') }}" class="btn btn-success float-right mb-2" >Create New Product</a>
+    <a href="{{ path('newProduct') }}" class="btn btn-success mb-2" >Create New Product</a>
     {% if message is defined %}
         <div class="message">{{message}}</div>
     {% endif %}
-
+<div class="overflow-auto">
     <table class="table align-middle table-striped table-hover table-bordered border-secondary">
         <tr>
             <th>Image</th>
@@ -49,8 +49,10 @@
             <td class="stock">
                 {% if product.stock == 0 %}
                 <strong style="color:red">{{ product.stock }}</strong>
+                {% elseif product.stock < 10 %}
+                <strong style="color:orange">{{ product.stock }}</strong>
                 {% else %}
-                {{ product.stock }}
+                <strong style="color:green">{{ product.stock }}</strong>
                 {% endif %}
             </td>
             <td class="actions">
@@ -60,4 +62,5 @@
         </tr>
         {% endfor %}
     </table>
+</div>    
 {% endblock %}

@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Basket;
 use App\Entity\Image;
+use App\Entity\Order;
 use App\Entity\Product;
 use App\Form\SearchType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -282,7 +285,7 @@ class ProductController extends AbstractController
         return $this->redirect($this->generateUrl('manageProducts'));
     }
 
-    public function detail(Product $product, $img_id)
+    public function detail(Product $product, $img_id): Response
     {    
         if($img_id != null){
             $main=$this->em->getRepository('App:Image')->findOneBy(['id'=> $img_id]);
@@ -296,4 +299,17 @@ class ProductController extends AbstractController
         ]);
     }  
 
+    public function updateStock(Order $order)
+    {
+        $orderRows=$this->em->getRepository('App:OrderRow')->findBy([
+            'order_id' => $order
+        ]);
+
+        foreach($orderRows as $orderRow){
+            $rowProduct=$this->em->getRepository('App:Product')->findOneBy([
+                'id' => $orderRow->getProduct()
+            ]);
+            $rowProduct->setStock(($rowProduct->getStock() - $orderRow->getQuantity()));
+        }
+    }
 }
