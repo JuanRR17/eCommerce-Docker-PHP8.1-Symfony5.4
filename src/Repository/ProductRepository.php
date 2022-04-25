@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -73,4 +74,25 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findOrdersWithProduct(Product $product)
+    {
+        // SELECT * FROM order WHERE order.id IN 
+        //(SELECT order_id_id FROM order_row WHERE product = $product->getId() )
+
+        $query = $this->_em->createQuery('
+            SELECT      o
+            FROM        App:Order o
+            WHERE       o.id IN(
+            SELECT      IDENTITY(orw.order_id)
+            FROM        App:OrderRow orw
+            INNER JOIN  orw.product p
+            WHERE       p.id = :prod    
+            )
+        ');
+
+        $query->setParameter('prod', $product->getId());
+
+        return $query->getResult();
+
+    }
 }

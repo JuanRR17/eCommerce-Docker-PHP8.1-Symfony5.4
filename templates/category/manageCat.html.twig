@@ -23,8 +23,7 @@
                 <tr>
                     <td>{{ category.name }}</td>
                     <td class="actions">
-                        <a href="{{ path('editCategory', {'id':category.id}) }}" class="btn btn-outline-warning">Edit</a>
-                        {# <a href="{{ path('removeCategory', {'id':category.id}) }}" class="btn btn-outline-danger">Delete</a> #}
+                        <a href="{{ path('editCategory', {'id':category.id}) }}" class="btn btn-outline-warning actions">Edit</a>
                         <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{category.id}}">
                             <span class="btn btn-outline-danger actions">Delete</span>
                         </a>

@@ -84,11 +84,23 @@ class ProductController extends AbstractController
     }
 
     public function manage(string $message=null): Response
-    {
+    {   
+        //Get all Products Collection
         $products = $this->em->getRepository(Product::class)->findBy([],['id' => 'DESC']);
 
+        //Create an Object in which each element contains a Product and 
+        //the Orders which it's contained in.
+        $productsWithOrders=[];
+        foreach($products as $product){
+            $orders=$this->em->getRepository('App:Product')->findOrdersWithProduct($product);
+            $productsWithOrders[]=[
+                'product'=>$product,
+                'orders'=>$orders
+            ];
+        }
+
         return $this->render('product/manageP.html.twig', [
-            'products' => $products,
+            'products' => $productsWithOrders,
             'message' => $message
         ]);
     }
@@ -311,5 +323,14 @@ class ProductController extends AbstractController
             ]);
             $rowProduct->setStock(($rowProduct->getStock() - $orderRow->getQuantity()));
         }
+    }
+
+    public function showOrdersWithProduct(Product $product): Response
+    {
+        $orders=$this->em->getRepository('App:Product')->findOrdersWithProduct($product);
+
+        return $this->render('includes/ordersWithProduct.html.twig', [
+            'orders' => $orders
+        ]);        
     }
 }
