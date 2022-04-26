@@ -16,29 +16,42 @@
                     <div class="row">
                         <div class="col-auto">
                             ORDERED:<br/>
-                            <span>{{order.createdAt | date('d/m/Y')}}</span>
+                            <span>{{order.order.createdAt | date('d/m/Y')}}</span>
                         </div>
                         <div class="col-auto">
                             STATUS:<br/>
-                            <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{order.id}}">
-                                <span class="status">{{order.status}}</span>
+                            <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{order.order.id}}">
+                                <span class="status">{{order.order.status}}</span>
                             </a>
                             <!-- Modal -->
-                            {{render(controller(
-                            'App\\Controller\\OrderController::updateOrderStatus',{'order':order.id}
-                            ))}}
+                            <div class="modal fade" id="staticBackdrop{{order.order.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Update Order #{{order.order.id}}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{form_start(order.statusForm,{
+                                                    'attr': {'action':path('updateOrderStatus', {'id':order.order.id})}
+                                                })}}
+                                            {{form_end(order.statusForm)}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>  
                         <div class="col-auto">
                             TOTAL:<br/>
-                            <span>{{order.cost|number_format(2, ',', '.')}} €</span>
+                            <span>{{order.order.cost|number_format(2, ',', '.')}} €</span>
                         </div>
                         <div class="col-auto">
                             DELIVERED TO:<br/>
-                            <span>{{order.receiverName}} {{order.receiverSurname}}</span>
+                            <span>{{order.order.receiverName}} {{order.order.receiverSurname}}</span>
                         </div>                        
                         <div class="col-auto ms-md-auto text-end ">
-                            Order #: {{order.id}}<br/>
-                            <a href="{{ path('orderDetails', {'id':order.id}) }}" target="_target">Order details</a>
+                            Order #: {{order.order.id}}<br/>
+                            <a href="{{ path('orderDetails', {'id':order.order.id}) }}" target="_target">Order details</a>
                         </div>
                     </div>
                 </div>

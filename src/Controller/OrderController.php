@@ -28,12 +28,22 @@ class OrderController extends AbstractController
         $this->em = $em;
     }
 
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $orders = $this->em->getRepository('App:Order')->findAll();
-       
+
+        $ordersWithStatus=[];
+        foreach($orders as $order){
+            $this->updateOrderStatus($request, $order);
+            $statusForm=$this->createForm(StatusType::class,$order);
+
+            $ordersWithStatus[]=[
+                'order'=>$order,
+                'statusForm'=>$statusForm->createView()
+            ];
+        }
             return $this->render('order/manageOrders.html.twig', [
-                'orders' => $orders,
+                'orders' => $ordersWithStatus,
             ]);
     }
 
@@ -149,12 +159,9 @@ class OrderController extends AbstractController
             // $status=$request->request->get('status')['status'];
             $this->em->persist($order);
             $this->em->flush();
-            return $this->redirect($this->generateUrl('manageOrders'));
+            // return $this->redirect($this->generateUrl('manageOrders'));
         }
-        return $this->render('includes/updateStatus.html.twig', [
-            'order' => $order,
-            'statusForm' => $statusForm->createView()
-        ]);
+        return $this->redirect($this->generateUrl('manageOrders'));
     }
 
     public function makeOrderFromLogin(

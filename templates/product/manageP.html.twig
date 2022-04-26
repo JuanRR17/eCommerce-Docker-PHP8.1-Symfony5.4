@@ -74,7 +74,7 @@
                                 {{dump(orderRow.orderid.id)}}
                                 {{ dump(product.orders) }}
                                 {% endfor %} #}
-                                {% for key, order in product.orders %}
+                                {% for order in product.orders %}
                                     {{ order.id }}
                                 {% endfor %}
                                 </br>
