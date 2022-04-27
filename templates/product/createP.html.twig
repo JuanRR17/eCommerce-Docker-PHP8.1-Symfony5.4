@@ -59,6 +59,9 @@
         <div class="row">
             <div class="col-md-3">
                 <label for="category">Category*</label>
+                {% if getCategories() is empty %}
+                </br><a href="{{ path('manageCategories')}}">Create first Category</a>
+                {% else %}
                 <select class="form-select" name="category">
                     <option value="" 
                         {% if newProduct.category is empty %}
@@ -75,11 +78,15 @@
                         </option>
                     {% endfor %}
                 </select>
+                {% endif %}
                 {% if error.category is defined %}<span class="alert_red">{{ error.category }}</span>{% endif %} 
 
             </div>
             <div class="col-md-3">
                 <label for="brand">Brand*</label>
+                {% if getBrands() is empty %}
+                </br><a href="{{ path('manageBrands')}}">Create first Brand</a>
+                {% else %}                
                     <select class="form-select" name="brand">
                         <option value="" 
                             {% if newProduct.brand is empty %}
@@ -96,6 +103,7 @@
                             </option>
                         {% endfor %}
                     </select>
+                {% endif %}
                 {% if error.brand is defined %}<span class="alert_red">{{ error.brand }}</span>{% endif %} 
             </div>
             <div class=" col-md-6">

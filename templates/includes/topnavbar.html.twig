@@ -12,9 +12,18 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ path('index') }}">Home</a>
         </li>
-        <li class="nav-item dropdown">
-			<a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-				Products
+        <li class="nav-item dropdown
+		{# {% if getCategories()|length == 0 %} #}
+		{# disabled #}
+		{# {% endif %} #}
+		">
+			<a class="nav-link dropdown-toggle
+			{% if getCategories() is empty %}
+				disabled
+				{% else %}
+				active
+			 {% endif %}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				Categories
 			</a>
 			<ul class="dropdown-menu bg-primary p-0 overflow-hidden" aria-labelledby="navbarDropdownMenuLink">
 				{% for category in getCategories() %}
@@ -27,7 +36,12 @@
 			</ul>
         </li>
 		<li class="nav-item dropdown">
-			<a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			<a class="nav-link dropdown-toggle
+			{% if getBrands() is empty %}
+				disabled
+				{% else %}
+				active
+			{% endif %}" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 				Brands
 			</a>
 			<ul class="dropdown-menu bg-primary p-0 overflow-hidden" aria-labelledby="navbarDropdownMenuLink">
