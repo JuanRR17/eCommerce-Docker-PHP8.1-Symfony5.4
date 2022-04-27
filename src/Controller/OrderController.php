@@ -156,10 +156,8 @@ class OrderController extends AbstractController
 
         //Update Status of Order in the Database
         if ($statusForm->isSubmitted() && $statusForm->isValid()) {
-            // $status=$request->request->get('status')['status'];
             $this->em->persist($order);
             $this->em->flush();
-            // return $this->redirect($this->generateUrl('manageOrders'));
         }
         return $this->redirect($this->generateUrl('manageOrders'));
     }

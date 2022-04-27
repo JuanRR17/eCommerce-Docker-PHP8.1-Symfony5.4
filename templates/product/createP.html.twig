@@ -36,17 +36,17 @@
                 <label for="images">Images</label></br>
                 {% if newProduct.images is not empty %}
                     {% for image in newProduct.images  %}
-                        <div class="image_thumb 
+                        <div class="image_thumb dropdown
                             {% if image.getisdefault == true %}
                                 default_image
                             {% endif %}
                             ">
-                            <div id="image_options">
-                                <a id="remove" href="{{ path('remove_image', {'id': image.id})}}">Remove</a>
+                            <div class="image_options dropdown-content prodImage">
+                                <a class="remove" href="{{ path('remove_image', {'id': image.id})}}">Remove</a>
                                 {% if image.getisdefault == false %}
-                                    <a id="set_default" href="{{ path('set_default', {'id': image.id})}}">Set as Default</a>
+                                    <a class="set_default" href="{{ path('set_default', {'id': image.id})}}">Set as Default</a>
                                 {% endif %}
-                                <a id="see" href="{{ asset('/assets/imgs/products/'~ newProduct.id ~'/'~ image.name) }}" target="_blank">See</a>
+                                <a class="see" href="{{ asset('/assets/imgs/products/'~ newProduct.id ~'/'~ image.name) }}" target="_blank">See</a>
                             </div>
                             <img src="{{ asset('/assets/imgs/products/'~ newProduct.id ~'/'~ image.name) }}"/>
                         </div>
