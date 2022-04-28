@@ -6,9 +6,11 @@
 
 {% block main %}
     {% if category_products|length >= 1 %}
-        {% for product in category_products %}
-            {{ include('includes/productThumb.html.twig') }}
-        {% endfor %}
+        <div class="d-flex flex-wrap">
+            {% for product in category_products %}
+                {{ include('includes/productThumb.html.twig') }}
+            {% endfor %}
+        </div>
     {% else %}
         No products in category "{{ category.name }}" available.
     {% endif %}

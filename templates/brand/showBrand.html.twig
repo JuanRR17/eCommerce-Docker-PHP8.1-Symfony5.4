@@ -6,9 +6,11 @@
 
 {% block main %}
     {% if brand_products|length >= 1 %}
-        {% for product in brand_products %}
-            {{ include('includes/productThumb.html.twig') }}
-        {% endfor %}
+        <div class="d-flex flex-wrap">
+            {% for product in brand_products %}
+                {{ include('includes/productThumb.html.twig') }}
+            {% endfor %}
+        </div>
     {% else %}
     <span> No brands available </span>
     {% endif %}

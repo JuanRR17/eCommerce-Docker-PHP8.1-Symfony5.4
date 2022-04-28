@@ -2,16 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Basket;
 use App\Entity\Image;
 use App\Entity\Order;
 use App\Entity\Product;
+use App\Exception\Product\ProductNotFoundException;
 use App\Form\SearchType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -299,6 +296,9 @@ class ProductController extends AbstractController
 
     public function detail(Product $product, $img_id): Response
     {    
+        if(!$product){
+            throw ProductNotFoundException::fromProductId($product);
+        }
         if($img_id != null){
             $main=$this->em->getRepository('App:Image')->findOneBy(['id'=> $img_id]);
         }else{

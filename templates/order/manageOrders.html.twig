@@ -67,55 +67,6 @@
         </tr>
         {% endfor %}
     </table>
-                {# <div class="ord-header container-fluid">
-                    <div class="row">
-                        <div class="col-auto">
-                            ORDERED:<br/>
-                            <span>{{order.order.createdAt | date('d/m/Y')}}</span>
-                        </div>
-                        <div class="col-auto">
-                            STATUS:<br/>
-                            <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{order.order.id}}">
-                                <span class="status">{{order.order.status}}</span>
-                            </a>
-                            <!-- Modal -->
-                            <div class="modal fade" id="staticBackdrop{{order.order.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="staticBackdropLabel">Update Order #{{order.order.id}}</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            {{form_start(order.statusForm,{
-                                                    'attr': {'action':path('updateOrderStatus', {'id':order.order.id})}
-                                                })}}
-                                            {{form_end(order.statusForm)}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  
-                        <div class="col-auto">
-                            TOTAL:<br/>
-                            <span>{{order.order.cost|number_format(2, ',', '.')}} €</span>
-                        </div>
-                        <div class="col-auto dropdown">
-                            DELIVERED TO:<br/>
-                            <span>{{order.order.receiverName}} {{order.order.receiverSurname}}</span>
-                            <div class="dropdown-content myorders">
-                                <div>{{order.order.address}}</div>
-                                <div>{{order.order.city}}</div>
-                                <div>{{order.order.country}}</div>
-                            </div>                       
-                        </div>                        
-                        <div class="col-auto ms-md-auto text-end ">
-                            Order #: {{order.order.id}}<br/>
-                            <a href="{{ path('orderDetails', {'id':order.order.id}) }}" target="_target">Order details</a>
-                        </div>
-                    </div>
-                </div> #}
-        {# {% endfor %} #}
     {% else %}
         No existing orders yet.
     {% endif %}

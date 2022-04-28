@@ -219,10 +219,19 @@ button{
 }
 
 /*PRODUCTS*/
+
+.categoryInMain{
+    color:black;
+    background-color: #ddd;
+    padding:20px;
+    margin:15px 0;
+    font-size:25px;
+}
+
 .product{
     width: 220px;
     height:320px;
-    float:left;
+    /* float:left; */
     margin:20px;
     text-align: center;
     padding: 10px;
@@ -259,7 +268,14 @@ button{
 }
 
 .offer{
-    font-size: 12px;
+    padding:0px;
+    font-size: 15px;
+}
+
+.final-price{
+    font-weight: bolder;
+    margin-right: 10px;
+    font-size: 15px;
 }
 
 .offerPerc{
@@ -277,10 +293,8 @@ button{
     text-decoration-color: rgb(212, 55, 55);
 }
 
-.offer-final-price{
+.offer.final-price{
     color:#00AA33!important;
-    font-weight: bolder;
-    margin-right: 10px;
 }
 
 .showCategory, .showBrand{

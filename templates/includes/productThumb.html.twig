@@ -1,19 +1,23 @@
 <div class="product">
     <div class="productFrame">
-    <div class="productDetails">
-        <div class="imageFrame">
-            <a href="{{ path('productDetail', {'id':product.id}) }}">
-                <img src="{{ asset('/assets/imgs/products/'~ product.id ~'/'~ product.images[0].name ) }}" alt="Image not available"/>
-            </a>
-        </div>
+        <div class="productDetails">
+            <div class="imageFrame">
+            {% if product.images is not empty %}
+                <a href="{{ path('productDetail', {'id':product.id}) }}">
+                    <img src="{{ asset('/assets/imgs/products/'~ product.id ~'/'~ product.images[0].name ) }}" alt="Image not available"/>
+                </a>
+            {% else %}
+                <img class="img_basket" src="{{ asset('assets/imgs/global/logo.png')}}"/>
+            {% endif %}
+            </div>
         {% if product.offer %}
         <p> 
-            <span class="offer-final-price">{{ (product.price - (product.price*product.offer/100))|number_format(2, ',', '.') }} € </span></br>
+            <span class="offer final-price">{{ (product.price - (product.price*product.offer/100))|number_format(2, ',', '.') }} € </span></br>
             <span class="offer offerPerc"> Offer {{product.offer}}%</span>
             <span class="offer original-price">{{product.price|number_format(2, ',', '.')}} € </span>
         </p>
         {% else %}
-        <p>{{product.price|number_format(2, ',', '.')}} € </p>
+        <p class="final-price">{{product.price|number_format(2, ',', '.')}} € </p>
         {% endif %}
 
         <h2> 
@@ -34,6 +38,6 @@
         {% else %}
             <a href="{{ path('addToBasket', {'id':product.id})}}" class="btn btn-warning addToBasket inThumb">Add to Basket</a>
         {% endif %}
-    </div>
+        </div>
     </div>
 </div>

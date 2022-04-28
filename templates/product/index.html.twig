@@ -6,9 +6,18 @@
 
 {% block main %}
     {% if products|length >= 1 %}
-        {% for product in products %}
-            {{ include('includes/productThumb.html.twig') }}
-        {% endfor %}
+        {% for category in getCategories() %}
+        <div class="categoryInMain">
+            <span><strong>{{category.name}}</strong></span>
+            <div class="d-flex flex-wrap">
+                {% for product in products %}
+                    {% if product.category.id == category.id %}
+                        {{ include('includes/productThumb.html.twig') }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+         {% endfor %}
     {% else %}
         {% if search is defined %}
         <strong> No results for search "{{search}}"  </strong>
