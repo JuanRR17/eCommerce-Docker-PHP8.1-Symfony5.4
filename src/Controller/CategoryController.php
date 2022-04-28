@@ -39,10 +39,15 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    public function edit(Category $category): Response
+    public function edit(Category $category=null): Response
     {
+        if(!$category){
+            $categoryId=$this->request->get('id');
+            throw $this->createNotFoundException('The Category with id "'.$categoryId.'" doesn\'t exist.');
+        }
         $edit_cat=$this->em->getRepository('App:Category')->findOneBy(['id' => $category]);
         $message="";
+
         if($this->request->getMethod() == 'POST'){
             $category->setName($this->request->get('name'));
             $this->em->persist($category);
@@ -57,8 +62,12 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    public function remove(Category $category): Response
+    public function remove(Category $category=null): Response
     {
+        if(!$category){
+            $categoryId=$this->request->get('id');
+            throw $this->createNotFoundException('The Category with id "'.$categoryId.'" doesn\'t exist.');
+        }
         $message="";
         if($category){
             $message = $category->getName()." deleted successfully";
@@ -74,8 +83,12 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    public function showCategory(Category $category): Response
+    public function showCategory(Category $category=null): Response
     {
+        if(!$category){
+            $categoryId=$this->request->get('id');
+            throw $this->createNotFoundException('The Category with id "'.$categoryId.'" doesn\'t exist.');
+        }
         if($category){
             $category_products = $this->em->getRepository('App:Product')
                                 ->createQueryBuilder('p')

@@ -7,21 +7,26 @@ use App\Entity\BasketRow;
 use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class BasketController extends AbstractController
 {
     private $em;
+    private $request;
 
     public function __construct(
         EntityManagerInterface $em,
+        RequestStack $request
     )
     {
         $this->em = $em;
+        $this->request = $request->getCurrentRequest();
+
     }
 
-    public function index(?UserInterface $user): Response
+    public function index(UserInterface $user=null): Response
     {
     if($user){     
         $basket = $this->em->getRepository('App:Basket')->findOneBy(['userid' => $user]); 
@@ -50,7 +55,12 @@ class BasketController extends AbstractController
         ]);
     }
 
-    public function add(Product $product){
+    public function add(Product $product=null):Response
+    {
+        if(!$product){
+            $productId=$this->request->get('id');
+            throw $this->createNotFoundException('The Product with id "'.$productId.'" doesn\'t exist.');
+        }
         $basket = $this->em->getRepository('App:Basket')->findOneBy(['userid' => $this->getUser()]);
 
         if($basket==null){
@@ -105,7 +115,12 @@ class BasketController extends AbstractController
         return $this->redirect($this->generateUrl('basket'));
     }
     
-    public function removeRow(BasketRow $basket_row){
+    public function removeRow(BasketRow $basket_row=null): Response
+    {
+        if(!$basket_row){
+            $basketRowId=$this->request->get('id');
+            throw $this->createNotFoundException('The Basket Row with id "'.$basketRowId.'" doesn\'t exist.');
+        }
         if(isset($basket_row)){
             $basket = $basket_row->getBasketId();
             $this->em->remove($basket_row);
@@ -119,8 +134,12 @@ class BasketController extends AbstractController
         return $this->redirect($this->generateUrl('basket'));
     }
 
-    public function up(BasketRow $basket_row)
+    public function up(BasketRow $basket_row=null): Response
     {
+        if(!$basket_row){
+            $basketRowId=$this->request->get('id');
+            throw $this->createNotFoundException('The Basket Row with id "'.$basketRowId.'" doesn\'t exist.');
+        }
         $stock=$basket_row->getProductId()->getStock();
         if($stock > $basket_row->getQuantity()
         &&
@@ -130,8 +149,12 @@ class BasketController extends AbstractController
         return $this->redirect($this->generateUrl('basket'));        
     }
 
-    public function down(BasketRow $basket_row){
-
+    public function down(BasketRow $basket_row=null): Response
+    {
+        if(!$basket_row){
+            $basketRowId=$this->request->get('id');
+            throw $this->createNotFoundException('The Basket Row with id "'.$basketRowId.'" doesn\'t exist.');
+        }
         if(isset($basket_row)){
             $basket_row->setQuantity($basket_row->getQuantity()-1)->setSubtotal();
             $basket = $basket_row->getBasketId();
@@ -143,7 +166,6 @@ class BasketController extends AbstractController
                 $this->removeRow($basket_row);
             }
         }
-
         return $this->redirect($this->generateUrl('basket'));
     }
 }

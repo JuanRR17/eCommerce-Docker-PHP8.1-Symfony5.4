@@ -22,7 +22,8 @@ class ProductController extends AbstractController
     public function __construct(
         EntityManagerInterface $em,
         RequestStack $request,
-        $projectDir
+        $projectDir,
+        
     ){
         $this->em = $em;
         $this->request = $request->getCurrentRequest();
@@ -104,6 +105,10 @@ class ProductController extends AbstractController
 
     public function create(Product $product=null): Response
     {
+        if(!$product){
+            $productId=$this->request->get('id');
+            throw $this->createNotFoundException('The Product with id "'.$productId.'" doesn\'t exist.');
+        }
         //Gather all categories and brands in the database
         //These will be passed to the view to the select input
        $categories = $this->em->getRepository('App:Category')->findBy([],['name' => 'ASC']);
@@ -283,22 +288,26 @@ class ProductController extends AbstractController
 
     public function remove(Product $product): Response
     {
-        $message="";
-        if($product){
+        
+       if($product){
             $message=$product->getBrand()->getName().' '.$product->getModel().' removed successfully!';
             $this->em->remove($product);
             $this->em->flush();
         }else{
-            $message="Product couldn't be removed";    
+            $productId=$this->request->get('id');
+            throw new \Exception('The Product '.$productId.' can\'t be removed.');
+            // throw $this->createNotFoundException('The Product '.$productId.' can\'t be removed because it doesn\'t exist.');   
         }
         return $this->manage($message);
     }
 
-    public function detail(Product $product, $img_id): Response
+    public function detail(Product $product=null, $img_id): Response
     {    
         if(!$product){
-            throw ProductNotFoundException::fromProductId($product);
+            $productId=$this->request->get('id');
+            throw $this->createNotFoundException('The Product '.$productId.' doesn\'t exist.');
         }
+
         if($img_id != null){
             $main=$this->em->getRepository('App:Image')->findOneBy(['id'=> $img_id]);
         }else{

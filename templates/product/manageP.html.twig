@@ -71,21 +71,19 @@
                             <div class="modal-body">
                                 {% if product.orders is empty%}
                                 <span>This Product has never been ordered yet.</span>
-                                {% else %}
-                                    <span>The following Orders contain this Product:</br> 
-                                    {# {% for orderRow in product.product.orderRows %}
-                                    {{dump(orderRow.orderid.id)}}
-                                    {{ dump(product.orders) }}
-                                    {% endfor %} #}
-                                    {% for order in product.orders %}
-                                        {{ order.id }}
-                                    {% endfor %}
-                                {% endif %}
                                 </br>
                                 <span>Are you sure you want to remove the Product</br> 
                                     <strong>{{product.product.brand.name}} {{product.product.model}}?</strong>
                                 </span></br>
                                 <a href="{{ path('removeProduct', {'id':product.product.id}) }}" class="btn btn-danger">Delete</a>
+                                {% else %}
+                                    <span> You can't remove <strong>{{product.product.brand.name}} {{product.product.model}}</strong>
+                                     because it's been ordered by the following:</br> 
+                                    {% for order in product.orders %}
+                                        <div><a href="{{ path('orderDetails', {'id':order.id}) }}">Order #{{ order.id }}</a></div>
+                                    {% endfor %}
+                                {% endif %}
+
                             </div>
                         </div>
                     </div>

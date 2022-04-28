@@ -40,8 +40,12 @@ class BrandController extends AbstractController
         ]);
     }
 
-    public function edit(Brand $brand): Response
+    public function edit(Brand $brand=null): Response
     {
+        if(!$brand){
+            $brandId=$this->request->get('id');
+            throw $this->createNotFoundException('The Brand with id "'.$brandId.'" doesn\'t exist.');
+        }
         $edit_brand=$this->em->getRepository('App:Brand')->findOneBy(['id' => $brand]);
         $message="";
         if($this->request->getMethod() == 'POST'){
@@ -58,9 +62,12 @@ class BrandController extends AbstractController
         ]);
     }
 
-    public function remove(Brand $brand): Response
+    public function remove(Brand $brand=null): Response
     {
-
+        if(!$brand){
+            $brandId=$this->request->get('id');
+            throw $this->createNotFoundException('The Brand with id "'.$brandId.'" doesn\'t exist.');
+        }
         $message="";
         if($brand){
             $message = $brand->getName()." deleted successfully";
@@ -75,8 +82,12 @@ class BrandController extends AbstractController
         ]);
     }
 
-    public function showBrand(Brand $brand): Response
+    public function showBrand(Brand $brand=null): Response
     {
+        if(!$brand){
+            $brandId=$this->request->get('id');
+            throw $this->createNotFoundException('The Brand with id "'.$brandId.'" doesn\'t exist.');
+        }
         if($brand){
             $brand_products = $this->em->getRepository('App:Product')
             ->createQueryBuilder('p')

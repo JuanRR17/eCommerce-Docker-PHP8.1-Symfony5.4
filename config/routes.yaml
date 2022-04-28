@@ -49,10 +49,6 @@ set_default:
    path: /product/image/set_default/{id}
    controller: App\Controller\ImageController::set_default
 
-select_main:
-   path: /product/image/select_main/{img_id}
-   controller: App\Controller\ProductController:select_main
-
 # CATEGORY ROUTES
 manageCategories:
    path: /category/manage

@@ -14,18 +14,22 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class OrderController extends AbstractController
 {
     private $em;
+    private $request;
 
     public function __construct(
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        RequestStack $request
     )
     {
         $this->em = $em;
+        $this->request = $request->getCurrentRequest();
     }
 
     public function index(Request $request): Response
@@ -47,8 +51,12 @@ class OrderController extends AbstractController
             ]);
     }
 
-    public function userIndex(UserInterface $user): Response
+    public function userIndex(UserInterface $user=null): Response
     {
+        if(!$user){
+            $userId=$this->request->get('id');
+            throw $this->createNotFoundException('The User with id "'.$userId.'" doesn\'t exist.');
+        }
         if($user){
             $orders = $this->em->getRepository('App:Order')->findBy(
                 ['user'=> $user]
@@ -62,8 +70,12 @@ class OrderController extends AbstractController
     public function makeOrder(
         Request $request,
         ManagerRegistry $doctrine,
-        Basket $basket): Response
+        Basket $basket=null): Response
     {
+        if(!$basket){
+            $basketId=$this->request->get('id');
+            throw $this->createNotFoundException('The Basket with id "'.$basketId.'" doesn\'t exist.');
+        }
         //Create and fill Order details
         $order=new Order();
         $user=$basket->getUserid();
@@ -133,7 +145,12 @@ class OrderController extends AbstractController
         ]);
     }
 
-    public function orderConfirmation(Order $order){
+    public function orderConfirmation(Order $order=null): Response
+    {
+        if(!$order){
+            $orderId=$this->request->get('id');
+            throw $this->createNotFoundException('The Order with id "'.$orderId.'" doesn\'t exist.');
+        }
         $confirmation=true;
         return $this->render('order/orderDetails.html.twig', [
             'order' => $order,    
@@ -141,14 +158,23 @@ class OrderController extends AbstractController
         ]);
     }
 
-    public function showDetails(Order $order){
+    public function showDetails(Order $order=null): Response
+    {
+        if(!$order){
+            $orderId=$this->request->get('id');
+            throw $this->createNotFoundException('The Order with id "'.$orderId.'" doesn\'t exist.');
+        }
         return $this->render('order/orderDetails.html.twig', [
             'order' => $order,     
         ]);
     }
 
-    public function updateOrderStatus(Request $request, Order $order):Response
+    public function updateOrderStatus(Request $request, Order $order=null):Response
     {
+        if(!$order){
+            $orderId=$this->request->get('id');
+            throw $this->createNotFoundException('The Order with id "'.$orderId.'" doesn\'t exist.');
+        }
         $statusForm=$this->createForm(StatusType::class,$order);
     
         //Handle search

@@ -20,9 +20,13 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-    # App\Controller\:
-    #     resource: '../src/Controller'
-    #     tags: [ 'controller.service_arguments' ]            
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: [ 'controller.service_arguments' ]            
 
+    # App\Listener\ExceptionsListener:
+    #     tags: 
+    #         - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 100 }
+   
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
