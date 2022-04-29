@@ -62,6 +62,11 @@ class ProductController extends AbstractController
         ]);
     }
 
+    // public function findAndCompare(string $search): bool
+    // {
+    //     if()
+    // }
+
     public function searchBar(Request $request=null):Response
     {
         //Create search Bar Form

@@ -19,6 +19,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         
+        $roles = $this->roles;
+        
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
@@ -49,8 +51,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $role;
+    #[ORM\Column(type: 'json', length: 255)]
+    private $roles=[];
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank]
@@ -129,14 +131,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getRole(): ?string
+    public function getRole(): ?array
     {
-        return $this->role;
+        return $this->roles;
     }
 
-    public function setRole(string $role): self
+    public function setRole(string $roles): self
     {
-        $this->role = $role;
+        $this->roles[] = $roles;
 
         return $this;
     }

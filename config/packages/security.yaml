@@ -23,6 +23,8 @@ security:
             logout:
                 path: logout
                 target: /
+
+            entry_point: App\Security\AuthenticationEntryPoint
             # lazy: true
             # provider: users_in_memory
 
@@ -32,15 +34,14 @@ security:
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/product/*, roles: ROLE_USER } # Actually ROLE_ADMIN
-        - { path: ^/category/*, roles: ROLE_USER } # Actually ROLE_ADMIN
-        - { path: ^/brand/*, roles: ROLE_USER } # Actually ROLE_ADMIN
-        - { path: ^/order/*, roles: ROLE_USER } 
+        - { path: ^/manage/, roles: ROLE_ADMIN } 
 
-        - { path: ^/order/manage, roles: ROLE_USER } # Actually ROLE_ADMIN
+        - { path: ^/order/, roles: ROLE_USER }
 
 when@test:
     security:

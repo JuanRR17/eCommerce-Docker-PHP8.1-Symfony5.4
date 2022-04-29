@@ -12,11 +12,7 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ path('index') }}">Home</a>
         </li>
-        <li class="nav-item dropdown
-		{# {% if getCategories()|length == 0 %} #}
-		{# disabled #}
-		{# {% endif %} #}
-		">
+        <li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle
 			{% if getCategories() is empty %}
 				disabled
@@ -80,11 +76,14 @@
 			<ul class="dropdown-menu bg-primary p-0 overflow-hidden" aria-labelledby="navbarDropdownMenuLink">
 				{% if app.user %}
 					<li><a class="dropdown-item text-light" href="{{ path('user_orders_index', {'id':app.user.id}) }}">My Orders</a></li>
-					<li><a class="dropdown-item text-light" href="{{ path('manageOrders')}}">Manage Orders</a></li>
-					<li><a class="dropdown-item text-light" href="{{ path('manageCategories')}}">Manage Categories</a></li>
-					<li><a class="dropdown-item text-light" href="{{ path('manageBrands')}}">Manage Brands</a></li>
-					<li><a class="dropdown-item text-light" href="{{ path('manageProducts') }}">Manage Products</a></li>
-
+					{% for role in app.user.roles %}
+						{% if role == 'ROLE_ADMIN' %}				
+							<li><a class="dropdown-item text-light" href="{{ path('manageOrders')}}">Manage Orders</a></li>
+							<li><a class="dropdown-item text-light" href="{{ path('manageCategories')}}">Manage Categories</a></li>
+							<li><a class="dropdown-item text-light" href="{{ path('manageBrands')}}">Manage Brands</a></li>
+							<li><a class="dropdown-item text-light" href="{{ path('manageProducts') }}">Manage Products</a></li>
+						{% endif %}
+					{% endfor %}
 					<li><a class="dropdown-item text-light" href="{{path('register', {'id':app.user.id})}}">My details</a></li>
 					<li><a class="dropdown-item text-light" href="{{path('logout')}}">Logout</a></li>
 					</ul>

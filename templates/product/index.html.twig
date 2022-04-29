@@ -5,18 +5,23 @@
 {% block header %}Products{% endblock %}
 
 {% block main %}
+{% if search is defined and products|length > 0 %}
+   <span> Results for "<strong>{{search}}</strong>".</span>
+{% endif %}
     {% if products|length >= 1 %}
         {% for category in getCategories() %}
-        <div class="categoryInMain">
-            <span><strong>{{category.name}}</strong></span>
-            <div class="d-flex flex-wrap">
-                {% for product in products %}
-                    {% if product.category.id == category.id %}
-                        {{ include('includes/productThumb.html.twig') }}
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
+            {% if category|length >= 1 %}
+                <div class="categoryInMain">
+                    <span><strong>{{category.name}}</strong></span>
+                    <div class="d-flex flex-wrap">
+                        {% for product in products %}
+                            {% if product.category.id == category.id %}
+                                {{ include('includes/productThumb.html.twig') }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
          {% endfor %}
     {% else %}
         {% if search is defined %}

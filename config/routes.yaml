@@ -16,7 +16,7 @@ logout:
 
 # PRODUCT ROUTES
 newProduct:
-   path: /product/create
+   path: /manage/product/create
    controller: App\Controller\ProductController::create
 
 index:
@@ -24,15 +24,15 @@ index:
    controller: App\Controller\ProductController::index
 
 manageProducts:
-   path: /product/manage
+   path: /manage/product/manage
    controller: App\Controller\ProductController::manage
    
 editProduct:
-   path: /product/edit/{id}
+   path: /manage/product/edit/{id}
    controller: App\Controller\ProductController::create
 
 removeProduct:
-   path: /product/remove/{id}
+   path: /manage/product/remove/{id}
    controller: App\Controller\ProductController::remove
 
 productDetail:
@@ -42,24 +42,24 @@ productDetail:
       img_id: null
 
 remove_image:
-   path: /product/image/remove/{id}
+   path: /manage/product/image/remove/{id}
    controller: App\Controller\ImageController::remove_image
 
 set_default:
-   path: /product/image/set_default/{id}
+   path: /manage/product/image/set_default/{id}
    controller: App\Controller\ImageController::set_default
 
 # CATEGORY ROUTES
 manageCategories:
-   path: /category/manage
+   path: /manage/category
    controller: App\Controller\CategoryController::manage
 
 editCategory:
-   path: /category/edit/{id}
+   path: /manage/category/edit/{id}
    controller: App\Controller\CategoryController::edit
 
 removeCategory:
-   path: /category/remove/{id}
+   path: /manage/category/remove/{id}
    controller: App\Controller\CategoryController::remove
 
 showCategory:
@@ -68,7 +68,7 @@ showCategory:
 
 # BRAND ROUTES
 manageBrands:
-   path: /brand/manage
+   path: /manage/brand/
    controller: App\Controller\BrandController::manage
 
 editBrand:
@@ -76,7 +76,7 @@ editBrand:
    controller: App\Controller\BrandController::edit
 
 removeBrand:
-   path: /brand/remove/{id}
+   path: /manage/brand/remove/{id}
    controller: App\Controller\BrandController::remove
 
 showBrand:
@@ -127,11 +127,11 @@ user_orders_index:
    controller: App\Controller\OrderController::userIndex
 
 manageOrders:
-   path: /order/manage
+   path: /manage/orders
    controller: App\Controller\OrderController::index
 
 updateOrderStatus:
-   path: /order/status/{id}
+   path: /manage/order/status/{id}
    controller: App\Controller\OrderController::updateOrderStatus
 
 orderDetails:

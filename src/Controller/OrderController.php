@@ -7,7 +7,6 @@ use App\Entity\Basket;
 use App\Entity\BasketRow;
 use App\Entity\Order;
 use App\Entity\OrderRow;
-use App\Entity\User;
 use App\Form\OrderType;
 use App\Form\StatusType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -191,7 +190,7 @@ class OrderController extends AbstractController
     public function makeOrderFromLogin(
         Request $request,
         ManagerRegistry $doctrine,
-        User $user
+        UserInterface $user
     ){
         $userBasket=$this->em->getRepository('App:Basket')->findOneBy(
             ['userid' => $user]
