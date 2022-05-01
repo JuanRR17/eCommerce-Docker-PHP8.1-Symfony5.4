@@ -9,19 +9,17 @@
    <span> Results for "<strong>{{search}}</strong>".</span>
 {% endif %}
     {% if products|length >= 1 %}
-        {% for category in getCategories() %}
-            {% if category|length >= 1 %}
-                <div class="categoryInMain">
-                    <span><strong>{{category.name}}</strong></span>
-                    <div class="d-flex flex-wrap">
-                        {% for product in products %}
-                            {% if product.category.id == category.id %}
-                                {{ include('includes/productThumb.html.twig') }}
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+        {% for category in categories %}
+            <div class="categoryInMain">
+                <span><strong>{{category.name}}</strong></span>
+                <div class="d-flex flex-wrap">
+                    {% for product in products %}
+                        {% if product.category.id == category.id %}
+                            {{ include('includes/productThumb.html.twig') }}
+                        {% endif %}
+                    {% endfor %}
                 </div>
-            {% endif %}
+            </div>
          {% endfor %}
     {% else %}
         {% if search is defined %}

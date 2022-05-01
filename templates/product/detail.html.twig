@@ -10,7 +10,9 @@
 
 {% block main %}
     {% if product is not null %}
-        <a href="{{ path('editProduct', {'id': product.id })}}">Edit</a>
+        {% if app.user is not null and app.user.roles[0] == 'ROLE_ADMIN' %}
+            <a href="{{ path('editProduct', {'id': product.id })}}">Edit</a>
+        {% endif %}
         <div id="detail-product">
             <div class="images_container">
                 <div class="image main">

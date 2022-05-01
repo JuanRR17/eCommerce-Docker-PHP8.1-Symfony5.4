@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Image;
 use App\Entity\Order;
 use App\Entity\Product;
-use App\Exception\Product\ProductNotFoundException;
 use App\Form\SearchType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,7 +32,11 @@ class ProductController extends AbstractController
 
     public function index(Request $request=null): Response
     {
-        $products = $this->em->getRepository(Product::class)->findBy([],['id' => 'DESC']);
+        $products = $this->em->getRepository(Product::class)->findBy([
+            'catalogued' => true
+        ],['id' => 'DESC']);
+
+        $categories = $this->em->getRepository(Category::class)->findCataloguedProducts();
 
         // searchBar request handling
         if($request->request->count() > 0){
@@ -42,30 +46,46 @@ class ProductController extends AbstractController
             $matches=[];
             foreach($products as $product){
                 if(
-                    str_contains($product->getModel(), $search)
+                    $this->findAndCompare($product->getModel(), $search)
                     ||
-                    str_contains($product->getSpecifications(), $search)
+                    $this->findAndCompare($product->getSpecifications(), $search)
                     ||
-                    str_contains($product->getColour(), $search)
+                    $this->findAndCompare($product->getColour(), $search)
+                    ||
+                    $this->findAndCompare($product->getCategory()->getName(), $search)
+                    ||
+                    $this->findAndCompare($product->getBrand()->getName(), $search)
                     ){
                     $matches[]=$product;
                 }
             }
             return $this->render('product/index.html.twig', [
                 'products' => $matches,
-                'search' => $search
+                'search' => $search,
+                'categories' => $categories
             ]);
         }
         
         return $this->render('product/index.html.twig', [
             'products' => $products,
+            'categories' => $categories
         ]);
     }
 
-    // public function findAndCompare(string $search): bool
-    // {
-    //     if()
-    // }
+    public function findAndCompare(string $productField=null, string $search): bool
+    {
+        if($productField != null){
+        //convert search string to lowercase
+        $searchLWR = strtolower($search);
+        $productFieldLWR = strtolower($productField);
+        
+        return str_contains($productFieldLWR, $searchLWR);
+        }else{
+            return false;
+        }
+        
+        
+    }
 
     public function searchBar(Request $request=null):Response
     {
@@ -93,24 +113,24 @@ class ProductController extends AbstractController
 
         //Create an Object in which each element contains a Product and 
         //the Orders which it's contained in.
-        $productsWithOrders=[];
-        foreach($products as $product){
-            $orders=$this->em->getRepository('App:Product')->findOrdersWithProduct($product);
-            $productsWithOrders[]=[
-                'product'=>$product,
-                'orders'=>$orders
-            ];
-        }
+        // $productsWithOrders=[];
+        // foreach($products as $product){
+        //     $orders=$this->em->getRepository('App:Product')->findOrdersWithProduct($product);
+        //     $productsWithOrders[]=[
+        //         'product'=>$product,
+        //         'orders'=>$orders
+        //     ];
+        // }
 
         return $this->render('product/manageP.html.twig', [
-            'products' => $productsWithOrders,
+            'products' => $products,
             'message' => $message
         ]);
     }
 
     public function create(Product $product=null): Response
     {
-        if(!$product){
+        if($product != null && !$product){
             $productId=$this->request->get('id');
             throw $this->createNotFoundException('The Product with id "'.$productId.'" doesn\'t exist.');
         }
@@ -292,15 +312,15 @@ class ProductController extends AbstractController
     }
 
     public function remove(Product $product): Response
-    {
-        
+    {        
        if($product){
-            $message=$product->getBrand()->getName().' '.$product->getModel().' removed successfully!';
-            $this->em->remove($product);
+            $message=$product->getBrand()->getName().' '.$product->getModel().' removed from catalogue successfully!';
+            // $this->em->remove($product);
+            $product->setCatalogued(false);
             $this->em->flush();
         }else{
             $productId=$this->request->get('id');
-            throw new \Exception('The Product '.$productId.' can\'t be removed.');
+            throw new \Exception('The Product '.$productId.' can\'t be removed from catalogue.');
             // throw $this->createNotFoundException('The Product '.$productId.' can\'t be removed because it doesn\'t exist.');   
         }
         return $this->manage($message);
@@ -339,12 +359,35 @@ class ProductController extends AbstractController
         }
     }
 
-    public function showOrdersWithProduct(Product $product): Response
-    {
-        $orders=$this->em->getRepository('App:Product')->findOrdersWithProduct($product);
+    // public function showOrdersWithProduct(Product $product): Response
+    // {
+    //     $orders=$this->em->getRepository('App:Product')->findOrdersWithProduct($product);
 
-        return $this->render('includes/ordersWithProduct.html.twig', [
-            'orders' => $orders
-        ]);        
+    //     return $this->render('includes/ordersWithProduct.html.twig', [
+    //         'orders' => $orders
+    //     ]);        
+    // }
+
+    public function updateCatalogue(Product $product, string $cat): Response
+    {
+        if($product){
+            if($cat == "remove"){
+                $message=$product->getBrand()->getName().' '.$product->getModel().' removed from catalogue successfully!';
+                $product->setCatalogued(false);
+            }else{
+                $message=$product->getBrand()->getName().' '.$product->getModel().' added to catalogue successfully!';
+                $product->setCatalogued(true);
+            }
+            $this->em->flush();
+        }else{
+            $productId=$this->request->get('id');
+            if($cat == "remove"){
+                throw new \Exception('The Product '.$productId.' can\'t be removed from catalogue.');
+            }else{
+                throw new \Exception('The Product '.$productId.' can\'t be added to catalogue.');
+            }
+            // throw $this->createNotFoundException('The Product '.$productId.' can\'t be removed because it doesn\'t exist.');   
+        }
+        return $this->manage($message);
     }
 }

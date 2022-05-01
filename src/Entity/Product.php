@@ -51,11 +51,15 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product_id', targetEntity: BasketRow::class)]
     private $basketRows;
 
+    #[ORM\Column(type: 'boolean')]
+    private $catalogued;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->orderRows = new ArrayCollection();
         $this->basketRows = new ArrayCollection();
+        $this->catalogued = true;
     }
 
     public function getId(): ?int
@@ -245,6 +249,18 @@ class Product
                 $basketRow->setProductId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCatalogued(): ?bool
+    {
+        return $this->catalogued;
+    }
+
+    public function setCatalogued(?bool $catalogued): self
+    {
+        $this->catalogued = $catalogued;
 
         return $this;
     }

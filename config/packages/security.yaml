@@ -19,6 +19,7 @@ security:
                 login_path: index
                 check_path: login_check
                 provider: user
+                default_target_path: index
 
             logout:
                 path: logout

@@ -45,6 +45,22 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
+    public function findCataloguedProducts()
+    {
+        //SELECT * FROM category WHERE catefory.id IN
+        // (SELECT categoryid FROM product WHERE product = )
+        $query = $this->_em->createQuery('
+        SELECT      c
+        FROM        App:Category c
+        WHERE       c.id IN(
+            SELECT  IDENTITY(p.category)
+            FROM    App:Product p
+            WHERE   p.catalogued = true
+            )
+        ');
+
+        return $query->getResult();
+    }
     
 
     // /**

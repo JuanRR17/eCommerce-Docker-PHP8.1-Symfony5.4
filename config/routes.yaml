@@ -31,9 +31,9 @@ editProduct:
    path: /manage/product/edit/{id}
    controller: App\Controller\ProductController::create
 
-removeProduct:
-   path: /manage/product/remove/{id}
-   controller: App\Controller\ProductController::remove
+updateCatalogue:
+   path: /manage/product/cat/{id}/{cat}
+   controller: App\Controller\ProductController::updateCatalogue
 
 productDetail:
    path: /prod-detail/{id}/{img_id?}

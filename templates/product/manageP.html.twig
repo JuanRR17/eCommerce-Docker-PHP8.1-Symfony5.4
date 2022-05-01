@@ -25,65 +25,91 @@
     
         {% for product in products %}
         <tr>
-            <td>{% if product.product.images is not empty %}
-            <img class="img_basket" src="{{ asset('/assets/imgs/products/'~ product.product.id ~'/'~ product.product.images[0].name) }}"/>
+            <td>{% if product.images is not empty %}
+            <img class="img_basket" src="{{ asset('/assets/imgs/products/'~ product.id ~'/'~ product.images[0].name) }}"/>
             {% else %}
                  <img class="img_basket" src="{{ asset('assets/imgs/global/logo.png')}}"/>
             {% endif %}</td>
-            <td><a href="{{ path('showCategory', {'id':product.product.category.id} )}}">{{ product.product.category.name }}</a></td>
-            <td>{{ product.product.brand.name }}</td>
+            <td><a href="{{ path('showCategory', {'id':product.category.id} )}}">{{ product.category.name }}</a></td>
+            <td>{{ product.brand.name }}</td>
             <td>
-                <a href="{{ path('productDetail', {'id':product.product.id}) }}">
-                    {{ product.product.model }}
+                <a href="{{ path('productDetail', {'id':product.id}) }}">
+                    {{ product.model }}
                 </a>
             </td>
-            <td>{{ product.product.colour }}</td>
-            <td class="align-right">{{ product.product.price|number_format(2, ',', '.') }} €</td>
+            <td>{{ product.colour }}</td>
+            <td class="align-right">{{ product.price|number_format(2, ',', '.') }} €</td>
             <td>
-                {% if product.product.offer is not null %}
-                  {{ product.product.offer }} %
+                {% if product.offer is not null %}
+                  {{ product.offer }} %
                 {% else %}
                   None
                 {% endif %}
             </td>
             <td class="stock">
-                {% if product.product.stock == 0 %}
-                <strong style="color:red">{{ product.product.stock }}</strong>
-                {% elseif product.product.stock < 10 %}
-                <strong style="color:orange">{{ product.product.stock }}</strong>
+            {% if product.catalogued == true %}
+                {% if product.stock == 0 %}
+                <strong style="color:red">{{ product.stock }}</strong>
+                {% elseif product.stock < 10 %}
+                <strong style="color:orange">{{ product.stock }}</strong>
                 {% else %}
-                <strong style="color:green">{{ product.product.stock }}</strong>
+                <strong style="color:green">{{ product.stock }}</strong>
                 {% endif %}
+            {% else %}
+                <strong style="color:red">Uncatalogued</strong>
+            {% endif %}
             </td>
             <td>
-                <a href="{{ path('editProduct', {'id':product.product.id}) }}" class="btn btn-outline-warning actions" >Edit</a>
-                <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{product.product.id}}">
-                    <span class="btn btn-outline-danger actions">Delete</span>
+                <a href="{{ path('editProduct', {'id':product.id}) }}" class="btn btn-outline-warning actions" >Edit</a>
+                </br>
+                
+                <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{product.id}}">
+                    {% if product.catalogued == true %}
+                        <span class="btn btn-outline-danger actions">X</span>
+                    {% else %}
+                        <span class="btn btn-outline-success actions">+</span>
+                    {% endif %}
+                    
                 </a>
                  <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop{{product.product.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade" id="staticBackdrop{{product.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Remove <strong>{{product.product.brand.name}} {{product.product.model}}</strong></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                {% if product.orders is empty%}
-                                <span>This Product has never been ordered yet.</span>
-                                </br>
-                                <span>Are you sure you want to remove the Product</br> 
-                                    <strong>{{product.product.brand.name}} {{product.product.model}}?</strong>
-                                </span></br>
-                                <a href="{{ path('removeProduct', {'id':product.product.id}) }}" class="btn btn-danger">Delete</a>
+                                {% if product.catalogued == true %}
+                                    <h5 class="modal-title" id="staticBackdropLabel">Remove <strong>{{product.brand.name}} {{product.model}}</strong> from Catalogue</h5>
                                 {% else %}
-                                    <span> You can't remove <strong>{{product.product.brand.name}} {{product.product.model}}</strong>
-                                     because it's been ordered by the following:</br> 
-                                    {% for order in product.orders %}
-                                        <div><a href="{{ path('orderDetails', {'id':order.id}) }}">Order #{{ order.id }}</a></div>
-                                    {% endfor %}
+                                    <h5 class="modal-title" id="staticBackdropLabel">Add <strong>{{product.brand.name}} {{product.model}}</strong> to Catalogue</h5>
                                 {% endif %}
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                
+                                {% if product.orderRows is empty%}
+                                    <span>This Product has never been ordered yet.</span>
+                                {% else %}
+                                    <span>This Product has been ordered in the following orders:</span>
+                                        {% for orderRow in product.orderRows %}
+                                            <div><a href="{{ path('orderDetails', {'id':orderRow.orderid.id}) }}">Order #{{ orderRow.orderid.id }}</a></div>
+                                        {% endfor %}
+                                {% endif %}
+                                    </br>
 
+                                {% if product.catalogued == true %}
+                                    <span>Are you sure you want to remove the Product</br> 
+                                        <strong>{{product.brand.name}} {{product.model}}</strong></br>
+                                        from the catalogue?
+                                    </span></br>
+                                    <a href="{{ path('updateCatalogue', {'id':product.id, 'cat':"remove"}) }}" class="btn btn-danger">
+                                        De-catalogue
+                                    </a>                                
+                                {% else %}
+                                    <span>Are you sure you want to add the Product</br> 
+                                    <strong>{{product.brand.name}} {{product.model}}</strong></br> to the catalogue?</br>
+                                    <a href="{{ path('updateCatalogue', {'id':product.id, 'cat':"add"}) }}" class="btn btn-success">
+                                       Catalogue
+                                    </a>                                
+                                {% endif %}
                             </div>
                         </div>
                     </div>

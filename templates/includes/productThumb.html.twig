@@ -11,7 +11,7 @@
             {% endif %}
             </div>
         {% if product.offer %}
-        <p> 
+        <p style="line-height: normal;"> 
             <span class="offer final-price">{{ (product.price - (product.price*product.offer/100))|number_format(2, ',', '.') }} € </span></br>
             <span class="offer offerPerc"> Offer {{product.offer}}%</span>
             <span class="offer original-price">{{product.price|number_format(2, ',', '.')}} € </span>
