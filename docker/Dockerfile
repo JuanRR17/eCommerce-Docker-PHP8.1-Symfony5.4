@@ -1,5 +1,5 @@
+# FROM php:8.1.0-fpm
 FROM php:8.0.17-fpm
-
 ARG UID
 
 # Create user with same permissions as host and some useful stuff

@@ -11,8 +11,11 @@ use App\Messenger\Message\UserMessage;
 
 class MessengerAction
 {
+    // private $bus;
+
     public function __construct(private MessageBusInterface $bus)
     {
+        // $this->bus = $bus;
     }
     
     public function __invoke(): Response
