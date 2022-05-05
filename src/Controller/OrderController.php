@@ -33,7 +33,7 @@ class OrderController extends AbstractController
 
     public function index(Request $request): Response
     {
-        $orders = $this->em->getRepository('App:Order')->findAll();
+        $orders = $this->em->getRepository('App\Entity\Order')->findAll();
 
         $ordersWithStatus=[];
         foreach($orders as $order){
@@ -57,7 +57,7 @@ class OrderController extends AbstractController
             throw $this->createNotFoundException('The User with id "'.$userId.'" doesn\'t exist.');
         }
         if($user){
-            $orders = $this->em->getRepository('App:Order')->findBy(
+            $orders = $this->em->getRepository('App\Entity\Order')->findBy(
                 ['user'=> $user]
             );
         }
@@ -88,12 +88,12 @@ class OrderController extends AbstractController
         ;
 
         //Add Rows from Basket to Order
-        $basketRows = $this->em->getRepository('App:BasketRow')->findBy([
+        $basketRows = $this->em->getRepository('App\Entity\BasketRow')->findBy([
             'basket_id' => $basket
         ]);
 
         foreach($basketRows as $basketRow){
-            $rowProduct = $this->em->getRepository('App:Product')->findOneById([
+            $rowProduct = $this->em->getRepository('App\Entity\Product')->findOneById([
                 'id' => $basketRow->getProductId()
             ]);
             $newOrderRow= new OrderRow;
@@ -192,17 +192,17 @@ class OrderController extends AbstractController
         ManagerRegistry $doctrine,
         UserInterface $user
     ){
-        $userBasket=$this->em->getRepository('App:Basket')->findOneBy(
+        $userBasket=$this->em->getRepository('App\Entity\Basket')->findOneBy(
             ['userid' => $user]
         );
 
-        $noUserBasketRows=$this->em->getRepository('App:BasketRow')->findBy(
+        $noUserBasketRows=$this->em->getRepository('App\Entity\BasketRow')->findBy(
             ['userid' => null]
         );
 
         //Add Rows from No User Basket to User Basket
         foreach($noUserBasketRows as $noUserBasketRow){
-            $rowProduct = $this->em->getRepository('App:Product')->findOneById([
+            $rowProduct = $this->em->getRepository('App\Entity\Product')->findOneById([
                 'id' => $noUserBasketRow->getProductId()
             ]); 
             

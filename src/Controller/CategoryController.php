@@ -45,7 +45,7 @@ class CategoryController extends AbstractController
             $categoryId=$this->request->get('id');
             throw $this->createNotFoundException('The Category with id "'.$categoryId.'" doesn\'t exist.');
         }
-        $edit_cat=$this->em->getRepository('App:Category')->findOneBy(['id' => $category]);
+        $edit_cat=$this->em->getRepository('App\Entity\Category')->findOneBy(['id' => $category]);
         $message="";
 
         if($this->request->getMethod() == 'POST'){
@@ -90,7 +90,7 @@ class CategoryController extends AbstractController
             throw $this->createNotFoundException('The Category with id "'.$categoryId.'" doesn\'t exist.');
         }
         if($category){
-            $category_products = $this->em->getRepository('App:Product')
+            $category_products = $this->em->getRepository('App\Entity\Product')
                                 ->createQueryBuilder('p')
                                 ->andWhere("p.category = :category")
                                 ->setParameter('category', $category->getId())

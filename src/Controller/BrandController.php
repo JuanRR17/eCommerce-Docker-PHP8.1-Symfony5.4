@@ -46,7 +46,7 @@ class BrandController extends AbstractController
             $brandId=$this->request->get('id');
             throw $this->createNotFoundException('The Brand with id "'.$brandId.'" doesn\'t exist.');
         }
-        $edit_brand=$this->em->getRepository('App:Brand')->findOneBy(['id' => $brand]);
+        $edit_brand=$this->em->getRepository('App\Entity\Brand')->findOneBy(['id' => $brand]);
         $message="";
         if($this->request->getMethod() == 'POST'){
             $brand->setName($this->request->get('name'));
@@ -89,7 +89,7 @@ class BrandController extends AbstractController
             throw $this->createNotFoundException('The Brand with id "'.$brandId.'" doesn\'t exist.');
         }
         if($brand){
-            $brand_products = $this->em->getRepository('App:Product')
+            $brand_products = $this->em->getRepository('App\Entity\Product')
             ->createQueryBuilder('p')
             ->andWhere("p.brand = :brand")
             ->setParameter('brand', $brand->getId())

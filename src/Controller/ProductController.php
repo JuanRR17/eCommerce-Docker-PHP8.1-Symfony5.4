@@ -115,7 +115,7 @@ class ProductController extends AbstractController
         //the Orders which it's contained in.
         // $productsWithOrders=[];
         // foreach($products as $product){
-        //     $orders=$this->em->getRepository('App:Product')->findOrdersWithProduct($product);
+        //     $orders=$this->em->getRepository('App\Entity\Product')->findOrdersWithProduct($product);
         //     $productsWithOrders[]=[
         //         'product'=>$product,
         //         'orders'=>$orders
@@ -136,8 +136,8 @@ class ProductController extends AbstractController
         }
         //Gather all categories and brands in the database
         //These will be passed to the view to the select input
-       $categories = $this->em->getRepository('App:Category')->findBy([],['name' => 'ASC']);
-       $brands = $this->em->getRepository('App:Brand')->findBy([],['name' => 'ASC']);
+       $categories = $this->em->getRepository('App\Entity\Category')->findBy([],['name' => 'ASC']);
+       $brands = $this->em->getRepository('App\Entity\Brand')->findBy([],['name' => 'ASC']);
        $message="";
        $error=false;
        if(isset($product)){
@@ -159,8 +159,8 @@ class ProductController extends AbstractController
 
             $error_message=[];
             //Take values from the form
-            $category = $this->em->getRepository('App:Category')->findOneById($this->request->get('category'));
-            $brand = $this->em->getRepository('App:Brand')->findOneById($this->request->get('brand'));
+            $category = $this->em->getRepository('App\Entity\Category')->findOneById($this->request->get('category'));
+            $brand = $this->em->getRepository('App\Entity\Brand')->findOneById($this->request->get('brand'));
             $model = $this->request->get('model');
             $specifications = $this->request->get('specifications');
             $price = $this->request->get('price');
@@ -258,7 +258,7 @@ class ProductController extends AbstractController
                         mkdir($uploadFolder, 0777,true);
                     }
 
-                    $db_images = $this->em->getRepository('App:Image')->findBy(['product' => $newProduct->getId()]);
+                    $db_images = $this->em->getRepository('App\Entity\Image')->findBy(['product' => $newProduct->getId()]);
                     if($db_images !== null){
                         //Create array with the images name.
                         $db_images_names = array();
@@ -277,7 +277,7 @@ class ProductController extends AbstractController
                     }
 
                     $image->move($uploadFolder,$image_formatted_name);
-                    $test=$this->em->getRepository('App:Image')->findByProduct($newProduct->getId());
+                    $test=$this->em->getRepository('App\Entity\Image')->findByProduct($newProduct->getId());
                     $newImage = new Image();
                     $newImage
                         ->setName($image_formatted_name)
@@ -286,7 +286,7 @@ class ProductController extends AbstractController
                         ->setIsDefault(
                             in_array(true,array_map(
                             function($def){return $def->getIsDefault();},
-                            $this->em->getRepository('App:Image')->findByProduct($newProduct->getId()))) 
+                            $this->em->getRepository('App\Entity\Image')->findByProduct($newProduct->getId()))) 
                                ? false : true);
                     $this->em->persist($newImage);
                     
@@ -334,9 +334,9 @@ class ProductController extends AbstractController
         }
 
         if($img_id != null){
-            $main=$this->em->getRepository('App:Image')->findOneBy(['id'=> $img_id]);
+            $main=$this->em->getRepository('App\Entity\Image')->findOneBy(['id'=> $img_id]);
         }else{
-            $main=$this->em->getRepository('App:Image')->findOneBy(['product'=>$product->getId(),'isDefault'=>true]);
+            $main=$this->em->getRepository('App\Entity\Image')->findOneBy(['product'=>$product->getId(),'isDefault'=>true]);
         }
 
         return $this->render('product/detail.html.twig', [
@@ -347,12 +347,12 @@ class ProductController extends AbstractController
 
     public function updateStock(Order $order)
     {
-        $orderRows=$this->em->getRepository('App:OrderRow')->findBy([
+        $orderRows=$this->em->getRepository('App\Entity\OrderRow')->findBy([
             'order_id' => $order
         ]);
 
         foreach($orderRows as $orderRow){
-            $rowProduct=$this->em->getRepository('App:Product')->findOneBy([
+            $rowProduct=$this->em->getRepository('App\Entity\Product')->findOneBy([
                 'id' => $orderRow->getProduct()
             ]);
             $rowProduct->setStock(($rowProduct->getStock() - $orderRow->getQuantity()));
@@ -361,7 +361,7 @@ class ProductController extends AbstractController
 
     // public function showOrdersWithProduct(Product $product): Response
     // {
-    //     $orders=$this->em->getRepository('App:Product')->findOrdersWithProduct($product);
+    //     $orders=$this->em->getRepository('App\Entity\Product')->findOrdersWithProduct($product);
 
     //     return $this->render('includes/ordersWithProduct.html.twig', [
     //         'orders' => $orders

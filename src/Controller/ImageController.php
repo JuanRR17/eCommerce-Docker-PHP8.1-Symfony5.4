@@ -59,7 +59,7 @@ class ImageController extends AbstractController
           $imageId=$this->request->get('id');
           throw $this->createNotFoundException('The Image with id "'.$imageId.'" doesn\'t exist.');
         }
-        $images=$this->em->getRepository('App:Image')->findByProduct($image->getProduct());
+        $images=$this->em->getRepository('App\Entity\Image')->findByProduct($image->getProduct());
         foreach($images as $img){
             $img->setIsDefault(false);
         }

@@ -29,7 +29,7 @@ class BasketController extends AbstractController
     public function index(UserInterface $user=null): Response
     {
     if($user){     
-        $basket = $this->em->getRepository('App:Basket')->findOneBy(['userid' => $user]); 
+        $basket = $this->em->getRepository('App\Entity\Basket')->findOneBy(['userid' => $user]); 
             if(!$basket){
                 $basket = new Basket();
                 $basket->setTotal(0);
@@ -38,7 +38,7 @@ class BasketController extends AbstractController
                 $this->em->flush();
             }
     }else{
-        if($basketNoUser = $this->em->getRepository('App:Basket')->findOneBy(['userid'=>null])){
+        if($basketNoUser = $this->em->getRepository('App\Entity\Basket')->findOneBy(['userid'=>null])){
             $basket = $basketNoUser;
         }else{
                 $basket = new Basket();
@@ -61,7 +61,7 @@ class BasketController extends AbstractController
             $productId=$this->request->get('id');
             throw $this->createNotFoundException('The Product with id "'.$productId.'" doesn\'t exist.');
         }
-        $basket = $this->em->getRepository('App:Basket')->findOneBy(['userid' => $this->getUser()]);
+        $basket = $this->em->getRepository('App\Entity\Basket')->findOneBy(['userid' => $this->getUser()]);
 
         if($basket==null){
             $basket = new Basket();
@@ -71,7 +71,7 @@ class BasketController extends AbstractController
             $this->em->flush();
         }
         if(isset($product)){
-            $new_row=$this->em->getRepository('App:BasketRow')->findOneBy([
+            $new_row=$this->em->getRepository('App\Entity\BasketRow')->findOneBy([
                 'product_id' => $product,
                 'basket_id' => $basket
         ]);
@@ -104,7 +104,7 @@ class BasketController extends AbstractController
     }
 
     public function emptyBasket(){
-        $basket = $this->em->getRepository('App:Basket')->findOneBy(['userid' => $this->getUser()]);
+        $basket = $this->em->getRepository('App\Entity\Basket')->findOneBy(['userid' => $this->getUser()]);
         foreach($basket->getBasketRows() as $row){
             $this->removeRow($row);
         }

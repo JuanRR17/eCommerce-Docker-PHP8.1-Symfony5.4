@@ -26,6 +26,6 @@ class BrandExtension extends AbstractExtension
 
     public function getBrands(int $limit=null)
     {
-        return  $this->em->getRepository('App:Brand')->findBy([],['name' => 'ASC'],$limit);
+        return  $this->em->getRepository('App\Entity\Brand')->findBy([],['name' => 'ASC'],$limit);
     }
 }

@@ -31,14 +31,14 @@ class BasketExtension extends AbstractExtension
             'total' => 0
         );
         if($user){     
-            $basket = $this->em->getRepository('App:Basket')->findOneBy([
+            $basket = $this->em->getRepository('App\Entity\Basket')->findOneBy([
                 'userid' => $user->getId()]); 
                 if($basket){
 			        $stats['count'] = count($basket->getBasketRows());
 			
                     $stats['total'] = $basket->getTotal();
                 }
-        }elseif($basketNoUser = $this->em->getRepository('App:Basket')->findOneBy([
+        }elseif($basketNoUser = $this->em->getRepository('App\Entity\Basket')->findOneBy([
                 'userid'=>null])){
                     $stats['count'] = count($basketNoUser->getBasketRows());
 			

@@ -26,6 +26,6 @@ class CategoryExtension extends AbstractExtension
 
     public function getCategories(int $limit=null)
     {
-        return  $this->em->getRepository('App:Category')->findBy([],['name' => 'ASC'],$limit);
+        return  $this->em->getRepository('App\Entity\Category')->findBy([],['name' => 'ASC'],$limit);
     }
 }
